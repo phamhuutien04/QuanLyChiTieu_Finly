@@ -39,11 +39,11 @@ class CategoryFragment : Fragment() {
 
         // Danh mục Chi tiêu
         val spendingCategories = listOf(
-            Category(R.drawable.ic_food, "Ăn uống", "2,000,000đ"),
+            Category(R.drawable.ic_category_food, "Ăn uống", "2,000,000đ"),
             Category(R.drawable.ic_car, "Di chuyển", "800,000đ"),
-            Category(R.drawable.ic_shop, "Mua sắm", "1,500,000đ"),
-            Category(R.drawable.ic_bill, "Hóa đơn", "1,200,000đ"),
-            Category(R.drawable.ic_sk, "Y tế", "2,000,000đ"),
+            Category(R.drawable.ic_category_shop, "Mua sắm", "1,500,000đ"),
+            Category(R.drawable.ic_category_billic, "Hóa đơn", "1,200,000đ"),
+            Category(R.drawable.ic_category_sk, "Y tế", "2,000,000đ"),
             Category(R.drawable.ic_cinema, "Giải trí", "800,000đ"),
             Category(R.drawable.ic_sports, "Thể thao", "1,500,000đ"),
             Category(R.drawable.ic_adds, "Khác", "2,000,000đ")
@@ -51,8 +51,8 @@ class CategoryFragment : Fragment() {
 
         // Danh mục Thu nhập
         val incomeCategories = listOf(
-            Category(R.drawable.ic_wage, "Lương", "10,000,000đ"),
-            Category(R.drawable.ic_wages, "Thưởng", "2,000,000đ"),
+            Category(R.drawable.ic_category_wage, "Lương", "10,000,000đ"),
+            Category(R.drawable.ic_category_wages, "Thưởng", "2,000,000đ"),
             Category(R.drawable.ic_adds, "Quà tặng", "2,000,000đ"),
             Category(R.drawable.ic_adds, "Khác", "2,000,000đ")
         )

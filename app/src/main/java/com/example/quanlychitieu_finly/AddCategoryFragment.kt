@@ -30,11 +30,9 @@ class AddCategoryFragment : Fragment() {
     private var selectedImageUri: Uri? = null
     private var selectedResId: Int? = null
 
-    // danh sách ảnh có sẵn trong drawable
-// Lấy toàn bộ drawable có prefix ic_
     private val predefinedImages: List<Int> by lazy {
         R.drawable::class.java.fields
-            .filter { it.name.startsWith("ic_") }  // lấy icon có tên bắt đầu bằng ic_
+            .filter { it.name.startsWith("ic_category_") }
             .map { it.getInt(null) }
     }
 
