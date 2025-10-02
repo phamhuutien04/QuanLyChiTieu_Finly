@@ -8,6 +8,8 @@
     <string name="password_hint">Mật khẩu</string>
     <string name="confirm_password_hint">Nhập lại mật khẩu</string>
     <string name="already_have_account">Đã có tài khoản? Đăng nhập</string>
+    <string name="category_image">Thêm danh mục</string>
+
 
     <string name="login">Đăng nhập</string>
     <string name="dont_have_account">Chưa có tài khoản? Đăng ký</string>
