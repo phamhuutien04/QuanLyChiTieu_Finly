@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="bluesky">#FF1976D2</color>
+    <color name="background">#F7F5FF</color>
+    <color name="red">#FFC62828</color>
+    <color name="green">#FF4CAF50</color>
+    <color name="gray">#FF757575</color>
+    <color name="teal_700">#018786</color>
+    <color name="colorPrimary">#3B82F6</color>
+    <color name="colorPrimaryDark">#1E40AF</color>
+    <color name="colorAccent">#F59E0B</color>
+    <!-- Modern Colors -->
+    <color name="gray_50">#F9FAFB</color>
+    <color name="gray_100">#F3F4F6</color>
+    <color name="gray_200">#E5E7EB</color>
+    <color name="gray_300">#D1D5DB</color>
+    <color name="gray_400">#9CA3AF</color>
+    <!-- Glassmorphism Base Colors -->
+    <color name="glassmorphism_bg">#40FFFFFF</color>
+    <color name="glassmorphism_border">#60FFFFFF</color>
+    <color name="glassmorphism_highlight">#80FFFFFF</color>
+
+    <!-- Tab States -->
+    <color name="glassmorphism_tab_active">#30FFFFFF</color>
+    <color name="glassmorphism_tab_normal">#00FFFFFF</color>
+    <color name="glassmorphism_tab_pressed">#50FFFFFF</color>
+
+    <!-- Icon & Text Colors -->
+    <color name="glassmorphism_icon_active">#FFFFFF</color>
+    <color name="glassmorphism_icon_normal">#B3FFFFFF</color>
+    <color name="glassmorphism_text_active">#FFFFFF</color>
+    <color name="glassmorphism_text_normal">#B3FFFFFF</color>
+
+    <!-- FAB Glassmorphism -->
+    <color name="fab_glassmorphism_bg">#4D2196F3</color>
+    <color name="fab_glassmorphism_border">#802196F3</color>
+    <color name="fab_glassmorphism_ripple">#40FFFFFF</color>
+    <color name="fab_glass_shadow">#332196F3</color>
+
+    <!-- App Background -->
+    <color name="app_bg_start">#667eea</color>
+    <color name="app_bg_end">#764ba2</color>
+
+    <color name="primary_blue">#2196F3</color>
+    <color name="gray_6b7280">#6B7280</color>
+    <color name="red_10B981">#10B981</color>
+    <!-- Primary Colors -->
+    <color name="primary">#667eea</color>
+    <color name="primary_dark">#764ba2</color>
+    <color name="accent">#3B82F6</color>
+
+    <!-- Background Colors -->
+    <color name="surface">#FFFFFF</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#1F2937</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="text_tertiary">#9CA3AF</color>
+
+    <!-- Accent Colors -->
+    <color name="accent_orange">#F59E0B</color>
+    <color name="accent_green">#10B981</color>
+    <color name="accent_blue">#3B82F6</color>
+    <color name="accent_purple">#8B5CF6</color>
+    <color name="accent_red">#EF4444</color>
+    <color name="accent_pink">#EC4899</color>
+    <color name="accent_teal">#14B8A6</color>
+    <color name="accent_indigo">#6366F1</color>
+
+    <!-- Background Tints -->
+    <color name="bg_orange">#FEF3C7</color>
+    <color name="bg_green">#D1FAE5</color>
+    <color name="bg_blue">#DBEAFE</color>
+    <color name="bg_purple">#F3E8FF</color>
+    <color name="bg_red">#FEE2E2</color>
+    <color name="bg_pink">#FCE7F3</color>
+    <color name="bg_indigo">#E0E7FF</color>
+
+    <!-- Border Colors -->
+    <color name="border_light">#E5E7EB</color>
+    <color name="border_medium">#D1D5DB</color>
+
+    <!-- Status Colors -->
+    <color name="success">#10B981</color>
+    <color name="warning">#F59E0B</color>
+    <color name="error">#DC2626</color>
+    <color name="info">#3B82F6</color>
+
+    <!-- Switch Colors -->
+    <color name="switch_thumb_checked">#3B82F6</color>
+    <color name="switch_thumb_unchecked">#D1D5DB</color>
+    <color name="switch_track_checked">#BFDBFE</color>
+    <color name="switch_track_unchecked">#E5E7EB</color>
+</resources>
