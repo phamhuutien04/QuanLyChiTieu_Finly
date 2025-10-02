@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Main Glass Background -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/glassmorphism_bg" />
+            <corners android:radius="24dp" />
+        </shape>
+    </item>
+
+    <!-- Subtle Border -->
+    <item>
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="0.5dp"
+                android:color="@color/glassmorphism_border" />
+            <corners android:radius="24dp" />
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+
+    <!-- Inner Glow Effect -->
+    <!-- Dùng insetStart/insetEnd nếu muốn hỗ trợ RTL, hoặc insetLeft/insetRight cho mọi API -->
+    <item
+        android:insetTop="1dp"
+        android:insetBottom="1dp"
+        android:insetLeft="1dp"
+        android:insetRight="1dp">
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="1dp"
+                android:color="@color/glassmorphism_highlight" />
+            <corners android:radius="23dp" />
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+</layer-list>

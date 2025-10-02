@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <!-- Viền gradient -->
+    <stroke android:width="4dp">
+        <gradient
+            android:startColor="#3B82F6"
+            android:centerColor="#60A5FA"
+            android:endColor="#9333EA"
+            android:angle="45"/>
+    </stroke>
+
+    <!-- Nền trong suốt hoặc màu mờ -->
+    <solid android:color="#22FFFFFF"/>
+</shape>

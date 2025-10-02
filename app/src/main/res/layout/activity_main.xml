@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Container hiển thị fragment -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Đường viền trên -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0"/>
+
+        <!-- Thanh menu dưới sang trọng -->
+        <LinearLayout
+            android:id="@+id/custom_bottom_menu"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@android:color/white"
+            android:elevation="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp">
+
+            <!-- Tab Home -->
+            <FrameLayout
+                android:id="@+id/tab_home"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp">
+
+                <!-- Indicator bar xanh da trời -->
+                <View
+                    android:id="@+id/indicator_home"
+                    android:layout_width="40dp"
+                    android:layout_height="3dp"
+                    android:layout_gravity="top|center_horizontal"
+                    android:background="@drawable/indicator_background"
+                    android:visibility="invisible" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="1dp">
+
+                    <ImageView
+                        android:id="@+id/icon_home"
+                        android:src="@drawable/home"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="2dp"
+                        app:tint="#9E9E9E" />
+
+                    <TextView
+                        android:id="@+id/text_home"
+                        android:text="Trang chủ"
+                        android:textSize="11sp"
+                        android:textColor="#9E9E9E"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.02" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Tab Category -->
+            <FrameLayout
+                android:id="@+id/tab_categorys"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp">
+
+                <View
+                    android:id="@+id/indicator_category"
+                    android:layout_width="40dp"
+                    android:layout_height="3dp"
+                    android:layout_gravity="top|center_horizontal"
+                    android:background="@drawable/indicator_background"
+                    android:visibility="invisible" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="1dp">
+
+                    <ImageView
+                        android:id="@+id/icon_category"
+                        android:src="@drawable/menu"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="2dp"
+                        app:tint="#9E9E9E" />
+
+                    <TextView
+                        android:id="@+id/text_category"
+                        android:text="Danh mục"
+                        android:textSize="11sp"
+                        android:textColor="#9E9E9E"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.02" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Tab Analytics -->
+            <FrameLayout
+                android:id="@+id/tab_analytics"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp">
+
+                <View
+                    android:id="@+id/indicator_analytics"
+                    android:layout_width="40dp"
+                    android:layout_height="3dp"
+                    android:layout_gravity="top|center_horizontal"
+                    android:background="@drawable/indicator_background"
+                    android:visibility="invisible" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="1dp">
+
+                    <ImageView
+                        android:id="@+id/icon_analytics"
+                        android:src="@drawable/chart"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="2dp"
+                        app:tint="#9E9E9E" />
+
+                    <TextView
+                        android:id="@+id/text_analytics"
+                        android:text="Phân tích"
+                        android:textSize="11sp"
+                        android:textColor="#9E9E9E"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.02" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Tab Settings -->
+            <FrameLayout
+                android:id="@+id/tab_settings"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp">
+
+                <View
+                    android:id="@+id/indicator_settings"
+                    android:layout_width="40dp"
+                    android:layout_height="3dp"
+                    android:layout_gravity="top|center_horizontal"
+                    android:background="@drawable/indicator_background"
+                    android:visibility="invisible" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="1dp">
+
+                    <ImageView
+                        android:id="@+id/icon_settings"
+                        android:src="@drawable/setting"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="2dp"
+                        app:tint="#9E9E9E" />
+
+                    <TextView
+                        android:id="@+id/text_settings"
+                        android:text="Cài đặt"
+                        android:textSize="11sp"
+                        android:textColor="#9E9E9E"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.02" />
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Nút Add sang trọng với hiệu ứng gradient và shadow -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_add"
+        android:src="@drawable/ic_add"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="92dp"
+        android:contentDescription="Thêm"
+        app:elevation="20dp"
+        app:pressedTranslationZ="24dp"
+        app:borderWidth="0dp"
+        app:tint="@android:color/white"
+        app:maxImageSize="28dp" />
+
+    <!-- Shadow effect cho FAB -->
+    <View
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="88dp"
+        android:alpha="0.3" />
+</FrameLayout>

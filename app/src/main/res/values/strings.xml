@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Finly</string>
+    <string name="welcome_message">Chào mừng bạn đến ứng dụng!</string>
+
+    <string name="register_button">Đăng ký</string>
+    <string name="username_hint">Tên người dùng</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Mật khẩu</string>
+    <string name="confirm_password_hint">Nhập lại mật khẩu</string>
+    <string name="already_have_account">Đã có tài khoản? Đăng nhập</string>
+
+    <string name="login">Đăng nhập</string>
+    <string name="dont_have_account">Chưa có tài khoản? Đăng ký</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
