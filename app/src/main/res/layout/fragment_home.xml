@@ -8,7 +8,11 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+<<<<<<< HEAD
         android:fillViewport="true">
+=======
+        android:fillViewport="true"> 
+>>>>>>> 532fd5467d76223ecf62169677e2537c484fb221
 
         <LinearLayout
             android:orientation="vertical"
@@ -378,6 +382,7 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+<<<<<<< HEAD
 
     <!-- Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -392,4 +397,6 @@
         app:elevation="6dp"
         app:borderWidth="0dp" />
 
+=======
+>>>>>>> 532fd5467d76223ecf62169677e2537c484fb221
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
