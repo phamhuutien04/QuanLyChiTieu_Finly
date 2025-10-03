@@ -2,7 +2,6 @@ package com.example.quanlychitieu_finly
 
 import android.animation.ValueAnimator
 import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -394,9 +393,9 @@ class AnalyticsFragment : Fragment() {
 
     private fun setupRecyclerView() {
         val details = listOf(
-            ExpenseDetail(R.drawable.ic_food, "Ăn uống", "8.500.000 đ", "+12%"),
+            ExpenseDetail(R.drawable.ic_category_food, "Ăn uống", "8.500.000 đ", "+12%"),
             ExpenseDetail(R.drawable.ic_transport, "Giao thông", "5.600.000 đ", "+5%"),
-            ExpenseDetail(R.drawable.ic_shopping, "Mua sắm", "4.200.000 đ", "-8%"),
+            ExpenseDetail(R.drawable.ic_category_shopping, "Mua sắm", "4.200.000 đ", "-8%"),
             ExpenseDetail(R.drawable.ic_play, "Giải trí", "3.400.000 đ", "+15%"),
             ExpenseDetail(R.drawable.ic_study, "Học tập", "2.800.000 đ", "+3%")
         )

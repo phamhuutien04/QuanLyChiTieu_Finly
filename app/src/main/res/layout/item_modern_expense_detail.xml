@@ -30,7 +30,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_food"
+                android:src="@drawable/ic_category_food"
                 app:tint="#6B7280" />
         </androidx.cardview.widget.CardView>
 
