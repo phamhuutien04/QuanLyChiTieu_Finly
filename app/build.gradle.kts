@@ -50,4 +50,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:34.3.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth:22.3.1")
+    implementation("com.cloudinary:cloudinary-android:2.3.1")
+
+
 }

@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
     // Bottom navigation tabs

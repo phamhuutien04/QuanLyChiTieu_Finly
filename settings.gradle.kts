@@ -11,15 +11,16 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
-        maven("https://jitpack.io")
+        maven { url = uri("https://linkedin.bintray.com/maven/") }
+        maven { url = uri("https://jitpack.io") }
     }
 }
 
 rootProject.name = "QuanLyChiTieu_Finly"
 include(":app")
- 
