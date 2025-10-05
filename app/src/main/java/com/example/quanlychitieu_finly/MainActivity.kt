@@ -68,9 +68,6 @@ class MainActivity : AppCompatActivity() {
         tabAnalytics = findViewById(R.id.tab_analytics)
         tabSettings = findViewById(R.id.tab_settings)
 
-        // Floating button
-        btnAdd = findViewById(R.id.btn_add)
-
         // Indicators
         indicatorHome = findViewById(R.id.indicator_home)
         indicatorCategory = findViewById(R.id.indicator_category)
@@ -114,19 +111,19 @@ class MainActivity : AppCompatActivity() {
         when (position) {
             0 -> {
                 loadFragment(HomeFragment())
-                btnAdd.show() // Hiện nút Add ở Home
+//                btnAdd.show() // Hiện nút Add ở Home
             }
             1 -> {
                 loadFragment(CategoryFragment())
-                btnAdd.hide() // Ẩn nút Add
+//                btnAdd.hide() // Ẩn nút Add
             }
             2 -> {
                 loadFragment(AnalyticsFragment())
-                btnAdd.hide() // Ẩn nút Add
+//                btnAdd.hide() // Ẩn nút Add
             }
             3 -> {
                 loadFragment(SettingsFragment())
-                btnAdd.hide() // Ẩn nút Add
+//                btnAdd.hide() // Ẩn nút Add
             }
         }
     }

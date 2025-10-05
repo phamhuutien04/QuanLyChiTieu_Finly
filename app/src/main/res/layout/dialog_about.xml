@@ -81,7 +81,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nhóm 8 - Đại học ABC"
+            android:text="Nhóm 8 - TDMU - D22CNT05"
             android:textSize="14sp"
             android:textColor="#1F2937"
             android:textStyle="bold"
@@ -90,7 +90,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="© 2025 All rights reserved"
+            android:text="© 2025 Niên khóa 2022 - 2027"
             android:textSize="12sp"
             android:textColor="#6B7280"/>
     </LinearLayout>

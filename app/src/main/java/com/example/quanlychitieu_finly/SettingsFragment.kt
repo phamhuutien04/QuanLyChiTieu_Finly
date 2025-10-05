@@ -173,12 +173,27 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    private fun Dialog.applyFullWidthWithMargin(marginDp: Int = 20) {
+        val metrics = resources.displayMetrics
+        val marginPx = (marginDp * metrics.density).toInt()
+        val width = metrics.widthPixels - (marginPx * 2)
+
+        window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
+    }
+
     // ==================== THEME MODE DIALOG ====================
     private fun showThemeModeDialog() {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_theme_mode)
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        // ======== PHẦN SET WIDTH FULL ========
+
+        dialog.show()
+        dialog.applyFullWidthWithMargin(20)
+
+        // =====================================
 
         val cardLight = dialog.findViewById<CardView>(R.id.cardLightMode)
         val cardDark = dialog.findViewById<CardView>(R.id.cardDarkMode)
@@ -334,6 +349,7 @@ class SettingsFragment : Fragment() {
         }
 
         dialog.show()
+        dialog.applyFullWidthWithMargin(20)
     }
 
     // ==================== CURRENCY DIALOG ====================
@@ -377,6 +393,7 @@ class SettingsFragment : Fragment() {
         }
 
         dialog.show()
+        dialog.applyFullWidthWithMargin(20)
     }
 
     // ==================== CHANGE PASSWORD DIALOG ====================
@@ -418,6 +435,7 @@ class SettingsFragment : Fragment() {
         }
 
         dialog.show()
+        dialog.applyFullWidthWithMargin(20)
     }
 
     // ==================== 2FA SETUP DIALOG ====================
@@ -438,6 +456,7 @@ class SettingsFragment : Fragment() {
         }
 
         dialog.show()
+        dialog.applyFullWidthWithMargin(20)
     }
 
     // ==================== ABOUT DIALOG ====================
@@ -452,6 +471,7 @@ class SettingsFragment : Fragment() {
         }
 
         dialog.show()
+        dialog.applyFullWidthWithMargin(20)
     }
 
     // ==================== LOGOUT DIALOG ====================
@@ -472,5 +492,6 @@ class SettingsFragment : Fragment() {
         }
 
         dialog.show()
+        dialog.applyFullWidthWithMargin(20)
     }
 }
