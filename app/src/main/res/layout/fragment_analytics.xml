@@ -740,24 +740,24 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Floating Action Button for Quick Add -->
+        <!-- Premium Floating Action Button -->
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/fabQuickAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="20dp"
-            android:layout_gravity="center_horizontal"
-            android:text="Thêm"
-            android:textColor="@android:color/white"
-            app:icon="@drawable/ic_add"
-            app:iconTint="@android:color/white"
-            app:backgroundTint="@color/colorPrimary"
-            app:cornerRadius="999dp"
+            android:text="Thêm giao dịch"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginTop="20dp"
+            app:icon="@android:drawable/ic_input_add"
+            app:iconTint="#FFFFFF"
+            app:backgroundTint="#6366F1"
             app:elevation="8dp"
-            android:paddingHorizontal="28dp"
-            android:paddingVertical="12dp"/>
-
+            app:cornerRadius="28dp"
+            app:borderWidth="0dp" />
 
     </LinearLayout>
 </ScrollView>
