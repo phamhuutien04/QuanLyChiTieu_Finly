@@ -47,6 +47,7 @@
             android:inputType="textPassword"
             android:minHeight="48dp" />
 
+
         <!-- Forgot password -->
         <TextView
             android:id="@+id/txtForgotPassword"
