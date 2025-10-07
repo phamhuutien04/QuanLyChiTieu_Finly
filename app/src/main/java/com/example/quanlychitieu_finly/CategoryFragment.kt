@@ -5,11 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class CategoryFragment : Fragment() {
 
@@ -22,11 +26,18 @@ class CategoryFragment : Fragment() {
     private lateinit var underlineIncome: View
     private lateinit var fabAddCategory: ExtendedFloatingActionButton
 
+    private lateinit var db: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_category, container, false)
+
+        // Firebase
+        db = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
 
         // Ánh xạ view
         recyclerView = view.findViewById(R.id.rcvCategories)
@@ -37,97 +48,69 @@ class CategoryFragment : Fragment() {
         tvTotal = view.findViewById(R.id.tvTotal)
         fabAddCategory = view.findViewById(R.id.fabAddCategory)
 
-        // Danh mục Chi tiêu
-        val spendingCategories = listOf(
-            Category(R.drawable.ic_category_food, "Ăn uống", "2,000,000đ"),
-            Category(R.drawable.ic_car, "Di chuyển", "800,000đ"),
-            Category(R.drawable.ic_category_shop, "Mua sắm", "1,500,000đ"),
-            Category(R.drawable.ic_category_billic, "Hóa đơn", "1,200,000đ"),
-            Category(R.drawable.ic_category_sk, "Y tế", "2,000,000đ"),
-            Category(R.drawable.ic_cinema, "Giải trí", "800,000đ"),
-            Category(R.drawable.ic_sports, "Thể thao", "1,500,000đ"),
-            Category(R.drawable.ic_adds, "Khác", "2,000,000đ")
-        )
+        // RecyclerView
+        adapter = CategoryAdapter(emptyList()) {}
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        recyclerView.adapter = adapter
 
-        // Danh mục Thu nhập
-        val incomeCategories = listOf(
-            Category(R.drawable.ic_category_wage, "Lương", "10,000,000đ"),
-            Category(R.drawable.ic_category_wages, "Thưởng", "2,000,000đ"),
-            Category(R.drawable.ic_adds, "Quà tặng", "2,000,000đ"),
-            Category(R.drawable.ic_adds, "Khác", "2,000,000đ")
-        )
+        // Mặc định tab Chi tiêu
+        selectTab(tabSpending)
 
-        // Mặc định hiển thị Chi tiêu
-        showCategoryList(spendingCategories)
-        updateTotal(spendingCategories)
-        highlightTab(tabSpending)
-        adapter.setTab(true)
+        tabSpending.setOnClickListener { selectTab(tabSpending) }
+        tabIncome.setOnClickListener { selectTab(tabIncome) }
 
-        // Chuyển tab → Chi tiêu
-        tabSpending.setOnClickListener {
-            showCategoryList(spendingCategories)
-            updateTotal(spendingCategories)
-            highlightTab(tabSpending)
-            adapter.setTab(true) // Chi tiêu → đỏ
-        }
-
-        // Chuyển tab → Thu nhập
-        tabIncome.setOnClickListener {
-            showCategoryList(incomeCategories)
-            updateTotal(incomeCategories)
-            highlightTab(tabIncome)
-            adapter.setTab(false) // Thu nhập → xanh
-        }
-
-//         Ấn nút Thêm → sang fragment khác
         fabAddCategory.setOnClickListener {
-            val newFragment = AddCategoryFragment()
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, newFragment) // FrameLayout chứa fragment
-                .addToBackStack(null) // để nhấn Back quay lại
+                .replace(R.id.fragment_container, AddCategoryFragment())
+                .addToBackStack(null)
                 .commit()
         }
 
         return view
     }
 
-    // Hiển thị danh sách Category
-    private fun showCategoryList(list: List<Category>) {
-        adapter = CategoryAdapter(list) { category ->
-            // TODO: xử lý khi click item nếu cần
-        }
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
-        recyclerView.adapter = adapter
+    private fun selectTab(selectedTab: TextView) {
+        val isSpending = selectedTab == tabSpending
+        highlightTab(selectedTab)
+        adapter.setTab(isSpending)
+
+        val type = if (isSpending) "spending" else "income"
+        loadCategoriesFromFirestore(type)
     }
 
-    // Tính tổng số tiền
-    private fun updateTotal(list: List<Category>) {
-        var total = 0L
-        for (c in list) {
-            val amount = c.amount
-            if (!amount.isNullOrBlank()) {
-                val value = amount.replace(",", "").replace("đ", "").trim().toLong()
-                total += value
-            }
+    private fun loadCategoriesFromFirestore(type: String) {
+        val userId = auth.currentUser?.uid ?: run {
+            Toast.makeText(context, "Người dùng chưa đăng nhập!", Toast.LENGTH_SHORT).show()
+            return
         }
+
+        db.collection("users").document(userId)
+            .collection("categories")
+            .whereEqualTo("type", type)
+            .orderBy("name", Query.Direction.ASCENDING)
+            .get()
+            .addOnSuccessListener { docs ->
+                val list = docs.toObjects(Category::class.java)
+                adapter.updateData(list)
+                updateTotal(list)
+                if (list.isEmpty()) Toast.makeText(context, "Không có danh mục nào", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(context, "Lỗi tải danh mục: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun updateTotal(list: List<Category>) {
+        val total = list.sumOf { it.totalAmount }
         tvTotal.text = "%,dđ".format(total)
     }
 
-    // Đổi màu tab + underline
     private fun highlightTab(selected: TextView) {
-        if (selected == tabSpending) {
-            tabSpending.setTextColor(ContextCompat.getColor(requireContext(), R.color.bluesky))
-            tabIncome.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
-            tvTotal.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
-
-            underlineSpending.visibility = View.VISIBLE
-            underlineIncome.visibility = View.INVISIBLE
-        } else {
-            tvTotal.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
-            tabIncome.setTextColor(ContextCompat.getColor(requireContext(), R.color.bluesky))
-            tabSpending.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
-            underlineIncome.visibility = View.VISIBLE
-            underlineSpending.visibility = View.INVISIBLE
-        }
+        val isSpending = selected == tabSpending
+        tabSpending.setTextColor(ContextCompat.getColor(requireContext(), if (isSpending) R.color.bluesky else R.color.gray))
+        tabIncome.setTextColor(ContextCompat.getColor(requireContext(), if (!isSpending) R.color.bluesky else R.color.gray))
+        tvTotal.setTextColor(ContextCompat.getColor(requireContext(), if (isSpending) R.color.red else R.color.green))
+        underlineSpending.visibility = if (isSpending) View.VISIBLE else View.INVISIBLE
+        underlineIncome.visibility = if (!isSpending) View.VISIBLE else View.INVISIBLE
     }
 }

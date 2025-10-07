@@ -7,48 +7,51 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class CategoryAdapter(
     private var list: List<Category>,
-    private val onItemClick: (Category) -> Unit
-) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+    private val onClick: (Category) -> Unit
+) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
-    private var isSpendingTab: Boolean = true  // mặc định tab Chi tiêu
+    private var isSpendingTab = true
 
     fun setTab(isSpending: Boolean) {
-        this.isSpendingTab = isSpending
+        isSpendingTab = isSpending
         notifyDataSetChanged()
     }
 
-    inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val icon: ImageView = itemView.findViewById(R.id.imgIcon)
-        val name: TextView = itemView.findViewById(R.id.tvTitle)
-        val amount: TextView = itemView.findViewById(R.id.tvAmount)
+    fun updateData(newList: List<Category>) {
+        list = newList
+        notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_category, parent, false)
-        return CategoryViewHolder(view)
+        return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
+    override fun getItemCount() = list.size
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val category = list[position]
-        holder.icon.setImageResource(category.icon)
-        holder.name.text = category.title
-        holder.amount.text = category.amount
+        holder.tvName.text = category.name
+        holder.tvAmount.text = "%,dđ".format(category.totalAmount)
+        holder.tvName.setTextColor(if (isSpendingTab) Color.RED else Color.GREEN)
 
-        // Đổi màu số tiền theo tab
-        if (isSpendingTab) {
-            holder.amount.setTextColor(Color.parseColor("#FF0000")) // đỏ cho Chi tiêu
-        } else {
-            holder.amount.setTextColor(Color.parseColor("#4CAF50")) // xanh cho Thu nhập
-        }
+        // Hiển thị ảnh
+        Glide.with(holder.itemView.context)
+            .load(category.iconUrl)
+            .placeholder(R.drawable.ic_launcher_background)
+            .into(holder.ivIcon)
 
-        holder.itemView.setOnClickListener {
-            onItemClick(category)
-        }
+        holder.itemView.setOnClickListener { onClick(category) }
     }
 
-    override fun getItemCount(): Int = list.size
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val ivIcon: ImageView = itemView.findViewById(R.id.ivCategoryIcon)
+        val tvName: TextView = itemView.findViewById(R.id.tvCategoryName)
+        val tvAmount: TextView = itemView.findViewById(R.id.tvAmount)
+    }
 }
