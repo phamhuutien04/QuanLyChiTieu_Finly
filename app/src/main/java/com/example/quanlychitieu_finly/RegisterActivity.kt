@@ -151,7 +151,7 @@ class RegisterActivity : AppCompatActivity() {
                         val publicId = "users/$userId/$type/$name/icon"
                         val uploadParams = mapOf(
                             "public_id" to publicId,
-                            "upload_preset" to CloudinaryConfig.UPLOAD_PRESET
+                            "upload" to CloudinaryConfig.UPLOAD_PRESET
                         )
                         cloudinary.uploader().upload(inputStream, uploadParams)
                         inputStream.close()
