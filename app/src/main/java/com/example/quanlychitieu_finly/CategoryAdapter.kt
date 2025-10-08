@@ -43,7 +43,7 @@ class CategoryAdapter(
         // Hiển thị ảnh
         Glide.with(holder.itemView.context)
             .load(category.iconUrl)
-            .placeholder(R.drawable.ic_launcher_background)
+            .placeholder(R.drawable.ic_loading)
             .into(holder.ivIcon)
 
         holder.itemView.setOnClickListener { onClick(category) }
