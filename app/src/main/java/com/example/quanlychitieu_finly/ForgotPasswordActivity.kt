@@ -7,12 +7,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
+import android.widget.EditText
 import com.google.firebase.auth.FirebaseAuth
 
 class ForgotPasswordActivity : AppCompatActivity() {
 
-    private lateinit var edtForgotEmail: TextInputEditText
+    private lateinit var edtForgotEmail: android.widget.EditText
     private lateinit var btnResetPassword: MaterialButton
     private lateinit var btnBackToLogin: MaterialButton
     private lateinit var mAuth: FirebaseAuth
