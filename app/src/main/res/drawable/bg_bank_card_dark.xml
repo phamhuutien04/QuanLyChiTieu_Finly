@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Viền ngoài gradient -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#4F46E5"
+                android:centerColor="#22D3EE"
+                android:endColor="#A78BFA"
+                android:angle="45"/>
+            <corners android:radius="20dp"/>
+        </shape>
+    </item>
+
+    <!-- Lõi thẻ đen -->
+    <item android:left="2dp" android:top="2dp" android:right="2dp" android:bottom="2dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#111318"/>
+            <corners android:radius="18dp"/>
+        </shape>
+    </item>
+
+    <!-- Lớp glossy -->
+    <item android:left="2dp" android:top="2dp" android:right="2dp">
+        <shape android:shape="rectangle">
+            <size android:height="56dp"/>
+            <gradient
+                android:type="linear"
+                android:startColor="#26FFFFFF"
+                android:endColor="#00FFFFFF"
+                android:angle="270"/>
+            <corners android:radius="18dp"/>
+        </shape>
+    </item>
+
+</layer-list>
