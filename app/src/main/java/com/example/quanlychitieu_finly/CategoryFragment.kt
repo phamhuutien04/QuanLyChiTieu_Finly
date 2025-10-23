@@ -21,7 +21,15 @@ class CategoryFragment : Fragment() {
     private lateinit var adapter: CategoryAdapter
     private lateinit var tabSpending: TextView
     private lateinit var tabIncome: TextView
+    private lateinit var tvTransactionCount: TextView
+    private lateinit var tvAverage: TextView
+    private lateinit var tvHighest: TextView
     private lateinit var tvTotal: TextView
+    private lateinit var btnPeriodDay: TextView
+    private lateinit var btnPeriodMonth: TextView
+    private lateinit var btnPeriodYear: TextView
+    private var selectedPeriod = "month" // mặc định theo tháng
+
     private lateinit var underlineSpending: View
     private lateinit var underlineIncome: View
     private lateinit var fabAddCategory: ExtendedFloatingActionButton
@@ -47,6 +55,11 @@ class CategoryFragment : Fragment() {
         underlineIncome = view.findViewById(R.id.underlineIncome)
         tvTotal = view.findViewById(R.id.tvTotal)
         fabAddCategory = view.findViewById(R.id.fabAddCategory)
+        tvTransactionCount = view.findViewById(R.id.tvTransactionCount)
+        tvAverage = view.findViewById(R.id.tvAverage)
+        tvHighest = view.findViewById(R.id.tvHighest)
+
+
 
         // RecyclerView
         adapter = CategoryAdapter(emptyList()) {}
@@ -55,6 +68,7 @@ class CategoryFragment : Fragment() {
 
         // Mặc định tab Chi tiêu
         selectTab(tabSpending)
+
 
         tabSpending.setOnClickListener { selectTab(tabSpending) }
         tabIncome.setOnClickListener { selectTab(tabIncome) }
@@ -65,7 +79,6 @@ class CategoryFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
-
         return view
     }
 
@@ -76,6 +89,7 @@ class CategoryFragment : Fragment() {
 
         val type = if (isSpending) "spending" else "income"
         loadCategoriesFromFirestore(type)
+        loadTransactionCount(type)
     }
 
     private fun loadCategoriesFromFirestore(type: String) {
@@ -104,6 +118,39 @@ class CategoryFragment : Fragment() {
         val total = list.sumOf { it.totalAmount }
         tvTotal.text = "%,dđ".format(total)
     }
+    private fun loadTransactionCount(type: String) {
+        val userId = auth.currentUser?.uid ?: return
+
+        db.collection("users")
+            .document(userId)
+            .collection("transactions")
+            .whereEqualTo("type", type)
+            .get()
+            .addOnSuccessListener { docs ->
+                val count = docs.size()
+                tvTransactionCount.text = count.toString()
+
+                if (count > 0) {
+                    val amounts = docs.mapNotNull { it.getDouble("amount") }
+
+                    val total = amounts.sum()
+                    val avg = total / count
+                    val max = amounts.maxOrNull() ?: 0.0
+
+                    tvAverage.text = "%.0f đ".format(avg)
+                    tvHighest.text = "%.0f đ".format(max)
+                } else {
+                    tvAverage.text = "0 đ"
+                    tvHighest.text = "0 đ"
+                }
+            }
+            .addOnFailureListener { e ->
+                tvTransactionCount.text = "0"
+                tvAverage.text = "0 đ"
+                tvHighest.text = "0 đ"
+                Toast.makeText(context, "Lỗi tải giao dịch: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
 
     private fun highlightTab(selected: TextView) {
         val isSpending = selected == tabSpending
@@ -113,4 +160,5 @@ class CategoryFragment : Fragment() {
         underlineSpending.visibility = if (isSpending) View.VISIBLE else View.INVISIBLE
         underlineIncome.visibility = if (!isSpending) View.VISIBLE else View.INVISIBLE
     }
+
 }
