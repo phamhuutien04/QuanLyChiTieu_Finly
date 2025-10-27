@@ -19,7 +19,6 @@
             android:padding="16dp">
 
             <!-- Header -->
-            <!-- Header (gọn, chuyên nghiệp) -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/headerContainer"
                 android:layout_width="match_parent"
@@ -54,21 +53,7 @@
                         app:tint="#FFFFFF"/>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Lời chào -->
-                <TextView
-                    android:id="@+id/tvGreeting"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Xin chào! 👋"
-                    android:textSize="14sp"
-                    android:textColor="#CCFFFFFF"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/cardAvatar"
-                app:layout_constraintTop_toTopOf="@id/cardAvatar"
-                app:layout_constraintHorizontal_bias="0"
-                android:layout_marginEnd="16dp"/>
-
-                <!-- Tên người dùng (đậm, lớn) -->
+                <!-- Tên người dùng (đậm, lớn) - ĐÃ ĐIỀU CHỈNH CONSTRAINT -->
                 <TextView
                     android:id="@+id/tvUserName"
                     android:layout_width="0dp"
@@ -79,12 +64,12 @@
                     android:textColor="#FFFFFF"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/cardAvatar"
-                    app:layout_constraintTop_toBottomOf="@id/tvGreeting"
+                    app:layout_constraintTop_toTopOf="@id/cardAvatar"
                     app:layout_constraintHorizontal_bias="0"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="0dp"
                     android:layout_marginEnd="16dp"/>
 
-                <!-- Ngày dạng “chip”/badge ở dưới cùng bên trái -->
+                <!-- Ngày dạng "chip"/badge ở dưới cùng bên trái - ĐÃ ĐIỀU CHỈNH CONSTRAINT -->
                 <TextView
                     android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
@@ -99,8 +84,8 @@
                     android:background="@drawable/bg_date_chip"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvUserName"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginTop="12dp"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="8dp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

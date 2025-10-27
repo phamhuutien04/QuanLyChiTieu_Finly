@@ -342,12 +342,9 @@ class HomeFragment : Fragment() {
     private fun bindUserHeader(root: View) {
         val tvUserName = root.findViewById<TextView>(R.id.tvUserName)
         val imgAvatar  = root.findViewById<ImageView>(R.id.imgAvatar)
-        val tvGreeting = root.findViewById<TextView>(R.id.tvGreeting)
 
         val user = auth.currentUser ?: return
 
-        // Lời chào theo giờ
-        tvGreeting.text = greetingVN()
 
         // Hiển thị tạm thời từ Auth để UI không trễ
         tvUserName.text = bestNameFromAuth(user.displayName, user.email)
@@ -473,7 +470,6 @@ class HomeFragment : Fragment() {
             categoryId = category.id,
             categoryName = category.name,
             categoryIconUrl = category.iconUrl, // để TransactionAdapter hiển thị icon
-            categoryColorHex = "",              // nếu bạn có colorHex ở Category thì set tại đây
             amount = amount,
             type = type,
             date = Timestamp.now()

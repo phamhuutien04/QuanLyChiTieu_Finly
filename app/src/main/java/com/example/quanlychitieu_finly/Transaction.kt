@@ -17,7 +17,6 @@ data class Transaction(
     val categoryId: String = "",     // id document của category
     val categoryName: String = "",
     val categoryIconUrl: String = "",
-    val categoryColorHex: String = "",
     val amount: Double = 0.0,
     val type: String = "",           // "income" | "expense"
     val date: Timestamp = Timestamp.now()

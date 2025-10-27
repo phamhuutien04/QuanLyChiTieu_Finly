@@ -162,8 +162,7 @@ class TransactionAdapter(private val transactions: List<Transaction>) :
         holder.tvDate.text = df.format(t.date.toDate())
 
         // --- NỀN HUY HIỆU ---
-        val colorHex = if (t.categoryColorHex.isNotBlank()) t.categoryColorHex
-        else fallbackColors[t.categoryName] ?: "#B0BEC5"
+        val colorHex = fallbackColors[t.categoryName] ?: "#B0BEC5"
         holder.iconBackground.setBackgroundColor(Color.parseColor(colorHex))
 
         // --- ICON ---
