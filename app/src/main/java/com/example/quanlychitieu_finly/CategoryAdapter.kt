@@ -1,11 +1,11 @@
 package com.example.quanlychitieu_finly
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
@@ -36,19 +36,29 @@ class CategoryAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val category = list[position]
+        val context = holder.itemView.context
+
         holder.tvName.text = category.name
         holder.tvAmount.text = "%,dđ".format(category.totalAmount)
-        holder.tvName.setTextColor(if (isSpendingTab) Color.RED else Color.GREEN)
 
-        // Hiển thị ảnh
-        Glide.with(holder.itemView.context)
+        val mainColorRes = if (isSpendingTab) R.color.red else R.color.green
+        val mainColor = ContextCompat.getColor(context, mainColorRes)
+        val blackColor = ContextCompat.getColor(context, R.color.black)
+
+        holder.tvName.setTextColor(blackColor)
+        holder.tvAmount.setTextColor(mainColor)
+
+
+        Glide.with(context)
             .load(category.iconUrl)
             .placeholder(R.drawable.ic_loading)
+            .error(R.drawable.ic_loading)
             .into(holder.ivIcon)
 
         holder.itemView.setOnClickListener { onClick(category) }
     }
 
+    // ===== ViewHolder =====
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivIcon: ImageView = itemView.findViewById(R.id.ivCategoryIcon)
         val tvName: TextView = itemView.findViewById(R.id.tvCategoryName)

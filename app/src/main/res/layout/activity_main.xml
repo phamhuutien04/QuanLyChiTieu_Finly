@@ -210,12 +210,12 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Shadow effect cho FAB -->
-    <View
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="88dp"
-        android:alpha="0.3" />
+<!--    &lt;!&ndash; Shadow effect cho FAB &ndash;&gt;-->
+<!--    <View-->
+<!--        android:layout_width="64dp"-->
+<!--        android:layout_height="64dp"-->
+<!--        android:layout_gravity="bottom|end"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_marginBottom="88dp"-->
+<!--        android:alpha="0.3" />-->
 </FrameLayout>

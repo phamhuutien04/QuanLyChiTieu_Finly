@@ -25,10 +25,6 @@ class CategoryFragment : Fragment() {
     private lateinit var tvAverage: TextView
     private lateinit var tvHighest: TextView
     private lateinit var tvTotal: TextView
-    private lateinit var btnPeriodDay: TextView
-    private lateinit var btnPeriodMonth: TextView
-    private lateinit var btnPeriodYear: TextView
-    private var selectedPeriod = "month" // mặc định theo tháng
 
     private lateinit var underlineSpending: View
     private lateinit var underlineIncome: View
@@ -137,26 +133,34 @@ class CategoryFragment : Fragment() {
                     val avg = total / count
                     val max = amounts.maxOrNull() ?: 0.0
 
-                    tvAverage.text = "%.0f đ".format(avg)
-                    tvHighest.text = "%.0f đ".format(max)
+                    tvAverage.text = "${formatShortNumber(avg)}"
+                    tvHighest.text = "${formatShortNumber(max)}"
                 } else {
-                    tvAverage.text = "0 đ"
-                    tvHighest.text = "0 đ"
+                    tvAverage.text = "0k"
+                    tvHighest.text = "0k"
                 }
             }
             .addOnFailureListener { e ->
                 tvTransactionCount.text = "0"
-                tvAverage.text = "0 đ"
-                tvHighest.text = "0 đ"
+                tvAverage.text = "0đ"
+                tvHighest.text = "0đ"
                 Toast.makeText(context, "Lỗi tải giao dịch: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
-
+    private fun formatShortNumber(value: Double): String {
+        return when {
+            value >= 1_000_000_000 -> String.format("%.1fb", value / 1_000_000_000).replace(".0", "")
+            value >= 1_000_000 -> String.format("%.1fm", value / 1_000_000).replace(".0", "")
+            value >= 1_000 -> String.format("%.1fk", value / 1_000).replace(".0", "")
+            else -> value.toInt().toString()
+        }
+    }
     private fun highlightTab(selected: TextView) {
         val isSpending = selected == tabSpending
         tabSpending.setTextColor(ContextCompat.getColor(requireContext(), if (isSpending) R.color.bluesky else R.color.gray))
         tabIncome.setTextColor(ContextCompat.getColor(requireContext(), if (!isSpending) R.color.bluesky else R.color.gray))
         tvTotal.setTextColor(ContextCompat.getColor(requireContext(), if (isSpending) R.color.red else R.color.green))
+        tvHighest.setTextColor(ContextCompat.getColor(requireContext(), if (isSpending) R.color.red else R.color.green))
         underlineSpending.visibility = if (isSpending) View.VISIBLE else View.INVISIBLE
         underlineIncome.visibility = if (!isSpending) View.VISIBLE else View.INVISIBLE
     }
