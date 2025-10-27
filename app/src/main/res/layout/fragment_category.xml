@@ -170,52 +170,52 @@
                         android:text="28.351.000 đ"
                         android:textSize="22sp"
                         android:textStyle="bold"
-                        android:textColor="@color/red_10B981"
+                        android:textColor="@color/green"
                         android:fontFamily="sans-serif"
                         android:layout_marginTop="2dp"/>
                 </LinearLayout>
 
                 <!-- Period Selector -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="32dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/bg_period_selector"
-                    android:padding="3dp">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="32dp"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:background="@drawable/bg_period_selector"-->
+<!--                    android:padding="3dp">-->
 
-                    <TextView
-                        android:id="@+id/btnPeriodDay"
-                        android:layout_width="48dp"
-                        android:layout_height="match_parent"
-                        android:text="Ngày"
-                        android:textSize="11sp"
-                        android:textColor="#6B7280"
-                        android:gravity="center"
-                        android:background="?attr/selectableItemBackground"
-                        android:fontFamily="sans-serif-medium"/>
+<!--                    <TextView-->
+<!--                        android:id="@+id/btnPeriodDay"-->
+<!--                        android:layout_width="48dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:text="Ngày"-->
+<!--                        android:textSize="11sp"-->
+<!--                        android:textColor="#6B7280"-->
+<!--                        android:gravity="center"-->
+<!--                        android:background="?attr/selectableItemBackground"-->
+<!--                        android:fontFamily="sans-serif-medium"/>-->
 
-                    <TextView
-                        android:id="@+id/btnPeriodMonth"
-                        android:layout_width="48dp"
-                        android:layout_height="match_parent"
-                        android:text="Tháng"
-                        android:textSize="11sp"
-                        android:textColor="#3B82F6"
-                        android:background="@drawable/bg_period_selected"
-                        android:gravity="center"
-                        android:fontFamily="sans-serif-medium"/>
+<!--                    <TextView-->
+<!--                        android:id="@+id/btnPeriodMonth"-->
+<!--                        android:layout_width="48dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:text="Tháng"-->
+<!--                        android:textSize="11sp"-->
+<!--                        android:textColor="#3B82F6"-->
+<!--                        android:background="@drawable/bg_period_selected"-->
+<!--                        android:gravity="center"-->
+<!--                        android:fontFamily="sans-serif-medium"/>-->
 
-                    <TextView
-                        android:id="@+id/btnPeriodYear"
-                        android:layout_width="48dp"
-                        android:layout_height="match_parent"
-                        android:text="Năm"
-                        android:textSize="11sp"
-                        android:textColor="#6B7280"
-                        android:gravity="center"
-                        android:background="?attr/selectableItemBackground"
-                        android:fontFamily="sans-serif-medium"/>
-                </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:id="@+id/btnPeriodYear"-->
+<!--                        android:layout_width="48dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:text="Năm"-->
+<!--                        android:textSize="11sp"-->
+<!--                        android:textColor="#6B7280"-->
+<!--                        android:gravity="center"-->
+<!--                        android:background="?attr/selectableItemBackground"-->
+<!--                        android:fontFamily="sans-serif-medium"/>-->
+<!--                </LinearLayout>-->
             </LinearLayout>
 
             <!-- Divider -->

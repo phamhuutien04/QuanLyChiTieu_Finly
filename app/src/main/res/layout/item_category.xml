@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ăn uống"
-        android:textColor="#000"
+        android:textColor="@color/green"
         android:textStyle="bold"
         android:textSize="14sp"
         android:layout_marginTop="8dp"/>

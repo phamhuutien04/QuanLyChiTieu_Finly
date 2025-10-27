@@ -12,17 +12,25 @@ import android.widget.*
 import androidx.appcompat.widget.SwitchCompat
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SettingsFragment : Fragment() {
 
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
 
     // Views
     private lateinit var tvCurrentTheme: TextView
     private lateinit var tvCurrentLanguage: TextView
     private lateinit var tvCurrentCurrency: TextView
+    private lateinit var tvUserName: TextView
+    private lateinit var tvUserEmail: TextView
+    private lateinit var imgAvatar: ImageView
 
     private lateinit var switch2FA: SwitchCompat
     private lateinit var switchAutoSync: SwitchCompat
@@ -37,8 +45,11 @@ class SettingsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
 
         sharedPreferences = requireContext().getSharedPreferences("AppSettings", Context.MODE_PRIVATE)
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
         initViews(view)
+        loadUserInfo()
         loadSettings()
         setupClickListeners(view)
 
@@ -49,11 +60,101 @@ class SettingsFragment : Fragment() {
         tvCurrentTheme = view.findViewById(R.id.tvCurrentTheme)
         tvCurrentLanguage = view.findViewById(R.id.tvCurrentLanguage)
         tvCurrentCurrency = view.findViewById(R.id.tvCurrentCurrency)
+        tvUserName = view.findViewById(R.id.tvUserName)
+        tvUserEmail = view.findViewById(R.id.tvUserEmail)
+        imgAvatar = view.findViewById(R.id.imgAvatar)
 
         switch2FA = view.findViewById(R.id.switch2FA)
         switchAutoSync = view.findViewById(R.id.switchAutoSync)
         switchBudgetAlert = view.findViewById(R.id.switchBudgetAlert)
         switchPushNotif = view.findViewById(R.id.switchPushNotif)
+    }
+
+    private fun loadUserInfo() {
+        val currentUser = auth.currentUser
+        val userId = currentUser?.uid
+
+        if (userId != null) {
+            // Lấy thông tin user từ Firestore
+            db.collection("users").document(userId)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        // Lấy thông tin từ Firestore
+                        val username = document.getString("username") ?: ""
+                        val email = document.getString("email") ?: currentUser.email ?: ""
+                        val avatarUrl = document.getString("avatarUrl") ?: ""
+                        val balance = document.getDouble("balance") ?: 0.0
+                        val createdAt = document.getLong("createdAt") ?: 0L
+
+                        // Hiển thị thông tin user
+                        tvUserName.text = username.ifEmpty { "User" }
+                        tvUserEmail.text = email
+
+                        // Load avatar với Glide
+                        if (avatarUrl.isNotEmpty()) {
+                            Glide.with(requireContext())
+                                .load(avatarUrl)
+                                .placeholder(R.drawable.ic_user_placeholder)
+                                .error(R.drawable.ic_user_placeholder)
+                                .into(imgAvatar)
+                        } else {
+                            // Avatar mặc định nếu không có
+                            imgAvatar.setImageResource(R.drawable.ic_user_placeholder)
+                        }
+
+                        // Lưu thông tin vào SharedPreferences để sử dụng sau
+                        sharedPreferences.edit().apply {
+                            putString("user_name", username)
+                            putString("user_email", email)
+                            putString("user_avatar", avatarUrl)
+                            putFloat("user_balance", balance.toFloat())
+                            putLong("user_created_at", createdAt)
+                            apply()
+                        }
+                    } else {
+                        // Nếu không có document trong Firestore, sử dụng thông tin từ Firebase Auth
+                        loadUserFromAuth(currentUser)
+                    }
+                }
+                .addOnFailureListener { e ->
+                    // Nếu có lỗi, sử dụng thông tin từ Firebase Auth
+                    Toast.makeText(requireContext(), "Lỗi tải thông tin user", Toast.LENGTH_SHORT).show()
+                    loadUserFromAuth(currentUser)
+                }
+        } else {
+            // User chưa đăng nhập
+            tvUserName.text = "Khách"
+            tvUserEmail.text = "Chưa đăng nhập"
+            imgAvatar.setImageResource(R.drawable.ic_user_placeholder)
+        }
+    }
+
+    private fun loadUserFromAuth(currentUser: com.google.firebase.auth.FirebaseUser) {
+        val displayName = currentUser.displayName ?: ""
+        val email = currentUser.email ?: ""
+        val photoUrl = currentUser.photoUrl?.toString() ?: ""
+
+        tvUserName.text = displayName.ifEmpty { "User" }
+        tvUserEmail.text = email
+
+        if (photoUrl.isNotEmpty()) {
+            Glide.with(requireContext())
+                .load(photoUrl)
+                .placeholder(R.drawable.ic_user_placeholder)
+                .error(R.drawable.ic_user_placeholder)
+                .into(imgAvatar)
+        } else {
+            imgAvatar.setImageResource(R.drawable.ic_user_placeholder)
+        }
+
+        // Lưu vào SharedPreferences
+        sharedPreferences.edit().apply {
+            putString("user_name", displayName)
+            putString("user_email", email)
+            putString("user_avatar", photoUrl)
+            apply()
+        }
     }
 
     private fun loadSettings() {
@@ -62,6 +163,25 @@ class SettingsFragment : Fragment() {
         tvCurrentLanguage.text = sharedPreferences.getString("language", "Tiếng Việt")
         tvCurrentCurrency.text = sharedPreferences.getString("currency", "VND (₫)")
 
+        // Load user info từ SharedPreferences (nếu có)
+        val savedName = sharedPreferences.getString("user_name", "")
+        val savedEmail = sharedPreferences.getString("user_email", "")
+        val savedAvatar = sharedPreferences.getString("user_avatar", "")
+
+        if (savedName?.isNotEmpty() == true) {
+            tvUserName.text = savedName
+        }
+        if (savedEmail?.isNotEmpty() == true) {
+            tvUserEmail.text = savedEmail
+        }
+        if (savedAvatar?.isNotEmpty() == true) {
+            Glide.with(requireContext())
+                .load(savedAvatar)
+                .placeholder(R.drawable.ic_user_placeholder)
+                .error(R.drawable.ic_user_placeholder)
+                .into(imgAvatar)
+        }
+
         switch2FA.isChecked = sharedPreferences.getBoolean("2fa_enabled", false)
         switchAutoSync.isChecked = sharedPreferences.getBoolean("auto_sync", true)
         switchBudgetAlert.isChecked = sharedPreferences.getBoolean("budget_alert", true)
@@ -69,33 +189,8 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupClickListeners(view: View) {
-        // User Profile
-        view.findViewById<CardView>(R.id.cardUserProfile).setOnClickListener {
-            Toast.makeText(requireContext(), "Chỉnh sửa hồ sơ", Toast.LENGTH_SHORT).show()
-        }
+        // User Profile - Thêm dialog chỉnh sửa profile
 
-        // Change Password
-        view.findViewById<LinearLayout>(R.id.btnChangePassword).setOnClickListener {
-            showChangePasswordDialog()
-        }
-
-        // Social Login
-        view.findViewById<LinearLayout>(R.id.btnSocialLogin).setOnClickListener {
-            Toast.makeText(requireContext(), "Quản lý đăng nhập mạng xã hội", Toast.LENGTH_SHORT).show()
-        }
-
-        // 2FA Switch
-        switch2FA.setOnCheckedChangeListener { _, isChecked ->
-            sharedPreferences.edit().putBoolean("2fa_enabled", isChecked).apply()
-            if (isChecked) {
-                show2FASetupDialog()
-            }
-        }
-
-        // Linked Wallets
-        view.findViewById<LinearLayout>(R.id.btnLinkedWallets).setOnClickListener {
-            Toast.makeText(requireContext(), "Quản lý ví liên kết", Toast.LENGTH_SHORT).show()
-        }
 
         // Auto Sync Switch
         switchAutoSync.setOnCheckedChangeListener { _, isChecked ->
@@ -109,7 +204,7 @@ class SettingsFragment : Fragment() {
 
         // OCR Settings
         view.findViewById<LinearLayout>(R.id.btnOCRSettings).setOnClickListener {
-            Toast.makeText(requireContext(), "Cài đặt quét hóa đơn", Toast.LENGTH_SHORT).show()
+            showOCRSettingsDialog()
         }
 
         // Budget Alert Switch
@@ -124,7 +219,7 @@ class SettingsFragment : Fragment() {
 
         // Sound Settings
         view.findViewById<LinearLayout>(R.id.btnSoundSettings).setOnClickListener {
-            Toast.makeText(requireContext(), "Cài đặt âm thanh", Toast.LENGTH_SHORT).show()
+            showSoundSettingsDialog()
         }
 
         // Theme Mode
@@ -149,17 +244,17 @@ class SettingsFragment : Fragment() {
 
         // Privacy Policy
         view.findViewById<LinearLayout>(R.id.btnPrivacyPolicy).setOnClickListener {
-            Toast.makeText(requireContext(), "Chính sách & Điều khoản", Toast.LENGTH_SHORT).show()
+            showPrivacyPolicyDialog()
         }
 
         // Help & Support
         view.findViewById<LinearLayout>(R.id.btnHelpSupport).setOnClickListener {
-            Toast.makeText(requireContext(), "Trợ giúp & Hỗ trợ", Toast.LENGTH_SHORT).show()
+            showHelpSupportDialog()
         }
 
         // Feedback
         view.findViewById<LinearLayout>(R.id.btnFeedback).setOnClickListener {
-            Toast.makeText(requireContext(), "Gửi phản hồi", Toast.LENGTH_SHORT).show()
+            showFeedbackDialog()
         }
 
         // About
@@ -172,6 +267,13 @@ class SettingsFragment : Fragment() {
             showLogoutDialog()
         }
     }
+
+    // ==================== EDIT PROFILE DIALOG ====================
+
+
+    // ==================== LINKED WALLETS DIALOG ====================
+
+    // ==================== OTHER DIALOGS ====================
 
     private fun Dialog.applyFullWidthWithMargin(marginDp: Int = 20) {
         val metrics = resources.displayMetrics
@@ -188,12 +290,8 @@ class SettingsFragment : Fragment() {
         dialog.setContentView(R.layout.dialog_theme_mode)
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-        // ======== PHẦN SET WIDTH FULL ========
-
         dialog.show()
         dialog.applyFullWidthWithMargin(20)
-
-        // =====================================
 
         val cardLight = dialog.findViewById<CardView>(R.id.cardLightMode)
         val cardDark = dialog.findViewById<CardView>(R.id.cardDarkMode)
@@ -344,7 +442,7 @@ class SettingsFragment : Fragment() {
 
             sharedPreferences.edit().putString("language", selectedLang).apply()
             tvCurrentLanguage.text = selectedLang
-            Toast.makeText(requireContext(), "Language changed to $selectedLang", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Đã đổi ngôn ngữ sang $selectedLang", Toast.LENGTH_SHORT).show()
             dialog.dismiss()
         }
 
@@ -486,12 +584,37 @@ class SettingsFragment : Fragment() {
         }
 
         dialog.findViewById<MaterialButton>(R.id.btnConfirmLogout).setOnClickListener {
-            // TODO: Clear session and navigate to login
+            // Đăng xuất khỏi Firebase
+            auth.signOut()
             Toast.makeText(requireContext(), "Đã đăng xuất", Toast.LENGTH_SHORT).show()
             dialog.dismiss()
+
+            // Quay về màn hình đăng nhập
+            requireActivity().finish()
         }
 
         dialog.show()
         dialog.applyFullWidthWithMargin(20)
+    }
+
+    // ==================== CÁC DIALOG KHÁC ====================
+    private fun showOCRSettingsDialog() {
+        Toast.makeText(requireContext(), "Cài đặt quét hóa đơn", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showSoundSettingsDialog() {
+        Toast.makeText(requireContext(), "Cài đặt âm thanh", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showPrivacyPolicyDialog() {
+        Toast.makeText(requireContext(), "Chính sách & Điều khoản", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showHelpSupportDialog() {
+        Toast.makeText(requireContext(), "Trợ giúp & Hỗ trợ", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showFeedbackDialog() {
+        Toast.makeText(requireContext(), "Gửi phản hồi", Toast.LENGTH_SHORT).show()
     }
 }

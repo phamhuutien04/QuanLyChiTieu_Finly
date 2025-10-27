@@ -291,7 +291,7 @@ class HomeFragment : Fragment() {
         val btnAddIncome: MaterialCardView = view.findViewById(R.id.add_income_layout)
         val btnAddExpense: MaterialCardView = view.findViewById(R.id.add_expense_layout)
         btnAddIncome.setOnClickListener { openAddTransactionFlow("income") }
-        btnAddExpense.setOnClickListener { openAddTransactionFlow("expense") }
+        btnAddExpense.setOnClickListener { openAddTransactionFlow("spending") }
 
         // Tổng
         tvIncome = view.findViewById(R.id.tvIncome)
