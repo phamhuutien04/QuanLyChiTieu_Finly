@@ -53,7 +53,7 @@
                         app:tint="#FFFFFF"/>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Tên người dùng (đậm, lớn) - ĐÃ ĐIỀU CHỈNH CONSTRAINT -->
+                <!-- Tên người dùng -->
                 <TextView
                     android:id="@+id/tvUserName"
                     android:layout_width="0dp"
@@ -69,7 +69,7 @@
                     android:layout_marginTop="0dp"
                     android:layout_marginEnd="16dp"/>
 
-                <!-- Ngày dạng "chip"/badge ở dưới cùng bên trái - ĐÃ ĐIỀU CHỈNH CONSTRAINT -->
+                <!-- Ngày -->
                 <TextView
                     android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
@@ -84,8 +84,8 @@
                     android:background="@drawable/bg_date_chip"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvUserName"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="8dp"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="8dp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -97,7 +97,6 @@
                 app:cardElevation="8dp"
                 android:layout_marginBottom="24dp">
 
-                <!-- Thẻ ngân hàng tối -->
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -146,13 +145,12 @@
                             android:letterSpacing="0.02"
                             android:layout_marginBottom="12dp"/>
 
-                        <!-- Dòng kẻ + 2 chấm trên dòng kẻ -->
+                        <!-- Dòng kẻ + 2 chấm -->
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="28dp"
                             android:layout_marginBottom="12dp">
 
-                            <!-- Dòng kẻ nằm giữa -->
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
@@ -160,7 +158,6 @@
                                 android:background="#FFFFFF"
                                 android:alpha="0.12"/>
 
-                            <!-- Hai chấm tròn (nằm trên dòng kẻ, canh phải) -->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -421,7 +418,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="2dp"
-                android:layout_marginBottom="80dp">
+                android:layout_marginBottom="12dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvTransactions"
@@ -432,6 +429,23 @@
                     android:padding="4dp"
                     android:minHeight="200dp"/>
             </com.google.android.material.card.MaterialCardView>
+
+            <!-- Button Xem tất cả -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnViewAllTransactions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Xem tất cả giao dịch"
+                android:textSize="15sp"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#667EEA"
+                app:cornerRadius="12dp"
+                app:icon="@android:drawable/ic_menu_view"
+                app:iconTint="#FFFFFF"
+                app:iconGravity="textStart"
+                android:paddingVertical="14dp"
+                android:layout_marginBottom="80dp"
+                app:elevation="2dp"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

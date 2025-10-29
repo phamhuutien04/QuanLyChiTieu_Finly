@@ -226,11 +226,14 @@
 //}
 //
 
-
 package com.example.quanlychitieu_finly
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputFilter
+import android.text.TextWatcher
+import android.text.method.DigitsKeyListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -243,6 +246,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.Timestamp
@@ -251,7 +255,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class HomeFragment : Fragment() {
 
@@ -304,8 +310,11 @@ class HomeFragment : Fragment() {
         val df = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale("vi", "VN"))
         tvDate.text = df.format(Date())
 
-        // Load tất cả giao dịch (users/{uid}/transactions)
-        subscribeTransactions()
+        // Load chỉ 3 giao dịch gần nhất
+        loadRecentTransactions()
+
+        // Setup button "Xem tất cả"
+        setupViewAllButton(view)
 
         return view
     }
@@ -316,6 +325,8 @@ class HomeFragment : Fragment() {
         if (ensureLoggedIn()) {
             // Refresh lại tên & avatar (phòng khi user vừa cập nhật hồ sơ)
             view?.let { bindUserHeader(it) }
+            // Refresh lại danh sách giao dịch
+            loadRecentTransactions()
         }
     }
 
@@ -344,7 +355,6 @@ class HomeFragment : Fragment() {
         val imgAvatar  = root.findViewById<ImageView>(R.id.imgAvatar)
 
         val user = auth.currentUser ?: return
-
 
         // Hiển thị tạm thời từ Auth để UI không trễ
         tvUserName.text = bestNameFromAuth(user.displayName, user.email)
@@ -434,12 +444,48 @@ class HomeFragment : Fragment() {
             actv.setText(chosen!!.name, false)
         }
 
+        // ====== Định dạng số tiền theo VND ======
+        val vnLocale = Locale("vi", "VN")
+        val vnFormat = NumberFormat.getInstance(vnLocale)
+
+
+        // Tự động thêm dấu chấm khi gõ
+        edtAmount.addTextChangedListener(object : TextWatcher {
+            private var isFormatting = false
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                if (isFormatting) return
+                val raw = s?.toString() ?: return
+
+                val digits = raw.replace(".", "").replace(",", "").replace("[^0-9]".toRegex(), "")
+                if (digits.isEmpty()) {
+                    isFormatting = true
+                    edtAmount.setText("")
+                    isFormatting = false
+                    return
+                }
+
+                val parsed = digits.toDoubleOrNull() ?: return
+                val formatted = vnFormat.format(parsed)
+                if (formatted != raw) {
+                    isFormatting = true
+                    edtAmount.setText(formatted)
+                    edtAmount.setSelection(formatted.length)
+                    isFormatting = false
+                }
+            }
+        })
+        // =======================================
+
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(if (type == "income") "Thêm thu nhập" else "Thêm chi tiêu")
             .setView(dialogView)
             .setPositiveButton("Lưu") { _, _ ->
                 val title = edtTitle.text.toString().trim()
-                val amount = edtAmount.text.toString().trim().toDoubleOrNull() ?: 0.0
+                val rawInput = edtAmount.text.toString().trim()
+                val clean = rawInput.replace(".", "").replace(",", "")
+                val amount = clean.toDoubleOrNull() ?: 0.0
 
                 if (chosen == null) {
                     val typed = actv.text?.toString()?.trim().orEmpty()
@@ -450,11 +496,14 @@ class HomeFragment : Fragment() {
                     Toast.makeText(requireContext(), "Vui lòng nhập đủ thông tin hợp lệ", Toast.LENGTH_SHORT).show()
                     return@setPositiveButton
                 }
+
                 saveTransaction(type, title, chosen!!, amount)
+                Toast.makeText(requireContext(), "Đã thêm ${vnFormat.format(amount)} đ", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("Hủy", null)
             .show()
     }
+
 
     /** Lưu xuống users/{uid}/transactions */
     private fun saveTransaction(type: String, title: String, category: Category, amount: Double) {
@@ -484,19 +533,23 @@ class HomeFragment : Fragment() {
             )
         }.addOnSuccessListener {
             Toast.makeText(requireContext(), "Đã lưu giao dịch!", Toast.LENGTH_SHORT).show()
+            // Refresh lại danh sách sau khi thêm
+            loadRecentTransactions()
         }.addOnFailureListener {
             Toast.makeText(requireContext(), "Lỗi: ${it.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
-    /** Lắng nghe realtime tất cả giao dịch -> cập nhật list + tổng */
-    private fun subscribeTransactions() {
+    /** Load chỉ 3 giao dịch gần nhất + cập nhật tổng thu/chi/số dư */
+    private fun loadRecentTransactions() {
         if (!ensureLoggedIn()) return
         val userId = auth.currentUser?.uid ?: return
 
+        // Lấy chỉ 3 giao dịch gần nhất
         db.collection("users").document(userId)
             .collection("transactions")
             .orderBy("date", Query.Direction.DESCENDING)
+            .limit(3)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) {
                     Toast.makeText(requireContext(), "Lỗi tải dữ liệu: ${error.message}", Toast.LENGTH_SHORT).show()
@@ -504,21 +557,58 @@ class HomeFragment : Fragment() {
                 }
 
                 transactionList.clear()
+                snapshot?.forEach { doc ->
+                    val t = doc.toObject(Transaction::class.java)
+                    transactionList.add(t)
+                }
+
+                adapter.notifyDataSetChanged()
+                tvCount?.text = "${transactionList.size} giao dịch gần đây"
+            }
+
+        // Tính tổng thu/chi từ TẤT CẢ giao dịch (không giới hạn)
+        calculateTotals(userId)
+    }
+
+    /** Tính tổng thu nhập và chi tiêu từ tất cả giao dịch */
+    private fun calculateTotals(userId: String) {
+        db.collection("users").document(userId)
+            .collection("transactions")
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) return@addSnapshotListener
+
                 var income = 0.0
                 var expense = 0.0
 
                 snapshot?.forEach { doc ->
                     val t = doc.toObject(Transaction::class.java)
-                    transactionList.add(t)
-                    if (t.type.equals("income", true)) income += t.amount else expense += t.amount
+                    if (t.type.equals("income", true)) {
+                        income += t.amount
+                    } else {
+                        expense += t.amount
+                    }
                 }
 
-                adapter.notifyDataSetChanged()
-                tvCount?.text = "${transactionList.size} giao dịch"
                 tvIncome?.text = formatVnd(income)
                 tvExpense?.text = formatVnd(expense)
                 tvBalance?.text = formatVnd(income - expense)
             }
+    }
+
+    /** Setup button "Xem tất cả giao dịch" */
+    private fun setupViewAllButton(view: View) {
+        val btnViewAllTransactions = view.findViewById<MaterialButton>(R.id.btnViewAllTransactions)
+
+        btnViewAllTransactions?.setOnClickListener {
+            val intent = Intent(requireContext(), AllTransactionsActivity::class.java)
+            startActivity(intent)
+
+            // Animation chuyển trang mượt mà
+            requireActivity().overridePendingTransition(
+                android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right
+            )
+        }
     }
 
     private fun formatVnd(value: Double): String {
@@ -548,4 +638,3 @@ class HomeFragment : Fragment() {
         return "Người dùng"
     }
 }
-

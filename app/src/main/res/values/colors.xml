@@ -122,4 +122,22 @@
     <color name="category_other">#B0BEC5</color>
     <color name="item_background">#FAFAFA</color>
 
+    <!-- Màu hiện có -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+
+    <!-- Màu cho Toggle Button -->
+    <color name="income_color">#4CAF50</color>
+    <color name="expense_color">#F44336</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_gray">#666666</color>
+    <color name="stroke_gray">#CCCCCC</color>
+    <!-- ===== Màu cho ToggleGroup AllTransactions ===== -->
+    <color name="toggle_gray_bg">#F5F5F5</color>       <!-- Nền nhạt (xám nhẹ) -->
+    <color name="toggle_gray_bg_checked">#E0E0E0</color> <!-- Khi được chọn -->
+    <color name="toggle_gray_text">#424242</color>      <!-- Màu chữ trung tính -->
+    <color name="toggle_gray_text_checked">#000000</color> <!-- Chữ khi chọn -->
+
+
+
 </resources>

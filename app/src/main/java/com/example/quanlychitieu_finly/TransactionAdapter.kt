@@ -1,4 +1,3 @@
-//
 //package com.example.quanlychitieu_finly
 //
 //import android.graphics.Color
@@ -8,19 +7,17 @@
 //import android.widget.FrameLayout
 //import android.widget.ImageView
 //import android.widget.TextView
+//import androidx.core.widget.ImageViewCompat
 //import androidx.recyclerview.widget.RecyclerView
+//import com.bumptech.glide.Glide
 //import java.text.NumberFormat
 //import java.text.SimpleDateFormat
 //import java.util.*
 //
-//import com.bumptech.glide.Glide
-//import androidx.core.widget.ImageViewCompat
-//import android.content.res.ColorStateList
-//
 //class TransactionAdapter(private val transactions: List<Transaction>) :
 //    RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
 //
-//    // Fallback màu nếu không có color từ category
+//    // Fallback màu nếu transaction.categoryColorHex rỗng
 //    private val fallbackColors = mapOf(
 //        "Ăn uống" to "#FF6B6B",
 //        "Di chuyển" to "#4ECDC4",
@@ -57,44 +54,49 @@
 //        holder.tvCategory.text = t.categoryName
 //
 //        val nf = NumberFormat.getInstance(Locale("vi", "VN"))
-//        val sign = if (t.type == "income") "+" else "-"
+//        val isIncome = t.type.equals("income", ignoreCase = true)
+//        val sign = if (isIncome) "+" else "-"
 //        holder.tvAmount.text = "$sign${nf.format(t.amount)} đ"
-//        holder.tvAmount.setTextColor(Color.parseColor(if (t.type == "income") "#34C759" else "#FF3B30"))
+//        holder.tvAmount.setTextColor(Color.parseColor(if (isIncome) "#34C759" else "#FF3B30"))
 //
 //        val df = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 //        holder.tvDate.text = df.format(t.date.toDate())
 //
-//        // --- MÀU NỀN HUY HIỆU ---
-//        val colorHex = if (t.categoryColorHex.isNotBlank()) t.categoryColorHex
-//        else fallbackColors[t.categoryName] ?: "#B0BEC5"
+//        // --- NỀN HUY HIỆU ---
+//        val colorHex = fallbackColors[t.categoryName] ?: "#B0BEC5"
 //        holder.iconBackground.setBackgroundColor(Color.parseColor(colorHex))
 //
-//        // --- ICON TỪ DANH MỤC ---
-//        // Quan trọng: bỏ tint để icon không bị trắng hết
-//        ImageViewCompat.setImageTintList(holder.ivCategoryIcon, null)
+//        // --- ICON ---
+//        ImageViewCompat.setImageTintList(holder.ivCategoryIcon, null) // bỏ tint
 //
 //        val urlOrName = t.categoryIconUrl.trim()
-//        if (urlOrName.startsWith("http", true)) {
+//        if (urlOrName.startsWith("http", ignoreCase = true)) {
 //            Glide.with(holder.itemView.context)
 //                .load(urlOrName)
 //                .placeholder(android.R.drawable.ic_menu_gallery)
 //                .error(android.R.drawable.ic_menu_report_image)
 //                .into(holder.ivCategoryIcon)
 //        } else {
-//            // nếu iconUrl là tên resource nội bộ, ví dụ "ic_food"
+//            val safeName = urlOrName.lowercase(Locale.ROOT)
+//                .replace("-", "_")
+//                .replace(" ", "_")
 //            val resId = holder.itemView.context.resources
-//                .getIdentifier(urlOrName, "drawable", holder.itemView.context.packageName)
+//                .getIdentifier(safeName, "drawable", holder.itemView.context.packageName)
 //            if (resId != 0) holder.ivCategoryIcon.setImageResource(resId)
 //            else holder.ivCategoryIcon.setImageResource(android.R.drawable.ic_menu_more)
 //        }
 //
 //        holder.itemView.alpha = 0f
-//        holder.itemView.animate().alpha(1f).setDuration(300).setStartDelay((position * 50).toLong()).start()
+//        holder.itemView.animate()
+//            .alpha(1f)
+//            .setDuration(300)
+//            .setStartDelay((position * 50).toLong())
+//            .start()
 //    }
 //
 //    override fun getItemCount(): Int = transactions.size
 //}
-
+//
 
 
 package com.example.quanlychitieu_finly
@@ -113,10 +115,11 @@ import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TransactionAdapter(private val transactions: List<Transaction>) :
-    RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
+class TransactionAdapter(
+    private val transactions: MutableList<Transaction>,
+    private val onItemClick: (position: Int, item: Transaction) -> Unit = { _, _ -> }
+) : RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
 
-    // Fallback màu nếu transaction.categoryColorHex rỗng
     private val fallbackColors = mapOf(
         "Ăn uống" to "#FF6B6B",
         "Di chuyển" to "#4ECDC4",
@@ -143,6 +146,8 @@ class TransactionAdapter(private val transactions: List<Transaction>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_transaction, parent, false)
+        view.isClickable = true
+        view.isFocusable = true
         return TransactionViewHolder(view)
     }
 
@@ -161,38 +166,48 @@ class TransactionAdapter(private val transactions: List<Transaction>) :
         val df = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         holder.tvDate.text = df.format(t.date.toDate())
 
-        // --- NỀN HUY HIỆU ---
         val colorHex = fallbackColors[t.categoryName] ?: "#B0BEC5"
         holder.iconBackground.setBackgroundColor(Color.parseColor(colorHex))
 
-        // --- ICON ---
-        ImageViewCompat.setImageTintList(holder.ivCategoryIcon, null) // bỏ tint
-
+        ImageViewCompat.setImageTintList(holder.ivCategoryIcon, null)
         val urlOrName = t.categoryIconUrl.trim()
-        if (urlOrName.startsWith("http", ignoreCase = true)) {
+        if (urlOrName.startsWith("http", true)) {
             Glide.with(holder.itemView.context)
                 .load(urlOrName)
                 .placeholder(android.R.drawable.ic_menu_gallery)
                 .error(android.R.drawable.ic_menu_report_image)
                 .into(holder.ivCategoryIcon)
         } else {
-            val safeName = urlOrName.lowercase(Locale.ROOT)
-                .replace("-", "_")
-                .replace(" ", "_")
+            val safeName = urlOrName.lowercase(Locale.ROOT).replace("-", "_").replace(" ", "_")
             val resId = holder.itemView.context.resources
                 .getIdentifier(safeName, "drawable", holder.itemView.context.packageName)
-            if (resId != 0) holder.ivCategoryIcon.setImageResource(resId)
-            else holder.ivCategoryIcon.setImageResource(android.R.drawable.ic_menu_more)
+            holder.ivCategoryIcon.setImageResource(if (resId != 0) resId else android.R.drawable.ic_menu_more)
         }
 
         holder.itemView.alpha = 0f
-        holder.itemView.animate()
-            .alpha(1f)
-            .setDuration(300)
-            .setStartDelay((position * 50).toLong())
-            .start()
+        holder.itemView.animate().alpha(1f).setDuration(300).setStartDelay((position * 50).toLong()).start()
+
+        holder.itemView.setOnClickListener {
+            val pos = holder.bindingAdapterPosition
+            if (pos != RecyclerView.NO_POSITION) onItemClick(pos, transactions[pos])
+        }
     }
 
     override fun getItemCount(): Int = transactions.size
-}
 
+    fun replaceAll(newItems: List<Transaction>) {
+        transactions.clear()
+        transactions.addAll(newItems)
+        notifyDataSetChanged()
+    }
+
+    fun updateAt(position: Int, newItem: Transaction) {
+        transactions[position] = newItem
+        notifyItemChanged(position)
+    }
+
+    fun removeAt(position: Int) {
+        transactions.removeAt(position)
+        notifyItemRemoved(position)
+    }
+}
