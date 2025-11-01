@@ -7,6 +7,7 @@
     android:background="@color/background">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -15,40 +16,38 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="?attr/actionBarSize"
             android:background="@drawable/bg_app_mesh"
             android:paddingHorizontal="16dp"
-            android:paddingTop="12dp"
             app:contentInsetStartWithNavigation="0dp"
-            app:title="Quay lại"
+            android:title="Quay lại"
             app:titleCentered="true"
             app:titleTextColor="#FFFFFF"
             app:navigationIconTint="#FFFFFF"
             app:navigationIcon="@android:drawable/ic_menu_revert" />
-
-        <!-- 💡 Thêm dòng "Mẹo" -->
-        <TextView
-            android:id="@+id/tvHint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-8dp"
-            android:paddingHorizontal="16dp"
-            android:paddingBottom="8dp"
-            android:text="💡 Mẹo: Ấn vào giao dịch để chỉnh sửa"
-            android:textColor="#E0E0E0"
-            android:textSize="13sp"
-            android:gravity="center" />
     </com.google.android.material.appbar.AppBarLayout>
 
-
-
+    <!-- 💡 Mẹo - Đặt cố định giữa AppBar và NestedScrollView -->
+    <TextView
+        android:id="@+id/tvHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:text="💡 Mẹo: Ấn vào giao dịch để chỉnh sửa"
+        android:textColor="#FFA500"
+        android:textSize="13sp"
+        android:gravity="center"
+        android:background="#1A1D2E"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginTop="48dp"
         android:background="@drawable/okla"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -172,13 +171,12 @@
                     android:alpha="0.7"/>
             </LinearLayout>
 
+            <!-- Toggle Filter -->
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:id="@+id/tgTypeFilter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
                 app:singleSelection="true"
                 app:selectionRequired="true">
 
@@ -201,8 +199,7 @@
                     android:text="Chi tiêu"
                     android:textColor="@color/toggle_gray_text"
                     app:backgroundTint="@color/toggle_gray_bg" />
-        </com.google.android.material.button.MaterialButtonToggleGroup>
-
+            </com.google.android.material.button.MaterialButtonToggleGroup>
 
             <!-- RecyclerView chứa tất cả giao dịch -->
             <com.google.android.material.card.MaterialCardView
