@@ -2,6 +2,7 @@ package com.example.quanlychitieu_finly
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -579,23 +580,30 @@ class SettingsFragment : Fragment() {
         dialog.setContentView(R.layout.dialog_logout)
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
+        // Nút Hủy
         dialog.findViewById<TextView>(R.id.btnCancelLogout).setOnClickListener {
             dialog.dismiss()
         }
 
+        // Nút Xác nhận đăng xuất
         dialog.findViewById<MaterialButton>(R.id.btnConfirmLogout).setOnClickListener {
-            // Đăng xuất khỏi Firebase
             auth.signOut()
             Toast.makeText(requireContext(), "Đã đăng xuất", Toast.LENGTH_SHORT).show()
+
             dialog.dismiss()
 
-            // Quay về màn hình đăng nhập
-            requireActivity().finish()
+            // Quay về màn hình đăng nhập (LoginActivity)
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            // Xóa toàn bộ stack để không quay lại được bằng nút Back
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
         }
 
         dialog.show()
+
         dialog.applyFullWidthWithMargin(20)
     }
+
 
     // ==================== CÁC DIALOG KHÁC ====================
     private fun showOCRSettingsDialog() {
