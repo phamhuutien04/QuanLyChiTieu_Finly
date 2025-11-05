@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bgok">
+    android:background="@drawable/wallpaper_background">
 
     <!-- Header -->
     <LinearLayout
@@ -69,6 +69,7 @@
             android:layout_height="wrap_content"
             android:text="@string/email_hint"
             android:textColor="#475569"
+            android:textStyle="bold"
             android:textSize="13sp"
             android:layout_marginBottom="6dp"/>
 
@@ -96,6 +97,7 @@
                 android:layout_weight="1"
                 android:inputType="textEmailAddress"
                 android:hint="@string/email_hint"
+                android:textStyle="bold"
                 android:textColor="#0F172A"
                 android:textColorHint="#94A3B8"
                 android:background="@android:color/transparent"
@@ -126,6 +128,7 @@
                 android:inputType="textPassword"
                 android:hint="@string/password_hint"
                 android:textColor="#0F172A"
+                android:textStyle="bold"
                 android:textColorHint="#94A3B8"
                 android:background="@android:color/transparent"
                 android:paddingStart="10dp"
@@ -147,6 +150,7 @@
                 android:layout_height="wrap_content"
                 android:text="Hiện mật khẩu"
                 android:textColor="#64748B"
+                android:textStyle="bold"
                 app:buttonTint="#2563EB"/>
 
             <TextView
@@ -156,6 +160,7 @@
                 android:text="@string/forgot_password"
                 android:textColor="#2563EB"
                 android:textSize="14sp"
+                android:textStyle="bold"
                 android:layout_weight="1"
                 android:gravity="end"/>
         </LinearLayout>
@@ -186,6 +191,7 @@
                 android:layout_height="wrap_content"
                 android:text="Chưa có tài khoản? "
                 android:textColor="#64748B"
+                android:textStyle="bold"
                 android:textSize="14sp"/>
 
             <TextView

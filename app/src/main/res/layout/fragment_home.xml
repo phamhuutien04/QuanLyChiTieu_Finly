@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:background="@drawable/okla">
+        android:background="@drawable/pro">
 
         <LinearLayout
             android:orientation="vertical"
@@ -50,7 +50,7 @@
                         android:contentDescription="@string/app_name"
                         android:background="#667EEA"
                         android:padding="12dp"
-                        app:tint="#FFFFFF"/>
+                        app:tint="#000000"/>
                 </com.google.android.material.card.MaterialCardView>
 
                 <!-- Tên người dùng -->
@@ -61,7 +61,7 @@
                     android:text="NameUser"
                     android:textSize="22sp"
                     android:textStyle="bold"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#000000"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/cardAvatar"
                     app:layout_constraintTop_toTopOf="@id/cardAvatar"
@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:text="Thứ Năm, 18 tháng 09 2025"
                     android:textSize="12sp"
-                    android:textColor="#E6FFFFFF"
+                    android:textColor="#E6000000"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:paddingTop="6dp"
@@ -127,6 +127,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Số dư hiện tại"
+                                android:textStyle="bold"
                                 android:textColor="#F5F5F5"
                                 android:textSize="14sp"
                                 android:alpha="0.92"
@@ -207,6 +208,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Thu nhập"
+                                        android:textStyle="bold"
                                         android:textSize="12sp"
                                         android:textColor="#E5E7EB"
                                         android:alpha="0.9"
@@ -248,6 +250,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Chi tiêu"
+                                        android:textStyle="bold"
                                         android:textSize="12sp"
                                         android:textColor="#E5E7EB"
                                         android:alpha="0.9"
@@ -308,7 +311,8 @@
                             android:layout_height="wrap_content"
                             android:text="Thu nhập"
                             android:textSize="12sp"
-                            android:textColor="#666666"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
                             android:layout_marginTop="8dp"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -345,7 +349,8 @@
                             android:layout_height="wrap_content"
                             android:text="Chi tiêu"
                             android:textSize="12sp"
-                            android:textColor="#666666"
+                            android:textColor="#000000"
+                            android:textStyle="bold"
                             android:layout_marginTop="8dp"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -381,7 +386,8 @@
                             android:layout_height="wrap_content"
                             android:text="Báo cáo"
                             android:textSize="12sp"
-                            android:textColor="#666666"
+                            android:textColor="#000000"
+                            android:textStyle="bold"
                             android:layout_marginTop="8dp"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -402,7 +408,7 @@
                     android:text="Giao dịch gần đây"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="#FBFBFB"/>
+                    android:textColor="#0D0A0A"/>
 
                 <TextView
                     android:id="@+id/tvTransactionCount"
@@ -410,7 +416,7 @@
                     android:layout_height="wrap_content"
                     android:text="0 giao dịch"
                     android:textSize="13sp"
-                    android:textColor="#FBFBFB"/>
+                    android:textColor="#070505"/>
             </LinearLayout>
 
             <com.google.android.material.card.MaterialCardView
@@ -422,7 +428,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvTransactions"
-                    android:background="#1A1D2E"
+                    android:background="@drawable/trang_den_bg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"

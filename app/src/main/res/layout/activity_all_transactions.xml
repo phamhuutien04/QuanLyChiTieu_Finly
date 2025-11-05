@@ -17,8 +17,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:paddingTop="20dp"
             android:background="@drawable/bg_app_mesh"
-            android:paddingHorizontal="16dp"
+            android:paddingHorizontal="20dp"
             app:contentInsetStartWithNavigation="0dp"
             android:title="Quay lại"
             app:titleCentered="true"
@@ -45,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="48dp"
-        android:background="@drawable/okla"
+        android:background="@drawable/pro"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -161,13 +162,13 @@
                     android:text="Danh sách giao dịch"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#FBFBFB"/>
+                    android:textColor="#121111"/>
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@android:drawable/ic_menu_sort_by_size"
-                    app:tint="#FBFBFB"
+                    app:tint="#000000"
                     android:alpha="0.7"/>
             </LinearLayout>
 
@@ -213,7 +214,7 @@
                     android:id="@+id/rvAllTransactions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#1A1D2E"
+                    android:background="@drawable/trang_den_bgg"
                     android:clipToPadding="false"
                     android:padding="8dp"
                     android:minHeight="300dp"/>

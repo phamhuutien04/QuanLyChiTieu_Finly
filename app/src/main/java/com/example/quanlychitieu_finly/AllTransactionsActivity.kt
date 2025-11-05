@@ -6,7 +6,6 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.text.method.DigitsKeyListener
-import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
@@ -22,7 +21,6 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
@@ -62,7 +60,6 @@ class AllTransactionsActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Quay lại"
 
         rvAllTransactions = findViewById(R.id.rvAllTransactions)
         tvTotalIncome = findViewById(R.id.tvTotalIncome)
@@ -143,7 +140,49 @@ class AllTransactionsActivity : AppCompatActivity() {
             }
     }
 
-    // ========================= EDIT / DELETE SHEET ==============================
+    // ========================= CATEGORY PICKER (BOTTOM SHEET) =================
+    private fun openCategorySheet(
+        currentType: String,
+        onPicked: (CatUI) -> Unit
+    ) {
+        val userId = auth.currentUser?.uid ?: return
+        db.collection("users").document(userId)
+            .collection("categories")
+            .whereEqualTo("type", currentType)
+            .get()
+            .addOnSuccessListener { snap ->
+                val list = snap.documents.mapNotNull { d ->
+                    val id = d.id
+                    val name = d.getString("name") ?: return@mapNotNull null
+                    val icon = d.getString("iconUrl") ?: ""
+                    CatUI(id, name, icon)
+                }.sortedBy { it.name.lowercase(Locale.ROOT) }
+
+                if (list.isEmpty()) {
+                    Toast.makeText(this, "Chưa có danh mục $currentType", Toast.LENGTH_SHORT).show()
+                    return@addOnSuccessListener
+                }
+
+                val dialog = BottomSheetDialog(
+                    this,
+                    com.google.android.material.R.style.ThemeOverlay_Material3_BottomSheetDialog
+                )
+                val v = layoutInflater.inflate(R.layout.bottom_sheet_category_picker, null)
+                dialog.setContentView(v)
+
+                val rv = v.findViewById<RecyclerView>(R.id.rvCategories)
+                rv.layoutManager = LinearLayoutManager(this)
+                rv.adapter = CategoryPickerAdapter(list) {
+                    onPicked(it)
+                    dialog.dismiss()
+                }
+                v.findViewById<MaterialButton>(R.id.btnCancel)
+                    .setOnClickListener { dialog.dismiss() }
+                dialog.show()
+            }
+    }
+
+    // ========================= EDIT / DELETE SHEET ============================
     private fun showEditDeleteSheet(position: Int, item: Transaction) {
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_transaction_actions, null)
@@ -158,38 +197,13 @@ class AllTransactionsActivity : AppCompatActivity() {
         val btnDelete = view.findViewById<MaterialButton>(R.id.btnDelete)
         val btnSave = view.findViewById<MaterialButton>(R.id.btnSave)
 
-        data class CatUI(val id: String, val name: String, val iconUrl: String)
         var chosenCat: CatUI? = null
 
-        fun openCategoryDialog(currentType: String) {
-            val userId = auth.currentUser?.uid ?: return
-            db.collection("users").document(userId)
-                .collection("categories")
-                .whereEqualTo("type", currentType)
-                .get()
-                .addOnSuccessListener { snap ->
-                    val list = snap.documents.mapNotNull { d ->
-                        val id = d.id
-                        val name = d.getString("name") ?: return@mapNotNull null
-                        val icon = d.getString("iconUrl") ?: ""
-                        CatUI(id, name, icon)
-                    }.sortedBy { it.name.lowercase(Locale.ROOT) }
-
-                    if (list.isEmpty()) {
-                        Toast.makeText(this, "Chưa có danh mục $currentType", Toast.LENGTH_SHORT).show()
-                        return@addOnSuccessListener
-                    }
-
-                    val names = list.map { it.name }.toTypedArray()
-                    AlertDialog.Builder(this)
-                        .setTitle("Chọn danh mục")
-                        .setItems(names) { _, which ->
-                            chosenCat = list[which]
-                            edtCategory.setText(chosenCat?.name)
-                        }
-                        .setNegativeButton("Hủy", null)
-                        .show()
-                }
+        fun pickCategory(type: String) {
+            openCategorySheet(type) { picked ->
+                chosenCat = picked
+                edtCategory.setText(picked.name)
+            }
         }
 
         // Prefill
@@ -205,13 +219,13 @@ class AllTransactionsActivity : AppCompatActivity() {
 
         edtCategory.setOnClickListener {
             val typeNow = if (toggle.checkedButtonId == btnIncome.id) "income" else "spending"
-            openCategoryDialog(typeNow)
+            pickCategory(typeNow)
         }
 
         toggle.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 val newType = if (checkedId == btnIncome.id) "income" else "spending"
-                openCategoryDialog(newType)
+                pickCategory(newType)
             }
         }
 
@@ -248,10 +262,8 @@ class AllTransactionsActivity : AppCompatActivity() {
         newTitle: String,
         newAmount: Double,
         newType: String,
-        newCat: Any
+        newCat: CatUI
     ) {
-        data class CatUI(val id: String, val name: String, val iconUrl: String)
-        val cat = newCat as CatUI
         if (position !in docIds.indices) return
         val userId = auth.currentUser?.uid ?: return
         val docRef = db.collection("users").document(userId)
@@ -261,9 +273,9 @@ class AllTransactionsActivity : AppCompatActivity() {
             "title" to newTitle,
             "amount" to newAmount,
             "type" to newType,
-            "categoryId" to cat.id,
-            "categoryName" to cat.name,
-            "categoryIconUrl" to cat.iconUrl,
+            "categoryId" to newCat.id,
+            "categoryName" to newCat.name,
+            "categoryIconUrl" to newCat.iconUrl,
             "date" to (oldItem.date ?: Timestamp.now())
         )
 
@@ -318,8 +330,10 @@ class AllTransactionsActivity : AppCompatActivity() {
                 val parsed = digitsOnly.toDoubleOrNull() ?: return
                 val formatted = vnNumberFormat.format(parsed)
                 if (formatted != raw) {
-                    isFormatting = true; editText.setText(formatted)
-                    editText.setSelection(formatted.length); isFormatting = false
+                    isFormatting = true
+                    editText.setText(formatted)
+                    editText.setSelection(formatted.length)
+                    isFormatting = false
                 }
             }
         })
