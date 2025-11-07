@@ -33,13 +33,13 @@
                 <!-- Icon / Banner -->
                 <ImageView
                     android:id="@+id/imgBanner"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="110dp"
+                    android:layout_height="107dp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="16dp"
                     android:contentDescription="@string/register_button"
-                    android:src="@drawable/adduser"
-                    android:scaleType="centerInside" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/login" />
 
                 <!-- Tiêu đề -->
                 <TextView
@@ -51,7 +51,7 @@
                     android:fontFamily="sans-serif-medium"
                     android:text="@string/register_button"
                     android:textColor="#2C3E50"
-                    android:textSize="24sp"
+                    android:textSize="27sp"
                     android:textStyle="bold" />
 
                 <!-- Username -->
@@ -78,7 +78,7 @@
                         android:padding="14dp"
                         android:textSize="16sp"
                         android:textColor="#2C3E50"
-                        android:textColorHint="#94A3B8" />
+                        android:textColorHint="#000000" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Email -->
@@ -105,7 +105,7 @@
                         android:padding="14dp"
                         android:textSize="16sp"
                         android:textColor="#2C3E50"
-                        android:textColorHint="#94A3B8" />
+                        android:textColorHint="#000000" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Password -->
@@ -136,7 +136,7 @@
                         android:paddingEnd="48dp"
                         android:textSize="16sp"
                         android:textColor="#2C3E50"
-                        android:textColorHint="#94A3B8" />
+                        android:textColorHint="#000000" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Confirm Password -->
@@ -167,7 +167,7 @@
                         android:paddingEnd="48dp"
                         android:textSize="16sp"
                         android:textColor="#2C3E50"
-                        android:textColorHint="#94A3B8" />
+                        android:textColorHint="#000000" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Khối yêu cầu mật khẩu -->
@@ -201,13 +201,13 @@
                 android:id="@+id/txtGoLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/already_have_accountt"
-                android:textColor="#5E35B1"
-                android:textSize="14sp"
-                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:padding="8dp"
-                android:layout_gravity="center_horizontal" />
+                android:text="@string/already_have_accountt"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

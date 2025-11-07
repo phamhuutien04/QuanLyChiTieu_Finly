@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/bg_sheet_surface"
+        android:background="#E0E7FF"
         android:padding="16dp">
 
         <TextView
@@ -22,7 +22,7 @@
             android:text="Chọn danh mục"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:textColor="#FFFFFF"
+            android:textColor="#120D0D"
             android:layout_marginBottom="12dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -36,9 +36,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:textStyle="bold"
             android:layout_marginTop="10dp"
             android:text="Hủy"
-            android:textColor="#A78BFA"
+            android:textColor="#000000"
             app:backgroundTint="@android:color/transparent"/>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

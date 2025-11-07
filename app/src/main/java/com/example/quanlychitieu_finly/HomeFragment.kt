@@ -712,4 +712,3 @@ class HomeFragment : Fragment() {
         return name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
     }
 }
-

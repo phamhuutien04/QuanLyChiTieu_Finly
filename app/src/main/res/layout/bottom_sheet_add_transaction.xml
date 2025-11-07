@@ -31,7 +31,7 @@
                 android:textColor="@color/black"
                 android:layout_marginBottom="16dp"/>
 
-            <!-- Tiêu đề giao dịch -->
+            <!-- Tiêu đề giao dịch - ĐÃ SỬA -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilTitle"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -47,7 +47,8 @@
                 app:boxCornerRadiusTopStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusBottomEnd="12dp">
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtTitle"
@@ -55,10 +56,14 @@
                     android:layout_height="wrap_content"
                     android:minHeight="56dp"
                     android:textSize="15sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:inputType="textCapSentences|textAutoCorrect"
+                    android:imeOptions="actionDone"
+                    android:importantForAutofill="no"/>
+
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Danh mục -->
+            <!-- Danh mục - ĐÃ SỬA -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilCategory"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -88,10 +93,12 @@
                     android:focusable="false"
                     android:clickable="true"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/black"/>
+                    android:textColorHint="@color/black"
+                    android:importantForAutofill="no"/>
+
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Số tiền -->
+            <!-- Số tiền - ĐÃ SỬA -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilAmount"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -107,7 +114,8 @@
                 app:boxCornerRadiusTopStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusBottomEnd="12dp">
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtAmount"
@@ -118,7 +126,10 @@
                     android:digits="0123456789.,"
                     android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/black"/>
+                    android:textColorHint="@color/black"
+                    android:imeOptions="actionDone"
+                    android:importantForAutofill="no"/>
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Hành động -->
@@ -146,6 +157,7 @@
                     android:textColor="@color/text_white"
                     android:minWidth="88dp"
                     app:backgroundTint="@color/teal_500"/>
+
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

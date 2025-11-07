@@ -49,7 +49,6 @@ class RegisterActivity : AppCompatActivity() {
         val tilEmail = findViewById<TextInputLayout>(R.id.tilEmail)
         val edtUsername = findViewById<TextInputEditText>(R.id.edtUsername)
         val edtEmail = findViewById<TextInputEditText>(R.id.edtEmail)
-
         tilPassword = findViewById(R.id.tilPassword)
         edtPassword = findViewById(R.id.edtPassword)
         tilConfirmPassword = findViewById(R.id.tilConfirmPassword)
@@ -57,7 +56,6 @@ class RegisterActivity : AppCompatActivity() {
 
         val btnRegister = findViewById<Button>(R.id.btnRegister)
         val txtGoLogin = findViewById<TextView>(R.id.txtGoLogin)
-
         // Lắng nghe để hiện/ẩn badge + error realtime
         edtPassword.addTextChangedListener(SimpleTextWatcher {
             val pw = it?.toString() ?: ""
@@ -247,6 +245,7 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
     }
+
 }
 
 class SimpleTextWatcher(private val onChanged: (s: CharSequence?) -> Unit) : TextWatcher {

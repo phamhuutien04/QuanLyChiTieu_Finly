@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wallpaper_background">
+    android:background="@drawable/adidaphat">
 
     <!-- Header -->
     <LinearLayout
@@ -63,15 +63,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Email -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/email_hint"
-            android:textColor="#475569"
-            android:textStyle="bold"
-            android:textSize="13sp"
-            android:layout_marginBottom="6dp"/>
+<!--        &lt;!&ndash; Email &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/email_hint"-->
+<!--            android:textColor="#475569"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textSize="13sp"-->
+<!--            android:layout_marginBottom="6dp"/>-->
 
         <!-- ...các phần khác giữ nguyên... -->
 

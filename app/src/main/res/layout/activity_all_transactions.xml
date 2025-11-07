@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:paddingTop="20dp"
-            android:background="@drawable/bg_app_mesh"
+            android:background="#1A1D2E"
             android:paddingHorizontal="20dp"
             app:contentInsetStartWithNavigation="0dp"
             android:title="Quay lại"
@@ -37,7 +37,7 @@
         android:paddingVertical="12dp"
         android:text="💡 Mẹo: Ấn vào giao dịch để chỉnh sửa"
         android:textColor="#FFA500"
-        android:textSize="13sp"
+        android:textSize="14dp"
         android:gravity="center"
         android:background="#1A1D2E"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
@@ -214,7 +214,7 @@
                     android:id="@+id/rvAllTransactions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/trang_den_bgg"
+                    android:background="@drawable/trang_den_bg"
                     android:clipToPadding="false"
                     android:padding="8dp"
                     android:minHeight="300dp"/>
