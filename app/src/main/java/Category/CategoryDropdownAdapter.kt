@@ -1,4 +1,4 @@
-package com.example.quanlychitieu_finly
+package Category
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.example.quanlychitieu_finly.R
 
 class CategoryDropdownAdapter(
     context: Context,
