@@ -79,9 +79,6 @@ class SettingsFragment : Fragment() {
         view.findViewById<LinearLayout>(R.id.btnChangePassword).setOnClickListener {
             showChangePasswordDialog()
         }
-        view.findViewById<LinearLayout>(R.id.tvCurrentTheme).setOnClickListener {
-            showChangePasswordDialog()
-        }
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
 
