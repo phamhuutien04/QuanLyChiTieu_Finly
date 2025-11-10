@@ -29,6 +29,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
+import android.widget.LinearLayout
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatDelegate
+
+
 
 class SettingsFragment : Fragment() {
 
@@ -61,6 +66,7 @@ class SettingsFragment : Fragment() {
         tvUserEmail = view.findViewById(R.id.tvUserEmail)
         imgAvatar = view.findViewById(R.id.imgAvatar)
 
+
         // Tải thông tin người dùng
         loadUserInfo()
 
@@ -70,9 +76,91 @@ class SettingsFragment : Fragment() {
 
         // Nút đăng xuất
         view.findViewById<CardView>(R.id.btnLogout).setOnClickListener { showLogoutDialog() }
+        view.findViewById<LinearLayout>(R.id.btnChangePassword).setOnClickListener {
+            showChangePasswordDialog()
+        }
+        view.findViewById<LinearLayout>(R.id.tvCurrentTheme).setOnClickListener {
+            showChangePasswordDialog()
+        }
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+
+
 
         return view
     }
+
+    private fun showChangePasswordDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_change_password)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val edtOldPass = dialog.findViewById<EditText>(R.id.etOldPassword)
+        val edtNewPass = dialog.findViewById<EditText>(R.id.etNewPassword)
+        val edtConfirmPass = dialog.findViewById<EditText>(R.id.etConfirmPassword)
+        val btnCancel = dialog.findViewById<CardView>(R.id.btnCancelPassword)
+        val btnConfirm = dialog.findViewById<CardView>(R.id.btnSavePassword)
+
+        btnCancel.setOnClickListener { dialog.dismiss() }
+
+        btnConfirm.setOnClickListener {
+            val oldPass = edtOldPass.text.toString().trim()
+            val newPass = edtNewPass.text.toString().trim()
+            val confirmPass = edtConfirmPass.text.toString().trim()
+
+            if (oldPass.isEmpty() || newPass.isEmpty() || confirmPass.isEmpty()) {
+                Toast.makeText(requireContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (newPass != confirmPass) {
+                Toast.makeText(requireContext(), "Mật khẩu xác nhận không khớp", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (newPass.length < 8) {
+                Toast.makeText(requireContext(), "Mật khẩu phải có ít nhất 8 ký tự", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            changeUserPassword(oldPass, newPass, dialog)
+        }
+
+
+        dialog.show()
+        val metrics = resources.displayMetrics
+        val width = metrics.widthPixels - (40 * metrics.density).toInt()
+        dialog.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
+    }
+    private fun changeUserPassword(oldPassword: String, newPassword: String, dialog: Dialog) {
+        val user = auth.currentUser
+        val email = user?.email
+
+        if (user == null || email.isNullOrEmpty()) {
+            Toast.makeText(requireContext(), "Người dùng chưa đăng nhập", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val credential = com.google.firebase.auth.EmailAuthProvider.getCredential(email, oldPassword)
+
+        // Xác thực lại trước khi đổi mật khẩu
+        user.reauthenticate(credential)
+            .addOnSuccessListener {
+                user.updatePassword(newPassword)
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Đổi mật khẩu thành công!", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(requireContext(), "Lỗi khi đổi mật khẩu: ${it.message}", Toast.LENGTH_LONG).show()
+                    }
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Mật khẩu hiện tại không đúng", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
 
     /** Mở thư viện chọn ảnh */
     private fun openImagePicker() {
