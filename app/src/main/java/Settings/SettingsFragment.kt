@@ -46,6 +46,7 @@ class SettingsFragment : Fragment() {
     private lateinit var tvUserName: TextView
     private lateinit var tvUserEmail: TextView
     private lateinit var imgAvatar: ImageView
+
     private val imagePickRequest = 1001
 
     override fun onCreateView(
@@ -80,8 +81,6 @@ class SettingsFragment : Fragment() {
             showChangePasswordDialog()
         }
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-
-
 
         return view
     }
