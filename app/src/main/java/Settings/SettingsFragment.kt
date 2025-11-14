@@ -1,10 +1,13 @@
 package Settings
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -31,7 +34,16 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 import android.widget.LinearLayout
 import android.widget.EditText
+import android.widget.RadioButton
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
+import java.io.OutputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import jxl.Workbook
+import jxl.write.Label
+import jxl.write.WritableWorkbook
 
 
 
@@ -46,6 +58,7 @@ class SettingsFragment : Fragment() {
     private lateinit var tvUserName: TextView
     private lateinit var tvUserEmail: TextView
     private lateinit var imgAvatar: ImageView
+    private var selectedType: String = "Speeding"
 
     private val imagePickRequest = 1001
 
@@ -80,10 +93,126 @@ class SettingsFragment : Fragment() {
         view.findViewById<LinearLayout>(R.id.btnChangePassword).setOnClickListener {
             showChangePasswordDialog()
         }
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        view.findViewById<LinearLayout>(R.id.btnExportExcel).setOnClickListener {
+            showDialogExportExcel()
+        }
 
         return view
     }
+    fun showDialogExportExcel() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_export_excel, null)
+
+        val rbExpense = dialogView.findViewById<RadioButton>(R.id.rbExpense)
+        val rbIncome = dialogView.findViewById<RadioButton>(R.id.rbIncome)
+        val btnCancel = dialogView.findViewById<TextView>(R.id.btnCancel)
+        val btnApply = dialogView.findViewById<TextView>(R.id.btnApply)
+        val cardExpense = dialogView.findViewById<CardView>(R.id.cardExpense)
+        val cardIncome = dialogView.findViewById<CardView>(R.id.cardIncome)
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .setCancelable(true)
+            .create()
+
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // --- CLICK CARDVIEW ---
+        cardExpense.setOnClickListener {
+            rbExpense.isChecked = true
+            rbIncome.isChecked = false
+        }
+
+        cardIncome.setOnClickListener {
+            rbIncome.isChecked = true
+            rbExpense.isChecked = false
+        }
+
+        // --- CLICK RADIOBUTTON ---
+        rbExpense.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) rbIncome.isChecked = false
+        }
+
+        rbIncome.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) rbExpense.isChecked = false
+        }
+
+        btnCancel.setOnClickListener { dialog.dismiss() }
+
+        btnApply.setOnClickListener {
+            selectedType = if (rbExpense.isChecked) "spending" else "income"
+
+            val fileName = if (selectedType == "spending") {
+                "GiaoDich_ChiTieu.xls"
+            } else {
+                "GiaoDich_ThuNhap.xls"
+            }
+
+            createFileLauncher.launch(fileName)
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    private val createFileLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.CreateDocument("application/vnd.ms-excel")
+        ) { uri ->
+            uri?.let { saveExcel(it) }
+        }
+    private fun saveExcel(uri: Uri) {
+        val user = auth.currentUser ?: return
+        val userId = user.uid
+
+        db.collection("users").document(userId)
+            .collection("transactions")
+            .whereEqualTo("type", selectedType)   // 🔥 LỌC CHI TIÊU / THU NHẬP
+            .get()
+            .addOnSuccessListener { snapshot ->
+
+                try {
+                    val outputStream: OutputStream? =
+                        requireContext().contentResolver.openOutputStream(uri)
+
+                    val workbook: WritableWorkbook = Workbook.createWorkbook(outputStream)
+                    val sheet = workbook.createSheet("Transactions", 0)
+
+                    val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+
+                    // Header
+                    sheet.addCell(Label(0, 0, "Thời gian"))
+                    sheet.addCell(Label(1, 0, "Loại"))
+                    sheet.addCell(Label(2, 0, "Số tiền"))
+                    sheet.addCell(Label(3, 0, "Tiêu đề"))
+                    sheet.addCell(Label(4, 0, "Danh mục"))
+
+                    var row = 1
+
+                    for (doc in snapshot) {
+                        sheet.addCell(Label(0, row, sdf.format(doc.getDate("date") ?: Date())))
+                        sheet.addCell(Label(1, row, doc.getString("type") ?: ""))
+                        sheet.addCell(Label(2, row, (doc.getDouble("amount") ?: 0.0).toString()))
+                        sheet.addCell(Label(3, row, doc.getString("title") ?: ""))
+                        sheet.addCell(Label(4, row, doc.getString("categoryName") ?: ""))
+                        row++
+                    }
+
+                    workbook.write()
+                    workbook.close()
+                    outputStream?.close()
+
+                    Toast.makeText(requireContext(), "Xuất giao dịch thành công", Toast.LENGTH_SHORT).show()
+
+                } catch (e: Exception) {
+                    Toast.makeText(requireContext(), "Lỗi tạo Excel: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Lỗi tải dữ liệu Firestore!", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
 
     private fun showChangePasswordDialog() {
         val dialog = Dialog(requireContext())

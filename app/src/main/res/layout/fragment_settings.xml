@@ -202,7 +202,7 @@
 
                 <!-- Social Login -->
                 <LinearLayout
-                    android:id="@+id/btnSocialLogin"
+                    android:id="@+id/btnExportExcel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -235,7 +235,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Đăng nhập mạng xã hội"
+                            android:text="Xuất giao dịch"
                             android:textSize="15sp"
                             android:textColor="#1F2937"
                             android:fontFamily="sans-serif-medium"/>
@@ -243,7 +243,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Google, Facebook đã liên kết"
+                            android:text="Khoàng thu chi của bạn"
                             android:textSize="12sp"
                             android:textColor="#9CA3AF"
                             android:layout_marginTop="2dp"/>
