@@ -80,7 +80,6 @@
                     android:layout_width="60dp"
                     android:layout_height="3dp"
                     android:layout_marginTop="4dp"/>
-<!--                    android:background="@drawable/bg_tab_indicator"-->
             </LinearLayout>
 
             <LinearLayout
@@ -107,7 +106,6 @@
                     android:layout_height="3dp"
                     android:layout_marginTop="4dp"
                     android:visibility="invisible"/>
-<!--                    android:background="@drawable/bg_tab_indicator"-->
 
             </LinearLayout>
         </LinearLayout>
@@ -172,52 +170,52 @@
                         android:text="28.351.000 đ"
                         android:textSize="22sp"
                         android:textStyle="bold"
-                        android:textColor="@color/red_10B981"
+                        android:textColor="@color/green"
                         android:fontFamily="sans-serif"
                         android:layout_marginTop="2dp"/>
                 </LinearLayout>
 
                 <!-- Period Selector -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="32dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/bg_period_selector"
-                    android:padding="3dp">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="32dp"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:background="@drawable/bg_period_selector"-->
+<!--                    android:padding="3dp">-->
 
-                    <TextView
-                        android:id="@+id/btnPeriodDay"
-                        android:layout_width="48dp"
-                        android:layout_height="match_parent"
-                        android:text="Ngày"
-                        android:textSize="11sp"
-                        android:textColor="#6B7280"
-                        android:gravity="center"
-                        android:background="?attr/selectableItemBackground"
-                        android:fontFamily="sans-serif-medium"/>
+<!--                    <TextView-->
+<!--                        android:id="@+id/btnPeriodDay"-->
+<!--                        android:layout_width="48dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:text="Ngày"-->
+<!--                        android:textSize="11sp"-->
+<!--                        android:textColor="#6B7280"-->
+<!--                        android:gravity="center"-->
+<!--                        android:background="?attr/selectableItemBackground"-->
+<!--                        android:fontFamily="sans-serif-medium"/>-->
 
-                    <TextView
-                        android:id="@+id/btnPeriodMonth"
-                        android:layout_width="48dp"
-                        android:layout_height="match_parent"
-                        android:text="Tháng"
-                        android:textSize="11sp"
-                        android:textColor="#3B82F6"
-                        android:background="@drawable/bg_period_selected"
-                        android:gravity="center"
-                        android:fontFamily="sans-serif-medium"/>
+<!--                    <TextView-->
+<!--                        android:id="@+id/btnPeriodMonth"-->
+<!--                        android:layout_width="48dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:text="Tháng"-->
+<!--                        android:textSize="11sp"-->
+<!--                        android:textColor="#3B82F6"-->
+<!--                        android:background="@drawable/bg_period_selected"-->
+<!--                        android:gravity="center"-->
+<!--                        android:fontFamily="sans-serif-medium"/>-->
 
-                    <TextView
-                        android:id="@+id/btnPeriodYear"
-                        android:layout_width="48dp"
-                        android:layout_height="match_parent"
-                        android:text="Năm"
-                        android:textSize="11sp"
-                        android:textColor="#6B7280"
-                        android:gravity="center"
-                        android:background="?attr/selectableItemBackground"
-                        android:fontFamily="sans-serif-medium"/>
-                </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:id="@+id/btnPeriodYear"-->
+<!--                        android:layout_width="48dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:text="Năm"-->
+<!--                        android:textSize="11sp"-->
+<!--                        android:textColor="#6B7280"-->
+<!--                        android:gravity="center"-->
+<!--                        android:background="?attr/selectableItemBackground"-->
+<!--                        android:fontFamily="sans-serif-medium"/>-->
+<!--                </LinearLayout>-->
             </LinearLayout>
 
             <!-- Divider -->
@@ -355,7 +353,6 @@
                 android:layout_height="16dp"
                 app:tint="#6B7280"
                 android:layout_marginEnd="4dp"/>
-<!--            android:src="@drawable/ic_sort"-->
 
             <TextView
                 android:id="@+id/tvSortBy"
@@ -378,68 +375,6 @@
         android:paddingBottom="8dp"
         android:clipToPadding="false"
         android:overScrollMode="never"/>
-
-    <!-- Empty State -->
-    <LinearLayout
-        android:id="@+id/layoutEmptyState"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="32dp"
-        android:visibility="gone">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            app:cardCornerRadius="40dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="#F3F4F6">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                app:tint="#9CA3AF"/>
-<!--            android:src="@drawable/ic_empty_category"-->
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chưa có giao dịch"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#1F2937"
-            android:layout_marginTop="16dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bắt đầu thêm chi tiêu của bạn"
-            android:textSize="14sp"
-            android:textColor="#6B7280"
-            android:textAlignment="center"
-            android:layout_marginTop="8dp"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnAddFirst"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Thêm giao dịch"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
-            android:fontFamily="sans-serif-medium"
-            android:paddingHorizontal="24dp"
-            android:paddingVertical="12dp"
-            android:layout_marginTop="16dp"
-            app:cornerRadius="12dp"
-            app:icon="@drawable/ic_add"
-            app:iconTint="#FFFFFF"
-            app:backgroundTint="#3B82F6"
-            app:elevation="0dp"/>
-    </LinearLayout>
 
     <!-- FAB for Quick Add -->
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

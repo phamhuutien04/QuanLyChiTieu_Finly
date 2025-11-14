@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:paddingStart="0dp"
+    android:paddingEnd="16dp">
+
+    <!-- Đường dọc bên trái -->
+    <View
+        android:id="@+id/leftRail"
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start|center_vertical"
+        android:background="#E0E0E0" />
+
+    <!-- Huy hiệu tròn chồng lên đường dọc -->
+    <FrameLayout
+        android:id="@+id/flIcon"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/bg_icon_circle"
+        android:elevation="1dp">
+
+        <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:contentDescription="@string/app_name"
+            android:src="@android:drawable/ic_menu_gallery" />
+    </FrameLayout>
+
+    <!-- Tên danh mục -->
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="76dp"
+        android:text="Hoá đơn &amp; Tiện ích"
+        android:textColor="#212121"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.01"
+        android:maxLines="1"
+        android:ellipsize="end" />
+
+    <!-- Gạch phân cách giống ảnh (không chạy dưới icon) -->
+    <View
+        android:id="@+id/bottomDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="76dp"
+        android:background="#EEEEEE" />
+
+</FrameLayout>

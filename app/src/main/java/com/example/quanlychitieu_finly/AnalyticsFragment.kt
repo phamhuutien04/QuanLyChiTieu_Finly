@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.XAxis
@@ -56,7 +57,8 @@ class AnalyticsFragment : Fragment() {
     private lateinit var btnViewAll: TextView
 
     // Data
-    private val numberFormat = NumberFormat.getInstance(Locale("vi", "VN"))
+    private val numberFormat: NumberFormat
+        get() = NumberFormat.getInstance(Locale("vi", "VN"))
     private var currentPeriod = Period.DAY
     private var currentGoalProgress = 68f
 
@@ -291,7 +293,7 @@ class AnalyticsFragment : Fragment() {
             isRotationEnabled = true
             isHighlightPerTapEnabled = true
 
-            animateY(1200, com.github.mikephil.charting.animation.Easing.EaseInOutQuad)
+            animateY(1200, Easing.EaseInOutQuad)
 
             invalidate()
         }

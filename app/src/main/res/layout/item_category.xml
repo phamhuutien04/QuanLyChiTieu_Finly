@@ -5,35 +5,34 @@
     android:gravity="center"
     android:background="@drawable/bg_item"
     android:layout_width="match_parent"
-    android:layout_marginTop="10dp"
-    android:layout_marginStart ="10dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
 
     <!-- Icon -->
     <ImageView
-        android:id="@+id/imgIcon"
+        android:id="@+id/ivCategoryIcon"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:src="@drawable/ic_settings"
-        android:contentDescription="@string/app_name"/>
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_launcher_background"/>
 
     <!-- Tên danh mục -->
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvCategoryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ăn uống"
-        android:textColor="#000"
+        android:textColor="@color/green"
         android:textStyle="bold"
         android:textSize="14sp"
         android:layout_marginTop="8dp"/>
 
-    <!-- Số tiền đã chi -->
+    <!-- Số tiền -->
     <TextView
         android:id="@+id/tvAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Đã chi: 50.000 ₫"
+        android:text="2,000,000đ"
         android:textSize="12sp"
         android:textColor="#F44336"
         android:layout_marginTop="4dp"/>

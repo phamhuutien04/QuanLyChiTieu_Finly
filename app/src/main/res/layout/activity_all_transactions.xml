@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:paddingTop="20dp"
+            android:background="#1A1D2E"
+            android:paddingHorizontal="20dp"
+            app:contentInsetStartWithNavigation="0dp"
+            android:title="Quay lại"
+            app:titleCentered="true"
+            app:titleTextColor="#FFFFFF"
+            app:navigationIconTint="#FFFFFF"
+            app:navigationIcon="@android:drawable/ic_menu_revert" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- 💡 Mẹo - Đặt cố định giữa AppBar và NestedScrollView -->
+    <TextView
+        android:id="@+id/tvHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:text="💡 Mẹo: Ấn vào giao dịch để chỉnh sửa"
+        android:textColor="#FFA500"
+        android:textSize="14dp"
+        android:gravity="center"
+        android:background="#1A1D2E"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/pro"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Thông tin tổng quan -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_bank_card_dark"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📊 Tổng quan giao dịch"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginBottom="16dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <!-- Tổng thu nhập -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:background="#1E2A35"
+                            android:padding="12dp"
+                            android:layout_marginEnd="8dp"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Tổng thu"
+                                android:textSize="12sp"
+                                android:textColor="#9CA3AF"
+                                android:layout_marginBottom="4dp"/>
+
+                            <TextView
+                                android:id="@+id/tvTotalIncome"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0 đ"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="#22C55E"/>
+                        </LinearLayout>
+
+                        <!-- Tổng chi tiêu -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:background="#1E2A35"
+                            android:padding="12dp"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Tổng chi"
+                                android:textSize="12sp"
+                                android:textColor="#9CA3AF"
+                                android:layout_marginBottom="4dp"/>
+
+                            <TextView
+                                android:id="@+id/tvTotalExpense"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0 đ"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="#EF4444"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Header danh sách -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Danh sách giao dịch"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#121111"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@android:drawable/ic_menu_sort_by_size"
+                    app:tint="#000000"
+                    android:alpha="0.7"/>
+            </LinearLayout>
+
+            <!-- Toggle Filter -->
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/tgTypeFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:singleSelection="true"
+                app:selectionRequired="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFilterIncome"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:text="Thu nhập"
+                    android:textColor="@color/toggle_gray_text"
+                    app:backgroundTint="@color/toggle_gray_bg" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFilterExpense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:text="Chi tiêu"
+                    android:textColor="@color/toggle_gray_text"
+                    app:backgroundTint="@color/toggle_gray_bg" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <!-- RecyclerView chứa tất cả giao dịch -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                android:layout_marginBottom="16dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvAllTransactions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/trang_den_bg"
+                    android:clipToPadding="false"
+                    android:padding="8dp"
+                    android:minHeight="300dp"/>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
