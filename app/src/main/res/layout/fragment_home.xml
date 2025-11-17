@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:background="@drawable/pro">
+        android:background="#F0F0F0">
 
         <LinearLayout
             android:orientation="vertical"
@@ -207,12 +207,12 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Thu nhập"
-                                        android:textStyle="bold"
-                                        android:textSize="12sp"
-                                        android:textColor="#E5E7EB"
+                                        android:layout_marginStart="6dp"
                                         android:alpha="0.9"
-                                        android:layout_marginStart="6dp"/>
+                                        android:text="Thu nhập"
+                                        android:textColor="#4ADE80"
+                                        android:textSize="15sp"
+                                        android:textStyle="bold" />
                                 </LinearLayout>
 
                                 <TextView
@@ -222,7 +222,7 @@
                                     android:text="0 đ"
                                     android:textSize="18sp"
                                     android:textStyle="bold"
-                                    android:textColor="#FFFFFF"
+                                    android:textColor="#4ADE80"
                                     android:layout_marginTop="4dp"/>
                             </LinearLayout>
 
@@ -244,15 +244,15 @@
                                         android:layout_width="14dp"
                                         android:layout_height="14dp"
                                         android:src="@android:drawable/arrow_up_float"
-                                        app:tint="#EF4444"/>
+                                        app:tint="#F43F5E"/>
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Chi tiêu"
                                         android:textStyle="bold"
-                                        android:textSize="12sp"
-                                        android:textColor="#E5E7EB"
+                                        android:textSize="15sp"
+                                        android:textColor="#F43F5E"
                                         android:alpha="0.9"
                                         android:layout_marginStart="6dp"/>
                                 </LinearLayout>
@@ -264,7 +264,7 @@
                                     android:text="0 đ"
                                     android:textSize="18sp"
                                     android:textStyle="bold"
-                                    android:textColor="#FFFFFF"
+                                    android:textColor="#F43F5E"
                                     android:layout_marginTop="4dp"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -303,7 +303,7 @@
                         <ImageView
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:src="@android:drawable/arrow_down_float"
+                            android:src="@drawable/spending"
                             app:tint="#4CAF50" />
 
                         <TextView
@@ -341,7 +341,7 @@
                         <ImageView
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:src="@android:drawable/arrow_up_float"
+                            android:src="@drawable/income"
                             app:tint="#FF5252" />
 
                         <TextView
@@ -378,7 +378,7 @@
                         <ImageView
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:src="@android:drawable/ic_menu_report_image"
+                            android:src="@drawable/statistics"
                             app:tint="#2196F3" />
 
                         <TextView
@@ -428,12 +428,12 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvTransactions"
-                    android:background="@drawable/trang_den_bg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#F0F0F0"
                     android:clipToPadding="false"
-                    android:padding="4dp"
-                    android:minHeight="200dp"/>
+                    android:minHeight="200dp"
+                    android:padding="4dp" />
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Button Xem tất cả -->

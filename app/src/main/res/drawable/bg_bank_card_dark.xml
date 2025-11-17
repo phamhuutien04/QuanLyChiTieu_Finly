@@ -1,28 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Gradient fintech xanh tím -->
-    <gradient
-        android:startColor="#1E2A78"
-        android:centerColor="#3B4CCA"
-        android:endColor="#512DA8"
-        android:angle="45" />
+    <!-- Lớp nền gradient xanh dương chính -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#0F4CB1"
+                android:centerColor="#2563EB"
+                android:endColor="#1D4ED8"
+                android:angle="135"
+                android:type="linear" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
 
-    <!-- Bo góc -->
-    <corners
-        android:radius="16dp" />
+    <!-- Bong bóng lớn 1 -->
+    <item android:top="15dp" android:left="25dp" android:width="60dp" android:height="60dp">
+        <shape android:shape="oval">
+            <gradient
+                android:startColor="#66FFFFFF"
+                android:centerColor="#4093C8FF"
+                android:endColor="#1A60A5FF"
+                android:type="radial"
+                android:gradientRadius="30dp"
+                android:centerX="0.3"
+                android:centerY="0.3" />
+        </shape>
+    </item>
 
-    <!-- Viền mảnh cho cảm giác nổi -->
-    <stroke
-        android:width="1dp"
-        android:color="#4E5AFF" />
+    <!-- Bong bóng vừa 1 -->
+    <item android:top="20dp" android:right="35dp" android:width="40dp" android:height="40dp">
+        <shape android:shape="oval">
+            <gradient
+                android:startColor="#80FFFFFF"
+                android:centerColor="#4D97D4FF"
+                android:endColor="#266AADFF"
+                android:type="radial"
+                android:gradientRadius="20dp"
+                android:centerX="0.35"
+                android:centerY="0.35" />
+        </shape>
+    </item>
 
-    <!-- Shadow nhẹ (để app có chiều sâu) -->
-    <padding
-        android:left="2dp"
-        android:top="2dp"
-        android:right="2dp"
-        android:bottom="2dp" />
+    <!-- Bong bóng nhỏ 1 -->
+    <item android:top="35dp" android:left="140dp" android:width="28dp" android:height="28dp">
+        <shape android:shape="oval">
+            <gradient
+                android:startColor="#99FFFFFF"
+                android:centerColor="#5C9DD8FF"
+                android:endColor="#3370B5FF"
+                android:type="radial"
+                android:gradientRadius="14dp"
+                android:centerX="0.3"
+                android:centerY="0.3" />
+        </shape>
+    </item>
 
-</shape>
+    <!-- Bong bóng lớn 2 -->
+    <item android:top="80dp" android:left="35dp" android:width="50dp" android:height="50dp">
+        <shape android:shape="oval">
+            <gradient
+                android:startColor="#73FFFFFF"
+                android:centerColor="#4D99D3FF"
+                android:endColor="#266CAEFF"
+                android:type="radial"
+                android:gradientRadius="25dp"
+                android:centerX="0.32"
+                android:centerY="0.32" />
+        </shape>
+    </item>
+
+    <!-- Bong bóng vừa 2 -->
+    <item android:top="95dp" android:right="45dp" android:width="45dp" android:height="45dp">
+        <shape android:shape="oval">
+            <gradient
+                android:startColor="#8CFFFFFF"
+                android:centerColor="#599FDBFF"
+                android:endColor="#3375B9FF"
+                android:type="radial"
+                android:gradientRadius="22.5dp"
+                android:centerX="0.33"
+                android:centerY="0.33" />
+        </shape>
+    </item>
+
+    <!-- Bong bóng nhỏ 2 -->
+    <item android:top="115dp" android:left="65dp" android:width="32dp" android:height="32dp">
+        <shape android:shape="oval">
+            <gradient
+                android:startColor="#A6FFFFFF"
+                android:centerColor="#66A5DEFF"
+                android:endColor="#407BBFFF"
+                android:type="radial"
+                android:gradientRadius="16dp"
+                android:centerX="0.3"
+                android:centerY="0.3" />
+        </shape>
+    </item>
+
+    <!-- Bong bóng vừa 3 -->
+    <item android:top="125dp" android:left="150dp" android:width="38dp" android:height="38dp">
+        <shape android:shape="oval">
+            <gradient
+                android:startColor="#B3FFFFFF"
+                android:centerColor="#73AAE1FF"
+                android:endColor="#4D81C3FF"
+                android:type="radial"
+                android:gradientRadius="19dp"
+                android:centerX="0.3"
+                android:centerY="0.3" />
+        </shape>
+    </item>
+
+    <!-- Bong bóng nhỏ 3 -->
+    <item android:top="135dp" android:right="55dp" android:width="25dp" android:height="25dp">
+        <shape android:shape="oval">
+            <gradient
+                android:startColor="#CCFFFFFF"
+                android:centerColor="#80B0E5FF"
+                android:endColor="#5988C8FF"
+                android:type="radial"
+                android:gradientRadius="12.5dp"
+                android:centerX="0.3"
+                android:centerY="0.3" />
+        </shape>
+    </item>
+
+    <!-- Bong bóng nhỏ 4 -->
+    <item android:top="145dp" android:right="25dp" android:width="22dp" android:height="22dp">
+        <shape android:shape="oval">
+            <gradient
+                android:startColor="#D9FFFFFF"
+                android:centerColor="#8CB5E8FF"
+                android:endColor="#668ECBFF"
+                android:type="radial"
+                android:gradientRadius="11dp"
+                android:centerX="0.3"
+                android:centerY="0.3" />
+        </shape>
+    </item>
+
+    <!-- Lớp ánh sáng overlay -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#4DFFFFFF"
+                android:centerColor="#26FFFFFF"
+                android:endColor="#00FFFFFF"
+                android:angle="135"
+                android:type="linear" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+
+    <!-- Viền -->
+    <item>
+        <shape android:shape="rectangle">
+            <stroke android:width="1.5dp" android:color="#0273FF" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+
+</layer-list>
