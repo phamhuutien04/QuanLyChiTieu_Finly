@@ -1,4 +1,4 @@
-package com.example.quanlychitieu_finly
+package Category
 
 data class Category(
     var id: String = "",

@@ -540,13 +540,18 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tvGoalManagementTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Quản lý mục tiêu"
                             android:textSize="18sp"
                             android:textColor="#1F2937"
                             android:textStyle="bold"
-                            android:fontFamily="sans-serif"/>
+                            android:fontFamily="sans-serif"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?attr/selectableItemBackground"
+                            android:padding="8dp"/>
 
                         <TextView
                             android:layout_width="wrap_content"

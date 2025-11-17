@@ -53,4 +53,5 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.cloudinary:cloudinary-android:2.4.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("net.sourceforge.jexcelapi:jxl:2.6.12")
 }

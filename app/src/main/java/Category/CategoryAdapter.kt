@@ -1,4 +1,4 @@
-package com.example.quanlychitieu_finly
+package Category
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.quanlychitieu_finly.R
 
 class CategoryAdapter(
     private var list: List<Category>,
