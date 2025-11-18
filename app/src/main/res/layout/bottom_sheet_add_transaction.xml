@@ -156,7 +156,7 @@
                     android:text="Lưu"
                     android:textColor="@color/text_white"
                     android:minWidth="88dp"
-                    app:backgroundTint="@color/teal_500"/>
+                    app:backgroundTint="@color/accent"/>
 
             </LinearLayout>
         </LinearLayout>
