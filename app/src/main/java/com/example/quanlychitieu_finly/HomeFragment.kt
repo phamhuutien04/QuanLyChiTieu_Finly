@@ -479,6 +479,11 @@ class HomeFragment : Fragment() {
         val btnAddExpense: MaterialCardView = view.findViewById(R.id.add_expense_layout)
         btnAddIncome.setOnClickListener { openAddTransactionFlow("income") }
         btnAddExpense.setOnClickListener { openAddTransactionFlow("spending") }
+        val btnReports: MaterialCardView = view.findViewById(R.id.btnReports)
+        btnReports.setOnClickListener {
+            (activity as? MainActivity)?.switchToAnalyticsTab()
+        }
+
 
         tvIncome = view.findViewById(R.id.tvIncome)
         tvExpense = view.findViewById(R.id.tvExpense)
