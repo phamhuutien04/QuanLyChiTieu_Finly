@@ -29,6 +29,8 @@ class ChatActivity : AppCompatActivity() {
     private var friendUid = ""
     private var currentUid = ""
 
+    private var friendAvatar = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
@@ -43,24 +45,31 @@ class ChatActivity : AppCompatActivity() {
         btnBack = findViewById(R.id.btnBack)
         tvChatName = findViewById(R.id.tvChatName)
 
-        loadFriendName()
-
-        adapter = ChatAdapter(currentUid)
-        recyclerChat.layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
-        recyclerChat.adapter = adapter
-
+        loadFriendInfo()
+        setupRecyclerView()
         listenMessages()
 
         btnSend.setOnClickListener { sendMessage() }
         btnBack.setOnClickListener { finish() }
     }
 
-    private fun loadFriendName() {
+    private fun loadFriendInfo() {
         db.collection("users").document(friendUid)
             .get()
             .addOnSuccessListener { doc ->
-                tvChatName.text = doc.getString("username") ?: doc.getString("email") ?: "Đang chat"
+
+                val name = doc.getString("username") ?: doc.getString("email") ?: "Đang chat"
+                tvChatName.text = name
+
+                friendAvatar = doc.getString("avatarUrl") ?: ""
+                adapter.setFriendAvatar(friendAvatar)
             }
+    }
+
+    private fun setupRecyclerView() {
+        adapter = ChatAdapter(currentUid, friendAvatar)
+        recyclerChat.layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
+        recyclerChat.adapter = adapter
     }
 
     private fun listenMessages() {
@@ -69,6 +78,7 @@ class ChatActivity : AppCompatActivity() {
             .collection("messages")
             .orderBy("timestamp", Query.Direction.ASCENDING)
             .addSnapshotListener { snapshot, error ->
+
                 if (error != null) {
                     Log.e("CHAT", "Listen error: ${error.message}")
                     return@addSnapshotListener
@@ -77,10 +87,11 @@ class ChatActivity : AppCompatActivity() {
                 if (snapshot == null) return@addSnapshotListener
 
                 val messages = snapshot.documents.mapNotNull { doc ->
-                    val senderId = doc.getString("senderId") ?: return@mapNotNull null
-                    val text = doc.getString("text") ?: ""
-                    val ts = doc.getLong("timestamp") ?: 0L
-                    ChatMessage(senderId, text, ts)
+                    ChatMessage(
+                        senderId = doc.getString("senderId") ?: return@mapNotNull null,
+                        text = doc.getString("text") ?: "",
+                        timestamp = doc.getLong("timestamp") ?: 0L
+                    )
                 }
 
                 adapter.setMessages(messages)

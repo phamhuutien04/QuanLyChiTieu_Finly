@@ -3,44 +3,84 @@ package com.example.quanlychitieu_finly
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class ChatAdapter(
-    private val currentUid: String
-) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
+    private val currentUid: String,
+    private var friendAvatar: String
+
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val messages = mutableListOf<ChatMessage>()
 
-    inner class ChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvMessage: TextView = itemView.findViewById(R.id.tvMessage)
+    companion object {
+        private const val TYPE_ME = 1
+        private const val TYPE_THEM = 2
+    }
+
+    fun setMessages(list: List<ChatMessage>) {
+        messages.clear()
+        messages.addAll(list)
+        notifyDataSetChanged()
     }
 
     override fun getItemViewType(position: Int): Int {
-        // 1 = tin nhắn của mình, 0 = của người khác
-        return if (messages[position].senderId == currentUid) 1 else 0
+        return if (messages[position].senderId == currentUid) TYPE_ME else TYPE_THEM
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
-        val layout = if (viewType == 1)
-            R.layout.item_message_me
-        else
-            R.layout.item_message_other
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-        val view = LayoutInflater.from(parent.context)
-            .inflate(layout, parent, false)
-        return ChatViewHolder(view)
+        return if (viewType == TYPE_ME) {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_chat_me, parent, false)
+            MeHolder(view)
+
+        } else {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_chat_them, parent, false)
+            ThemHolder(view)
+        }
     }
 
-    override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
-        holder.tvMessage.text = messages[position].text
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val msg = messages[position]
+
+        if (holder is MeHolder) holder.bind(msg)
+        if (holder is ThemHolder) holder.bind(msg, friendAvatar)
     }
 
-    override fun getItemCount(): Int = messages.size
+    override fun getItemCount() = messages.size
 
-    fun setMessages(newList: List<ChatMessage>) {
-        messages.clear()
-        messages.addAll(newList)
+
+    // ----- VIEW HOLDER CỦA MÌNH -----
+    class MeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val tvText: TextView = itemView.findViewById(R.id.tvMyMessage)
+
+        fun bind(msg: ChatMessage) {
+            tvText.text = msg.text
+        }
+    }
+    fun setFriendAvatar(url: String) {
+        friendAvatar = url
         notifyDataSetChanged()
+    }
+
+
+    // ----- VIEW HOLDER CỦA NGƯỜI KHÁC -----
+    class ThemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val tvText: TextView = itemView.findViewById(R.id.tvTheirMessage)
+        private val imgAvatar: ImageView = itemView.findViewById(R.id.imgTheirAvatar)
+
+        fun bind(msg: ChatMessage, avatarUrl: String) {
+            tvText.text = msg.text
+
+            Glide.with(imgAvatar.context)
+                .load(avatarUrl)
+                .circleCrop()
+                .into(imgAvatar)
+        }
     }
 }
