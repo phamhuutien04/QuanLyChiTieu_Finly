@@ -23,5 +23,7 @@
     <string name="fill_all_fields">Vui lòng nhập đầy đủ thông tin.</string>
     <string name="pwd_not_match">Mật khẩu nhập lại không khớp.</string>
     <string name="register_success">Đăng ký thành công!</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>
