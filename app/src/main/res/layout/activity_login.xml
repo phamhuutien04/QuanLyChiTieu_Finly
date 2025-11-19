@@ -24,7 +24,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:src="@drawable/adsad"
+            android:src="@drawable/vkclvc"
             android:contentDescription="@string/login"
             android:scaleType="centerCrop"/>
 

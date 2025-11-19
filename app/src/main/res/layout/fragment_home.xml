@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:background="#F0F0F0">
+        android:background="@drawable/pro">
 
         <LinearLayout
             android:orientation="vertical"
@@ -127,7 +127,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Số dư hiện tại"
-                                android:fontFamily="@font/fontbold"
                                 android:textStyle="bold"
                                 android:textColor="#F5F5F5"
                                 android:textSize="14sp"
@@ -203,18 +202,17 @@
                                         android:layout_width="14dp"
                                         android:layout_height="14dp"
                                         android:src="@android:drawable/arrow_down_float"
-                                        app:tint="#00FF00"/>
+                                        app:tint="#22C55E"/>
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginStart="6dp"
+                                        android:text="Thu nhập"
+                                        android:textStyle="bold"
+                                        android:textSize="12sp"
+                                        android:textColor="#E5E7EB"
                                         android:alpha="0.9"
-                                        android:fontFamily="@font/fontbold"
-                                        android:text="THU NHẬP"
-                                        android:textColor="#00FF00"
-                                        android:textSize="20sp"
-                                        android:textStyle="bold" />
+                                        android:layout_marginStart="6dp"/>
                                 </LinearLayout>
 
                                 <TextView
@@ -223,9 +221,8 @@
                                     android:layout_height="wrap_content"
                                     android:text="0 đ"
                                     android:textSize="18sp"
-                                    android:fontFamily="@font/fontbold"
                                     android:textStyle="bold"
-                                    android:textColor="#00FF00"
+                                    android:textColor="#FFFFFF"
                                     android:layout_marginTop="4dp"/>
                             </LinearLayout>
 
@@ -247,16 +244,15 @@
                                         android:layout_width="14dp"
                                         android:layout_height="14dp"
                                         android:src="@android:drawable/arrow_up_float"
-                                        app:tint="#D6D6D6"/>
+                                        app:tint="#EF4444"/>
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="CHI TIÊU"
+                                        android:text="Chi tiêu"
                                         android:textStyle="bold"
-                                        android:fontFamily="@font/fontbold"
-                                        android:textSize="20sp"
-                                        android:textColor="#D6D6D6"
+                                        android:textSize="12sp"
+                                        android:textColor="#E5E7EB"
                                         android:alpha="0.9"
                                         android:layout_marginStart="6dp"/>
                                 </LinearLayout>
@@ -267,9 +263,8 @@
                                     android:layout_height="wrap_content"
                                     android:text="0 đ"
                                     android:textSize="18sp"
-                                    android:fontFamily="@font/fontbold"
                                     android:textStyle="bold"
-                                    android:textColor="#D6D6D6"
+                                    android:textColor="#FFFFFF"
                                     android:layout_marginTop="4dp"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -308,7 +303,7 @@
                         <ImageView
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:src="@drawable/spending"
+                            android:src="@android:drawable/arrow_down_float"
                             app:tint="#4CAF50" />
 
                         <TextView
@@ -346,7 +341,7 @@
                         <ImageView
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:src="@drawable/income"
+                            android:src="@android:drawable/arrow_up_float"
                             app:tint="#FF5252" />
 
                         <TextView
@@ -383,7 +378,7 @@
                         <ImageView
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:src="@drawable/statistics"
+                            android:src="@android:drawable/ic_menu_report_image"
                             app:tint="#2196F3" />
 
                         <TextView
@@ -433,12 +428,12 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvTransactions"
+                    android:background="@drawable/trang_den_bg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#F0F0F0"
                     android:clipToPadding="false"
-                    android:minHeight="200dp"
-                    android:padding="4dp" />
+                    android:padding="4dp"
+                    android:minHeight="200dp"/>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Button Xem tất cả -->

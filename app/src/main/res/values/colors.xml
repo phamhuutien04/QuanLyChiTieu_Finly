@@ -76,7 +76,7 @@
     <color name="bg_purple">#F3E8FF</color>
     <color name="bg_red">#FEE2E2</color>
     <color name="bg_pink">#FCE7F3</color>
-    <color name="bg_indigo">#F4F6FD</color>
+    <color name="bg_indigo">#E0E7FF</color>
 
     <!-- Border Colors -->
     <color name="border_light">#E5E7EB</color>

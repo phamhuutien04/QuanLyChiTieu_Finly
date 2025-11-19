@@ -96,10 +96,6 @@ class MainActivity : AppCompatActivity() {
         tabAnalytics.setOnClickListener { selectTab(2) }
         tabSettings.setOnClickListener { selectTab(3) }
     }
-    fun switchToAnalyticsTab() {
-        // vị trí 2 đang là AnalyticsFragment trong selectTab
-        selectTab(2)
-    }
 
     private fun selectTab(position: Int) {
         // Animate indicators - thanh xanh phía trên

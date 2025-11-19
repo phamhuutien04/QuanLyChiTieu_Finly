@@ -98,6 +98,7 @@
         <item name="android:thumb">@drawable/switch_thumb</item>
         <item name="android:track">@drawable/switch_track</item>
     </style>
+<<<<<<< HEAD
 
     <style name="Widget.Theme.QuanLyChiTieu_Finly.ButtonBar.Fullscreen" parent="">
         <item name="android:background">@color/black_overlay</item>
@@ -105,4 +106,6 @@
     </style>
 
 
+=======
+>>>>>>> parent of 003b5b9 (Merge branch 'main' into develop)
 </resources>

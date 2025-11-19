@@ -35,7 +35,6 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="16dp"
         android:paddingVertical="12dp"
-        android:textStyle="bold"
         android:text="💡 Mẹo: Ấn vào giao dịch để chỉnh sửa"
         android:textColor="#FFA500"
         android:textSize="14dp"
@@ -47,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="48dp"
-        android:background="#F0F0F0"
+        android:background="@drawable/pro"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -93,7 +92,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:orientation="vertical"
-                            android:background="@drawable/bg"
+                            android:background="#1E2A35"
                             android:padding="12dp"
                             android:layout_marginEnd="8dp"
                             android:gravity="center">
@@ -102,9 +101,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Tổng thu"
-                                android:textStyle="bold"
                                 android:textSize="12sp"
-                                android:textColor="#000000"
+                                android:textColor="#9CA3AF"
                                 android:layout_marginBottom="4dp"/>
 
                             <TextView
@@ -123,7 +121,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:orientation="vertical"
-                            android:background="@drawable/bg"
+                            android:background="#1E2A35"
                             android:padding="12dp"
                             android:layout_marginStart="8dp"
                             android:gravity="center">
@@ -133,8 +131,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Tổng chi"
                                 android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:textColor="#000000"
+                                android:textColor="#9CA3AF"
                                 android:layout_marginBottom="4dp"/>
 
                             <TextView
@@ -191,20 +188,18 @@
                     android:layout_weight="1"
                     style="@style/Widget.Material3.Button.OutlinedButton"
                     android:text="Thu nhập"
-                    android:textStyle="bold"
                     android:textColor="@color/toggle_gray_text"
-                    app:backgroundTint="#F0F0F0" />
+                    app:backgroundTint="@color/toggle_gray_bg" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnFilterExpense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
                     android:layout_weight="1"
                     style="@style/Widget.Material3.Button.OutlinedButton"
                     android:text="Chi tiêu"
                     android:textColor="@color/toggle_gray_text"
-                    app:backgroundTint="#F0F0F0" />
+                    app:backgroundTint="@color/toggle_gray_bg" />
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
             <!-- RecyclerView chứa tất cả giao dịch -->
@@ -219,7 +214,7 @@
                     android:id="@+id/rvAllTransactions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#F0F0F0"
+                    android:background="@drawable/trang_den_bg"
                     android:clipToPadding="false"
                     android:padding="8dp"
                     android:minHeight="300dp"/>
