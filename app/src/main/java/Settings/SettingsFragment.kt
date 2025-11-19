@@ -37,6 +37,8 @@ import android.widget.EditText
 import android.widget.RadioButton
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.quanlychitieu_finly.SearchFriendsActivity
+import com.example.quanlychitieu_finly.SocialActivity
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -53,6 +55,8 @@ class SettingsFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private lateinit var cloudinary: Cloudinary
+    private lateinit var row2FA: LinearLayout
+
 
     // Views
     private lateinit var tvUserName: TextView
@@ -96,9 +100,29 @@ class SettingsFragment : Fragment() {
         view.findViewById<LinearLayout>(R.id.btnExportExcel).setOnClickListener {
             showDialogExportExcel()
         }
+        view.findViewById<LinearLayout>(R.id.row2FA).setOnClickListener {
+            openSearchFriends()
+        }
+
+
+
 
         return view
     }
+    private fun openSearchFriends() {
+        val intent = Intent(requireContext(), SearchFriendsActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun openSocialActivity() {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        val intent = Intent(requireContext(), SocialActivity::class.java)
+        intent.putExtra("profileUid", uid)
+        startActivity(intent)
+    }
+
+
     fun showDialogExportExcel() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_export_excel, null)
 

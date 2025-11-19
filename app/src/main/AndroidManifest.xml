@@ -14,34 +14,41 @@
         android:roundIcon="@mipmap/ic_finly_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuanLyChiTieu_Finly">
-
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SearchFriendsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SocialActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileAddActivity"
+            android:exported="false" />
         <activity
             android:name=".RegisterActivity"
             android:exported="true" />
-
         <activity
             android:name=".LoginActivity"
             android:exported="true" />
-
         <activity
             android:name=".AllTransactionsActivity"
             android:parentActivityName=".MainActivity" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ResetPasswordActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".ForgotPasswordActivity"
             android:exported="false"
