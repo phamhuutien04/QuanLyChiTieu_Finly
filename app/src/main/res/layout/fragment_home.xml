@@ -28,6 +28,7 @@
                 android:layout_marginBottom="8dp">
 
                 <!-- Avatar tròn bên phải -->
+                <!-- Nút 1: Avatar -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardAvatar"
                     android:layout_width="52dp"
@@ -46,12 +47,35 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@android:drawable/ic_menu_manage"
-                        android:contentDescription="@string/app_name"
-                        android:background="#667EEA"
                         android:padding="12dp"
-                        app:tint="#000000"/>
+                        android:background="#667EEA"
+                        android:src="@drawable/ic_message" />
                 </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/message"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    app:cardCornerRadius="26dp"
+                    app:cardElevation="3dp"
+                    app:strokeWidth="0dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:layout_marginEnd="12dp"
+                    app:layout_constraintEnd_toStartOf="@+id/cardAvatar"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/notify"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:padding="12dp"
+                        android:src="@drawable/notify"
+                        android:background="#FBBF24"/>
+                </com.google.android.material.card.MaterialCardView>
+
 
                 <!-- Tên người dùng -->
                 <TextView

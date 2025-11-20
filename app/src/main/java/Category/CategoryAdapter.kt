@@ -12,7 +12,8 @@ import com.example.quanlychitieu_finly.R
 
 class CategoryAdapter(
     private var list: List<Category>,
-    private val onClick: (Category) -> Unit
+    private val onClick: (Category) -> Unit,
+    private val onLongClick: (Category) -> Unit   // ⭐ Thêm callback cho nhấn giữ
 ) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     private var isSpendingTab = true
@@ -49,17 +50,22 @@ class CategoryAdapter(
         holder.tvName.setTextColor(blackColor)
         holder.tvAmount.setTextColor(mainColor)
 
-
         Glide.with(context)
             .load(category.iconUrl)
             .placeholder(R.drawable.ic_loading)
             .error(R.drawable.ic_loading)
             .into(holder.ivIcon)
 
+        // ▶ Nhấn để chọn
         holder.itemView.setOnClickListener { onClick(category) }
+
+        // ▶ NHẤN GIỮ để sửa / xóa
+        holder.itemView.setOnLongClickListener {
+            onLongClick(category)
+            true
+        }
     }
 
-    // ===== ViewHolder =====
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivIcon: ImageView = itemView.findViewById(R.id.ivCategoryIcon)
         val tvName: TextView = itemView.findViewById(R.id.tvCategoryName)

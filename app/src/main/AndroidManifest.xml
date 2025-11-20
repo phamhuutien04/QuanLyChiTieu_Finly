@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuanLyChiTieu_Finly">
         <activity
+            android:name=".ChatListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChatActivity"
             android:exported="false" />
         <activity

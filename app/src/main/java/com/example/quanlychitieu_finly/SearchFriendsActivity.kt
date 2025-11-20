@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,19 +29,13 @@ class SearchFriendsActivity : AppCompatActivity() {
 
         currentUid = auth.currentUser?.uid ?: ""
 
-        // Ánh xạ view
         edtSearch = findViewById(R.id.edtSearchFriend)
         recyclerView = findViewById(R.id.rcvSearchFriend)
 
-        // Set adapter
         adapter = SearchFriendAdapter(
             mutableListOf(),
-            onAddFriend = { user ->
-                sendFriendRequest(user)
-            },
-            onOpenProfile = { user ->
-                openProfile(user.id)
-            }
+            onAddFriend = { user -> sendFriendRequest(user) },
+            onOpenProfile = { user -> openProfile(user.id) }
         )
 
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -52,38 +45,48 @@ class SearchFriendsActivity : AppCompatActivity() {
         setupSearchListener()
     }
 
+    /** 🔥 Load toàn bộ user nhưng KHÔNG hiển thị lên UI */
     private fun loadAllUsers() {
-        db.collection("users").get().addOnSuccessListener { snap ->
-            allUsers.clear()
+        db.collection("users")
+            .get()
+            .addOnSuccessListener { snap ->
+                allUsers.clear()
 
-            for (doc in snap.documents) {
-                if (doc.id == currentUid) continue
+                for (doc in snap.documents) {
+                    if (doc.id == currentUid) continue
 
-                allUsers.add(
-                    User(
-                        id = doc.id,
-                        username = doc.getString("username") ?: "",
-                        email = doc.getString("email") ?: "",
-                        avatarUrl = doc.getString("avatarUrl") ?: ""
+                    allUsers.add(
+                        User(
+                            id = doc.id,
+                            username = doc.getString("username") ?: "",
+                            email = doc.getString("email") ?: "",
+                            avatarUrl = doc.getString("avatarUrl") ?: ""
+                        )
                     )
-                )
-            }
+                }
 
-            adapter.setData(allUsers)
-        }
+                // ❌ KHÔNG show list ở đây → màn hình trống ban đầu
+                adapter.setData(emptyList())
+            }
     }
 
+    /** 🔍 Khi nhập text → filter user theo tên hoặc email */
     private fun setupSearchListener() {
         edtSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
-
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val keyword = s.toString().lowercase().trim()
+                val keyword = s.toString().trim().lowercase()
 
-                val filtered = allUsers.filter {
-                    it.username.lowercase().contains(keyword)
+                if (keyword.isEmpty()) {
+                    adapter.setData(emptyList())   // không nhập → không hiện list
+                    return
+                }
+
+                val filtered = allUsers.filter { user ->
+                    user.username.lowercase().contains(keyword) ||
+                            user.email.lowercase().contains(keyword)
                 }
 
                 adapter.setData(filtered)
@@ -91,6 +94,7 @@ class SearchFriendsActivity : AppCompatActivity() {
         })
     }
 
+    /** 📩 Gửi lời mời kết bạn */
     private fun sendFriendRequest(user: User) {
         val request = hashMapOf(
             "senderId" to currentUid,
@@ -101,11 +105,9 @@ class SearchFriendsActivity : AppCompatActivity() {
 
         db.collection("friend_requests")
             .add(request)
-            .addOnSuccessListener {
-                Toast.makeText(this, "Đã gửi lời mời kết bạn!", Toast.LENGTH_SHORT).show()
-            }
     }
 
+    /** 🔥 Mở trang cá nhân người đó */
     private fun openProfile(uid: String) {
         val intent = Intent(this, SocialActivity::class.java)
         intent.putExtra("profileUid", uid)

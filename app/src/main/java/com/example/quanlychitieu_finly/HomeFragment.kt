@@ -496,6 +496,10 @@ class HomeFragment : Fragment() {
 
         loadRecentTransactions()
         setupViewAllButton(view)
+        val btnNotify = view.findViewById<ImageView>(R.id.notify)
+        btnNotify.setOnClickListener {
+            openChatList()
+        }
         return view
     }
 
@@ -505,6 +509,11 @@ class HomeFragment : Fragment() {
             view?.let { bindUserHeader(it) }
             loadRecentTransactions()
         }
+    }
+
+    private fun openChatList() {
+        val intent = Intent(requireContext(), ChatListActivity::class.java)
+        startActivity(intent)
     }
 
     private fun ensureLoggedIn(): Boolean {

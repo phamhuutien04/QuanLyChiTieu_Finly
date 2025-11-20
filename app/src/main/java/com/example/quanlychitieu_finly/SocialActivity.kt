@@ -16,28 +16,24 @@ class SocialActivity : AppCompatActivity() {
 
     private lateinit var imgAvatar: ImageView
     private lateinit var tvName: TextView
-    private lateinit var tvBio: TextView
-    private lateinit var tvLocation: TextView
     private lateinit var btnAddFriend: TextView
     private lateinit var btnMessage: TextView
 
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
 
-    private var viewedUid = ""      // UID người được xem
-    private var currentUid = ""     // UID người đang dùng
+    private var viewedUid = ""
+    private var currentUid = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_social_profile)
 
-        currentUid = auth.currentUser?.uid ?: ""
         viewedUid = intent.getStringExtra("profileUid") ?: ""
+        currentUid = auth.currentUser?.uid ?: ""
 
         imgAvatar = findViewById(R.id.imgProfileAvatar)
         tvName = findViewById(R.id.tvProfileName)
-        tvBio = findViewById(R.id.tvProfileBio)
-        tvLocation = findViewById(R.id.tvProfileLocation)
         btnAddFriend = findViewById(R.id.btnAddFriend)
         btnMessage = findViewById(R.id.btnMessage)
 
@@ -47,19 +43,18 @@ class SocialActivity : AppCompatActivity() {
         }
 
         loadProfileInfo()
+        checkFriendStatus()
 
         btnAddFriend.setOnClickListener { sendFriendRequest() }
         btnMessage.setOnClickListener { openChat() }
     }
 
-    /** Load thông tin người dùng */
     private fun loadProfileInfo() {
         db.collection("users").document(viewedUid)
             .get()
             .addOnSuccessListener { doc ->
+
                 tvName.text = doc.getString("username") ?: "Không rõ"
-                tvBio.text = doc.getString("bio") ?: "Chưa có mô tả"
-                tvLocation.text = doc.getString("location") ?: "Không rõ"
 
                 val avatar = doc.getString("avatarUrl") ?: ""
                 if (avatar.isNotEmpty()) {
@@ -72,36 +67,58 @@ class SocialActivity : AppCompatActivity() {
             }
     }
 
-    /** Hàm tạo chatId cố định giữa 2 người */
-    private fun generateChatId(uid1: String, uid2: String): String {
-        return if (uid1 < uid2) "${uid1}_${uid2}" else "${uid2}_${uid1}"
+    private fun checkFriendStatus() {
+        db.collection("friends")
+            .document(currentUid)
+            .collection("list")
+            .document(viewedUid)
+            .get()
+            .addOnSuccessListener { doc ->
+                if (doc.exists()) {
+                    btnAddFriend.text = "Bạn bè"
+                    btnAddFriend.isEnabled = false
+                }
+            }
     }
 
-    /** Mở trang chat */
-    private fun openChat() {
-        val chatId = generateChatId(currentUid, viewedUid)
-
-        val intent = Intent(this, ChatActivity::class.java)
-        intent.putExtra("chatId", chatId)
-        intent.putExtra("friendUid", viewedUid)
-        startActivity(intent)
-    }
-
-    /** Gửi lời mời kết bạn */
     private fun sendFriendRequest() {
-        val request = hashMapOf(
+        val req = hashMapOf(
             "senderId" to currentUid,
             "receiverId" to viewedUid,
             "status" to "pending",
             "timestamp" to System.currentTimeMillis()
         )
 
-        db.collection("friend_requests")
-            .add(request)
+        db.collection("users")
+            .document(viewedUid)
+            .collection("friend_requests")
+            .add(req)
             .addOnSuccessListener {
-                btnAddFriend.text = "Đã gửi ✔"
+                Toast.makeText(this, "Đã gửi lời mời!", Toast.LENGTH_SHORT).show()
+                btnAddFriend.text = "Đã gửi"
                 btnAddFriend.isEnabled = false
-                Toast.makeText(this, "Đã gửi lời mời kết bạn", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun openChat() {
+        val chatId = generateChatId(currentUid, viewedUid)
+        val chatRef = db.collection("chats").document(chatId)
+
+        chatRef.get().addOnSuccessListener { doc ->
+            if (!doc.exists()) {
+                chatRef.set(
+                    mapOf("members" to listOf(currentUid, viewedUid))
+                )
+            }
+
+            val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra("chatId", chatId)
+            intent.putExtra("friendUid", viewedUid)
+            startActivity(intent)
+        }
+    }
+
+    private fun generateChatId(uid1: String, uid2: String): String {
+        return if (uid1 < uid2) "${uid1}_$uid2" else "${uid2}_$uid1"
     }
 }

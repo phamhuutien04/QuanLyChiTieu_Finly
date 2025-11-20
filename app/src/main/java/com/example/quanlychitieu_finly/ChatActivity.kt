@@ -1,7 +1,6 @@
 package com.example.quanlychitieu_finly
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -18,119 +17,93 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var recyclerChat: RecyclerView
     private lateinit var edtMessage: EditText
     private lateinit var btnSend: ImageView
-    private lateinit var btnBack: ImageView
+    private lateinit var imgChatAvatar: ImageView
     private lateinit var tvChatName: TextView
-    private lateinit var imgChatAvatar: ImageView   // ⭐ HEADER AVATAR
 
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
-
-    private lateinit var adapter: ChatAdapter
 
     private var chatId = ""
     private var friendUid = ""
     private var currentUid = ""
 
-    private var friendAvatar = ""   // ⭐ Lưu URL avatar người chat
+    private lateinit var adapter: ChatAdapter
+    private var friendAvatar = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
-        // Lấy UID
-        currentUid = auth.currentUser?.uid ?: ""
         chatId = intent.getStringExtra("chatId") ?: ""
         friendUid = intent.getStringExtra("friendUid") ?: ""
+        currentUid = auth.currentUser?.uid ?: ""
 
-        // Ánh xạ view
         recyclerChat = findViewById(R.id.recyclerChat)
         edtMessage = findViewById(R.id.edtMessage)
         btnSend = findViewById(R.id.btnSend)
-        btnBack = findViewById(R.id.btnBack)
+        imgChatAvatar = findViewById(R.id.imgChatAvatar)
         tvChatName = findViewById(R.id.tvChatName)
-        imgChatAvatar = findViewById(R.id.imgChatAvatar)   // ⭐ THÊM DÒNG NÀY
 
-        // Chuẩn bị RecyclerView + Adapter
-        adapter = ChatAdapter(currentUid, friendAvatar)
-        recyclerChat.layoutManager = LinearLayoutManager(this).apply {
-            stackFromEnd = true
-        }
+        adapter = ChatAdapter(currentUid, "")
+        recyclerChat.layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
         recyclerChat.adapter = adapter
 
         loadFriendInfo()
         listenMessages()
 
         btnSend.setOnClickListener { sendMessage() }
-        btnBack.setOnClickListener { finish() }
     }
 
-    // ⭐ Load tên + avatar người chat + gán vào header + gán vào adapter
     private fun loadFriendInfo() {
         db.collection("users").document(friendUid)
             .get()
             .addOnSuccessListener { doc ->
 
-                val name = doc.getString("username") ?: doc.getString("email") ?: "Đang chat"
+                val name = doc.getString("username") ?: "Đang chat"
                 tvChatName.text = name
 
                 friendAvatar = doc.getString("avatarUrl") ?: ""
+                Glide.with(this).load(friendAvatar).circleCrop().into(imgChatAvatar)
 
-                // ⭐ LOAD AVATAR Ở HEADER
-                if (friendAvatar.isNotEmpty()) {
-                    Glide.with(this)
-                        .load(friendAvatar)
-                        .circleCrop()
-                        .into(imgChatAvatar)
-                }
-
-                // ⭐ CẬP NHẬT AVATAR TIN NHẮN
                 adapter.setFriendAvatar(friendAvatar)
             }
     }
 
-    // ⭐ Lắng nghe tin nhắn realtime
     private fun listenMessages() {
         db.collection("chats")
             .document(chatId)
             .collection("messages")
             .orderBy("timestamp", Query.Direction.ASCENDING)
-            .addSnapshotListener { snapshot, error ->
+            .addSnapshotListener { snap, _ ->
 
-                if (error != null) {
-                    Log.e("CHAT", "Listen error: ${error.message}")
-                    return@addSnapshotListener
-                }
+                if (snap == null) return@addSnapshotListener
 
-                if (snapshot == null) return@addSnapshotListener
-
-                val list = snapshot.documents.mapNotNull { doc ->
+                val msgs = snap.documents.map { d ->
                     ChatMessage(
-                        senderId = doc.getString("senderId") ?: return@mapNotNull null,
-                        text = doc.getString("text") ?: "",
-                        timestamp = doc.getLong("timestamp") ?: 0L
+                        senderId = d.getString("senderId") ?: "",
+                        text = d.getString("text") ?: "",
+                        timestamp = d.getLong("timestamp") ?: 0
                     )
                 }
 
-                adapter.setMessages(list)
-                recyclerChat.scrollToPosition(list.size - 1)
+                adapter.setMessages(msgs)
+                recyclerChat.scrollToPosition(msgs.size - 1)
             }
     }
 
-    // ⭐ Gửi tin nhắn
     private fun sendMessage() {
         val text = edtMessage.text.toString().trim()
         if (text.isEmpty()) return
 
-        val msgData = hashMapOf(
+        val msg = mapOf(
             "senderId" to currentUid,
             "text" to text,
             "timestamp" to System.currentTimeMillis()
         )
 
-        db.collection("chats")
-            .document(chatId)
+        db.collection("chats").document(chatId)
             .collection("messages")
-            .add(msgData)
+            .add(msg)
 
         edtMessage.setText("")
     }
