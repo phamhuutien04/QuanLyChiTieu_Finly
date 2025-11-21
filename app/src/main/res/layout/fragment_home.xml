@@ -43,13 +43,13 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:id="@+id/imgAvatar"
+                        android:id="@+id/btnSearch"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
                         android:padding="12dp"
                         android:background="#667EEA"
-                        android:src="@drawable/ic_message" />
+                        android:src="@drawable/ic_search" />
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -72,7 +72,7 @@
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
                         android:padding="12dp"
-                        android:src="@drawable/notify"
+                        android:src="@drawable/ic_message"
                         android:background="#FBBF24"/>
                 </com.google.android.material.card.MaterialCardView>
 

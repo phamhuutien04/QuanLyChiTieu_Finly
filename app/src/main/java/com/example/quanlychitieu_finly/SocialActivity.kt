@@ -40,44 +40,82 @@ class SocialActivity : AppCompatActivity() {
         if (viewedUid == currentUid) {
             btnAddFriend.visibility = View.GONE
             btnMessage.visibility = View.GONE
+            return
         }
 
-        loadProfileInfo()
-        checkFriendStatus()
-
-        btnAddFriend.setOnClickListener { sendFriendRequest() }
-        btnMessage.setOnClickListener { openChat() }
+        loadProfile()
+        checkFriendState()
     }
 
-    private fun loadProfileInfo() {
-        db.collection("users").document(viewedUid)
-            .get()
+    private fun loadProfile() {
+        db.collection("users").document(viewedUid).get()
             .addOnSuccessListener { doc ->
-
                 tvName.text = doc.getString("username") ?: "Không rõ"
 
                 val avatar = doc.getString("avatarUrl") ?: ""
-                if (avatar.isNotEmpty()) {
-                    Glide.with(this)
-                        .load("$avatar?v=${System.currentTimeMillis()}")
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true)
-                        .into(imgAvatar)
-                }
+                Glide.with(this)
+                    .load("$avatar?v=${System.currentTimeMillis()}")
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(imgAvatar)
             }
     }
 
-    private fun checkFriendStatus() {
-        db.collection("friends")
+    private fun checkFriendState() {
+
+        btnMessage.visibility = View.GONE  // ẨN mặc định
+
+        db.collection("users")
             .document(currentUid)
-            .collection("list")
+            .collection("friends")
             .document(viewedUid)
             .get()
             .addOnSuccessListener { doc ->
                 if (doc.exists()) {
-                    btnAddFriend.text = "Bạn bè"
-                    btnAddFriend.isEnabled = false
+                    showFriendUI()
+                } else {
+                    checkRequests()
                 }
+            }
+    }
+
+    private fun checkRequests() {
+
+        // 2️⃣ Kiểm tra mình đã gửi lời mời?
+        db.collection("friend_requests")
+            .whereEqualTo("senderId", currentUid)
+            .whereEqualTo("receiverId", viewedUid)
+            .get()
+            .addOnSuccessListener { sent ->
+                if (!sent.isEmpty) {
+                    btnAddFriend.text = "Đã gửi"
+                    btnAddFriend.isEnabled = false
+                    return@addOnSuccessListener
+                }
+
+                db.collection("friend_requests")
+                    .whereEqualTo("senderId", viewedUid)
+                    .whereEqualTo("receiverId", currentUid)
+                    .get()
+                    .addOnSuccessListener { received ->
+
+                        if (!received.isEmpty) {
+                            val reqId = received.documents[0].id
+
+                            btnAddFriend.text = "Chấp nhận"
+                            btnAddFriend.isEnabled = true
+
+                            btnAddFriend.setOnClickListener {
+                                acceptFriendRequest(reqId)
+                            }
+                        } else {
+                            btnAddFriend.text = "Kết bạn"
+                            btnAddFriend.isEnabled = true
+                            btnAddFriend.setOnClickListener {
+                                sendFriendRequest()
+                            }
+                        }
+                    }
             }
     }
 
@@ -89,36 +127,60 @@ class SocialActivity : AppCompatActivity() {
             "timestamp" to System.currentTimeMillis()
         )
 
-        db.collection("users")
-            .document(viewedUid)
-            .collection("friend_requests")
+        db.collection("friend_requests")
             .add(req)
             .addOnSuccessListener {
-                Toast.makeText(this, "Đã gửi lời mời!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Đã gửi lời mời", Toast.LENGTH_SHORT).show()
                 btnAddFriend.text = "Đã gửi"
                 btnAddFriend.isEnabled = false
             }
     }
 
-    private fun openChat() {
-        val chatId = generateChatId(currentUid, viewedUid)
-        val chatRef = db.collection("chats").document(chatId)
+    private fun acceptFriendRequest(reqId: String) {
 
-        chatRef.get().addOnSuccessListener { doc ->
-            if (!doc.exists()) {
-                chatRef.set(
-                    mapOf("members" to listOf(currentUid, viewedUid))
-                )
-            }
+        val data = mapOf(
+            "since" to System.currentTimeMillis()
+        )
 
-            val intent = Intent(this, ChatActivity::class.java)
-            intent.putExtra("chatId", chatId)
-            intent.putExtra("friendUid", viewedUid)
-            startActivity(intent)
-        }
+        db.collection("users")
+            .document(currentUid)
+            .collection("friends")
+            .document(viewedUid)
+            .set(data)
+
+        // viewedUser thêm bạn
+        db.collection("users")
+            .document(viewedUid)
+            .collection("friends")
+            .document(currentUid)
+            .set(data)
+
+        db.collection("friend_requests")
+            .document(reqId)
+            .delete()
+
+        Toast.makeText(this, "Đã trở thành bạn bè!", Toast.LENGTH_SHORT).show()
+
+        showFriendUI()
     }
 
-    private fun generateChatId(uid1: String, uid2: String): String {
-        return if (uid1 < uid2) "${uid1}_$uid2" else "${uid2}_$uid1"
+    private fun showFriendUI() {
+        btnAddFriend.text = "Bạn bè"
+        btnAddFriend.isEnabled = false
+        btnMessage.visibility = View.VISIBLE
+
+        btnMessage.setOnClickListener { openChat() }
+    }
+
+    private fun openChat() {
+        val chatId = generateChatId(currentUid, viewedUid)
+        val intent = Intent(this, ChatActivity::class.java)
+        intent.putExtra("chatId", chatId)
+        intent.putExtra("friendUid", viewedUid)
+        startActivity(intent)
+    }
+
+    private fun generateChatId(a: String, b: String): String {
+        return if (a < b) "${a}_${b}" else "${b}_${a}"
     }
 }

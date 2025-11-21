@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-
 class ChatListAdapter(
     private val list: MutableList<ChatListItem>,
     private val onClick: (ChatListItem) -> Unit
@@ -17,6 +16,7 @@ class ChatListAdapter(
         val imgAvatar: ImageView = itemView.findViewById(R.id.imgListAvatar)
         val tvName: TextView = itemView.findViewById(R.id.tvListName)
         val tvLastMsg: TextView = itemView.findViewById(R.id.tvListLastMsg)
+        val tvTime: TextView = itemView.findViewById(R.id.tvListTime)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatListVH {
@@ -36,16 +36,21 @@ class ChatListAdapter(
             .circleCrop()
             .into(holder.imgAvatar)
 
-        holder.itemView.setOnClickListener {
-            onClick(item)
+        if (item.timestamp > 0) {
+            holder.tvTime.text =
+                android.text.format.DateFormat.format("HH:mm", item.timestamp)
+        } else {
+            holder.tvTime.text = ""
         }
+
+        holder.itemView.setOnClickListener { onClick(item) }
     }
 
-    override fun getItemCount(): Int = list.size
+    override fun getItemCount() = list.size
 
     fun setData(newList: List<ChatListItem>) {
         list.clear()
-        list.addAll(newList.sortedByDescending { it.timestamp })
+        list.addAll(newList)
         notifyDataSetChanged()
     }
 }

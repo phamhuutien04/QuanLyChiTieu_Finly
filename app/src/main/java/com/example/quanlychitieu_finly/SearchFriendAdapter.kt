@@ -25,7 +25,6 @@ class SearchFriendAdapter(
             tvUsername.text = user.username.ifBlank { "Không có tên" }
             tvEmail.text = user.email
 
-            // 🖼 load avatar từ Cloudinary (nếu có)
             if (user.avatarUrl.isNotEmpty()) {
                 Glide.with(imgAvatar.context)
                     .load("${user.avatarUrl}?v=${System.currentTimeMillis()}")
@@ -38,12 +37,9 @@ class SearchFriendAdapter(
                 imgAvatar.setImageResource(R.drawable.ic_user_placeholder)
             }
 
-            // Kết bạn
             btnAddFriend.setOnClickListener {
                 onAddFriend(user)
             }
-
-            // Bấm vào cả item -> mở profile
             itemView.setOnClickListener {
                 onOpenProfile(user)
             }

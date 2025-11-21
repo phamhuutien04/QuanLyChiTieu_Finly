@@ -94,7 +94,6 @@ class SearchFriendsActivity : AppCompatActivity() {
         })
     }
 
-    /** 📩 Gửi lời mời kết bạn */
     private fun sendFriendRequest(user: User) {
         val request = hashMapOf(
             "senderId" to currentUid,
@@ -106,8 +105,6 @@ class SearchFriendsActivity : AppCompatActivity() {
         db.collection("friend_requests")
             .add(request)
     }
-
-    /** 🔥 Mở trang cá nhân người đó */
     private fun openProfile(uid: String) {
         val intent = Intent(this, SocialActivity::class.java)
         intent.putExtra("profileUid", uid)

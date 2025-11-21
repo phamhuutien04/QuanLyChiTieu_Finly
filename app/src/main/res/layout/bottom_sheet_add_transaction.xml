@@ -31,7 +31,7 @@
                 android:textColor="@color/black"
                 android:layout_marginBottom="16dp"/>
 
-            <!-- Tiêu đề giao dịch - ĐÃ SỬA -->
+            <!-- Tiêu đề giao dịch -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilTitle"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -44,10 +44,6 @@
                 app:hintTextColor="@color/black"
                 app:startIconDrawable="@drawable/ic_title_wrap_24"
                 app:startIconTint="@color/accent_blue"
-                app:boxCornerRadiusTopStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusBottomEnd="12dp"
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -55,15 +51,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="56dp"
-                    android:textSize="15sp"
                     android:textColor="@color/black"
-                    android:inputType="textCapSentences|textAutoCorrect"
-                    android:imeOptions="actionDone"
-                    android:importantForAutofill="no"/>
-
+                    android:inputType="textCapSentences"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Danh mục - ĐÃ SỬA -->
+            <!-- Danh mục -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilCategory"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -71,51 +63,56 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:hint="Danh mục"
-                app:boxStrokeColor="@color/outline_state"
-                app:boxStrokeWidthFocused="2dp"
-                app:hintTextColor="@color/text_white_70"
                 app:startIconDrawable="@drawable/ic_category_wrap_24"
                 app:startIconTint="@color/accent_purple"
                 app:endIconMode="custom"
-                app:endIconDrawable="@android:drawable/arrow_down_float"
-                app:endIconTint="@color/accent_blue"
-                app:boxCornerRadiusTopStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusBottomEnd="12dp">
+                app:endIconDrawable="@android:drawable/arrow_down_float">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtCategory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="56dp"
-                    android:inputType="none"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:textColor="@color/black"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- ⭐⭐ KHUNG TAG BẠN BÈ ⭐⭐ -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilTagFriend"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Tag bạn bè"
+                app:startIconTint="@color/accent_blue"
+                app:endIconMode="custom"
+                app:endIconDrawable="@android:drawable/arrow_down_float"
+                app:endIconTint="@color/accent_blue">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtTagFriend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="56dp"
                     android:focusable="false"
                     android:clickable="true"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/black"
-                    android:importantForAutofill="no"/>
-
+                    android:textColorHint="@color/black"/>
             </com.google.android.material.textfield.TextInputLayout>
+            <!-- ⭐⭐⭐ -->
 
-            <!-- Số tiền - ĐÃ SỬA -->
+            <!-- Số tiền -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilAmount"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:hint="Số tiền (VNĐ)"
-                app:boxStrokeColor="@color/outline_state"
-                app:boxStrokeWidthFocused="2dp"
-                app:hintTextColor="@color/black"
+                android:layout_marginBottom="16dp"
                 app:startIconDrawable="@drawable/ic_money_wrap_24"
-                app:startIconTint="@color/income_green"
-                app:boxCornerRadiusTopStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusBottomEnd="12dp"
-                app:endIconMode="clear_text">
+                app:startIconTint="@color/income_green">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtAmount"
@@ -123,16 +120,10 @@
                     android:layout_height="wrap_content"
                     android:minHeight="56dp"
                     android:inputType="numberDecimal"
-                    android:digits="0123456789.,"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"
-                    android:imeOptions="actionDone"
-                    android:importantForAutofill="no"/>
-
+                    android:textColor="@color/black"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Hành động -->
+            <!-- Buttons -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -144,9 +135,7 @@
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
-                    android:text="Hủy"
-                    android:textColor="@color/black"
-                    android:minWidth="88dp"/>
+                    android:text="Hủy"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSave"
@@ -154,10 +143,7 @@
                     android:layout_height="48dp"
                     android:layout_marginStart="12dp"
                     android:text="Lưu"
-                    android:textColor="@color/text_white"
-                    android:minWidth="88dp"
                     app:backgroundTint="@color/accent"/>
-
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

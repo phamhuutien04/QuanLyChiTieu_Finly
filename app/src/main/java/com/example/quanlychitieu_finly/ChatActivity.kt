@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QuerySnapshot
 
 class ChatActivity : AppCompatActivity() {
 
@@ -38,6 +39,8 @@ class ChatActivity : AppCompatActivity() {
         friendUid = intent.getStringExtra("friendUid") ?: ""
         currentUid = auth.currentUser?.uid ?: ""
 
+        ensureChatDocumentExists()
+
         recyclerChat = findViewById(R.id.recyclerChat)
         edtMessage = findViewById(R.id.edtMessage)
         btnSend = findViewById(R.id.btnSend)
@@ -52,6 +55,24 @@ class ChatActivity : AppCompatActivity() {
         listenMessages()
 
         btnSend.setOnClickListener { sendMessage() }
+    }
+
+    // Tạo document chat + members nếu chưa có
+    private fun ensureChatDocumentExists() {
+        val chatRef = db.collection("chats").document(chatId)
+
+        chatRef.get().addOnSuccessListener { doc ->
+            if (!doc.exists()) {
+                val data = mapOf(
+                    "members" to listOf(currentUid, friendUid)
+                )
+                chatRef.set(data)
+            } else {
+                if (!doc.contains("members")) {
+                    chatRef.update("members", listOf(currentUid, friendUid))
+                }
+            }
+        }
     }
 
     private fun loadFriendInfo() {
@@ -88,7 +109,23 @@ class ChatActivity : AppCompatActivity() {
 
                 adapter.setMessages(msgs)
                 recyclerChat.scrollToPosition(msgs.size - 1)
+
+                // 🔥 Đánh dấu đã đọc
+                markMessagesAsSeen(snap)
             }
+    }
+
+    private fun markMessagesAsSeen(snap: QuerySnapshot) {
+        for (d in snap.documents) {
+            val senderId = d.getString("senderId") ?: ""
+            if (senderId == currentUid) continue   // tin mình gửi thì bỏ qua
+
+            val seenBy = d.get("seenBy") as? MutableList<String> ?: mutableListOf()
+            if (!seenBy.contains(currentUid)) {
+                seenBy.add(currentUid)
+                d.reference.update("seenBy", seenBy)
+            }
+        }
     }
 
     private fun sendMessage() {
@@ -98,7 +135,9 @@ class ChatActivity : AppCompatActivity() {
         val msg = mapOf(
             "senderId" to currentUid,
             "text" to text,
-            "timestamp" to System.currentTimeMillis()
+            "timestamp" to System.currentTimeMillis(),
+            // 🔥 Người gửi luôn coi là đã xem
+            "seenBy" to listOf(currentUid)
         )
 
         db.collection("chats").document(chatId)
