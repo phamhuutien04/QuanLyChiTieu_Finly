@@ -148,4 +148,19 @@
     <color name="outline_state">#8AB4F8</color>
 
     <color name="surface_card">#1A1C2E</color>
+
+    <color name="gray_light">#E0E0E0</color>
+    <color name="gray_dark">#212121</color>
+
+    <!-- 1. MÀU NỀN TỐI (DARK/DEEP INDIGO) -->
+    <color name="deep_indigo">#1A1D2E</color>  <!-- Nền chính cho Card View -->
+    <color name="input_bg_dark">#2C3140</color> <!-- Nền các trường Input (hơi sáng hơn nền chính) -->
+    <color name="ripple_dark">#343A50</color>   <!-- Hiệu ứng nhấn (ripple) -->
+
+    <!-- 2. MÀU VĂN BẢN (TEXT COLOR) -->
+    <color name="text_primary_dark">#FFFFFF</color> <!-- Văn bản chính (Title) -->
+    <color name="text_secondary_dark">#A0AEC0</color> <!-- Văn bản phụ (Hint, Cancel Button) -->
+    <color name="income_green_vibrant">#68D391</color>
+    <color name="outline_focused">#60A5FA</color>   <!-- Viền khi focus (Xanh nhạt) -->
+
 </resources>

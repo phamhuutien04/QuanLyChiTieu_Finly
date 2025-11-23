@@ -1,0 +1,145 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Main SIM card body with cut corner -->
+    <path
+        android:fillColor="#FFB300"
+        android:pathData="M4,3 L15,3 L19,7 L19,21 L4,21 Z"/>
+
+    <!-- Cut corner detail (darker shade) -->
+    <path
+        android:fillColor="#FF8F00"
+        android:pathData="M15,3 L15,7 L19,7 Z"/>
+
+    <!-- Chip background -->
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M7,8 L16,8 L16,16 L7,16 Z"
+        android:strokeWidth="0.5"
+        android:strokeColor="#F9A825"/>
+
+    <!-- Chip contacts grid (3x4) -->
+    <!-- Row 1 -->
+    <path
+        android:fillColor="#FFA726"
+        android:pathData="M8,9.5 L9.5,9.5 L9.5,11 L8,11 Z"/>
+    <path
+        android:fillColor="#FFA726"
+        android:pathData="M10.5,9.5 L12,9.5 L12,11 L10.5,11 Z"/>
+    <path
+        android:fillColor="#FFA726"
+        android:pathData="M13,9.5 L14.5,9.5 L14.5,11 L13,11 Z"/>
+
+    <!-- Row 2 -->
+    <path
+        android:fillColor="#FFA726"
+        android:pathData="M8,11.5 L9.5,11.5 L9.5,13 L8,13 Z"/>
+    <path
+        android:fillColor="#FFA726"
+        android:pathData="M10.5,11.5 L12,11.5 L12,13 L10.5,13 Z"/>
+    <path
+        android:fillColor="#FFA726"
+        android:pathData="M13,11.5 L14.5,11.5 L14.5,13 L13,13 Z"/>
+
+    <!-- Row 3 -->
+    <path
+        android:fillColor="#FFA726"
+        android:pathData="M8,13.5 L9.5,13.5 L9.5,15 L8,15 Z"/>
+    <path
+        android:fillColor="#FFA726"
+        android:pathData="M10.5,13.5 L12,13.5 L12,15 L10.5,15 Z"/>
+    <path
+        android:fillColor="#FFA726"
+        android:pathData="M13,13.5 L14.5,13.5 L14.5,15 L13,15 Z"/>
+
+    <!-- Decorative lines on card -->
+    <path
+        android:strokeColor="#FF8F00"
+        android:strokeWidth="0.3"
+        android:strokeAlpha="0.6"
+        android:pathData="M6,5 L12,5"/>
+
+    <path
+        android:strokeColor="#FF8F00"
+        android:strokeWidth="0.3"
+        android:strokeAlpha="0.6"
+        android:pathData="M6,6 L10,6"/>
+
+    <!-- Circuit lines decoration (left side) -->
+    <path
+        android:strokeColor="#E65100"
+        android:strokeWidth="0.4"
+        android:strokeAlpha="0.5"
+        android:pathData="M4.5,10 L7,10"/>
+
+    <path
+        android:fillColor="#E65100"
+        android:fillAlpha="0.5"
+        android:pathData="M4.5,10 m-0.3,0 a0.3,0.3 0,1,1 0.6,0 a0.3,0.3 0,1,1 -0.6,0"/>
+
+    <path
+        android:strokeColor="#E65100"
+        android:strokeWidth="0.4"
+        android:strokeAlpha="0.5"
+        android:pathData="M4.5,12 L7,12"/>
+
+    <path
+        android:fillColor="#E65100"
+        android:fillAlpha="0.5"
+        android:pathData="M4.5,12 m-0.3,0 a0.3,0.3 0,1,1 0.6,0 a0.3,0.3 0,1,1 -0.6,0"/>
+
+    <path
+        android:strokeColor="#E65100"
+        android:strokeWidth="0.4"
+        android:strokeAlpha="0.5"
+        android:pathData="M4.5,14 L7,14"/>
+
+    <path
+        android:fillColor="#E65100"
+        android:fillAlpha="0.5"
+        android:pathData="M4.5,14 m-0.3,0 a0.3,0.3 0,1,1 0.6,0 a0.3,0.3 0,1,1 -0.6,0"/>
+
+    <!-- Circuit lines decoration (right side) -->
+    <path
+        android:strokeColor="#E65100"
+        android:strokeWidth="0.4"
+        android:strokeAlpha="0.5"
+        android:pathData="M16,10 L18.5,10"/>
+
+    <path
+        android:fillColor="#E65100"
+        android:fillAlpha="0.5"
+        android:pathData="M18.5,10 m-0.3,0 a0.3,0.3 0,1,1 0.6,0 a0.3,0.3 0,1,1 -0.6,0"/>
+
+    <path
+        android:strokeColor="#E65100"
+        android:strokeWidth="0.4"
+        android:strokeAlpha="0.5"
+        android:pathData="M16,12 L18.5,12"/>
+
+    <path
+        android:fillColor="#E65100"
+        android:fillAlpha="0.5"
+        android:pathData="M18.5,12 m-0.3,0 a0.3,0.3 0,1,1 0.6,0 a0.3,0.3 0,1,1 -0.6,0"/>
+
+    <path
+        android:strokeColor="#E65100"
+        android:strokeWidth="0.4"
+        android:strokeAlpha="0.5"
+        android:pathData="M16,14 L18.5,14"/>
+
+    <path
+        android:fillColor="#E65100"
+        android:fillAlpha="0.5"
+        android:pathData="M18.5,14 m-0.3,0 a0.3,0.3 0,1,1 0.6,0 a0.3,0.3 0,1,1 -0.6,0"/>
+
+    <!-- Bottom text area highlight -->
+    <path
+        android:fillColor="#FFF3E0"
+        android:fillAlpha="0.3"
+        android:pathData="M7,17 L16,17 L16,19 L7,19 Z"/>
+
+</vector>

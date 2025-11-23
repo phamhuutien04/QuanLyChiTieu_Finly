@@ -1,35 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
+    android:padding="0dp"
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="20dp"
-        app:cardBackgroundColor="@color/bg_indigo"
-        app:strokeWidth="1dp"
-        app:strokeColor="@color/stroke_gray">
+        app:cardCornerRadius="28dp"
+        app:cardElevation="16dp"
+        app:cardBackgroundColor="@color/background"
+        android:layout_margin="0dp"
+        tools:ignore="UnusedAttribute">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingHorizontal="24dp"
+            android:paddingTop="32dp"
+            android:paddingBottom="28dp">
 
-            <!-- Tiêu đề -->
-            <TextView
-                android:id="@+id/tvSheetTitle"
+            <!-- Header với icon và tiêu đề -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Thêm giao dịch"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:textColor="@color/black"
-                android:layout_marginBottom="16dp"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="28dp">
+
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="32dp"
+                    android:background="@color/accent"
+                    android:layout_marginEnd="16dp"/>
+
+                <TextView
+                    android:id="@+id/tvSheetTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/fontbold"
+                    android:text="Thêm giao dịch mới"
+                    android:textStyle="bold"
+                    android:textSize="26sp"
+                    android:textColor="@color/black"
+                    android:letterSpacing="0.01"/>
+            </LinearLayout>
 
             <!-- Tiêu đề giao dịch -->
             <com.google.android.material.textfield.TextInputLayout
@@ -37,22 +57,34 @@
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="18dp"
                 android:hint="Tiêu đề"
-                app:boxStrokeColor="@color/outline_state"
-                app:boxStrokeWidthFocused="2dp"
-                app:hintTextColor="@color/black"
+                app:boxCornerRadiusTopStart="14dp"
+                app:boxCornerRadiusTopEnd="14dp"
+                app:boxCornerRadiusBottomStart="14dp"
+                app:boxCornerRadiusBottomEnd="14dp"
+                app:boxStrokeColor="@color/outline_focused"
+                app:boxStrokeWidth="1.5dp"
+                app:boxStrokeWidthFocused="2.5dp"
+                app:hintTextColor="@color/text_secondary"
                 app:startIconDrawable="@drawable/ic_title_wrap_24"
                 app:startIconTint="@color/accent_blue"
-                app:endIconMode="clear_text">
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/text_secondary"
+                app:helperText="Ví dụ: Mua sắm siêu thị"
+                app:helperTextTextColor="@color/text_secondary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="56dp"
-                    android:textColor="@color/black"
-                    android:inputType="textCapSentences"/>
+                    android:minHeight="58dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:inputType="text"
+                    android:imeOptions="actionNext"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Danh mục -->
@@ -61,47 +93,113 @@
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="18dp"
                 android:hint="Danh mục"
+                app:boxCornerRadiusTopStart="14dp"
+                app:boxCornerRadiusTopEnd="14dp"
+                app:boxCornerRadiusBottomStart="14dp"
+                app:boxCornerRadiusBottomEnd="14dp"
+                app:boxStrokeColor="@color/outline_focused"
+                app:boxStrokeWidth="1.5dp"
+                app:boxStrokeWidthFocused="2.5dp"
                 app:startIconDrawable="@drawable/ic_category_wrap_24"
                 app:startIconTint="@color/accent_purple"
                 app:endIconMode="custom"
-                app:endIconDrawable="@android:drawable/arrow_down_float">
+                app:endIconDrawable="@android:drawable/arrow_down_float"
+                app:endIconTint="@color/text_secondary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtCategory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="56dp"
+                    android:minHeight="58dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:focusable="false"
                     android:clickable="true"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- ⭐⭐ KHUNG TAG BẠN BÈ ⭐⭐ -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilTagFriend"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            <!-- Row cho Ngày và Tag bạn bè -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:hint="Tag bạn bè"
-                app:startIconTint="@color/accent_blue"
-                app:endIconMode="custom"
-                app:endIconDrawable="@android:drawable/arrow_down_float"
-                app:endIconTint="@color/accent_blue">
+                android:orientation="horizontal"
+                android:layout_marginBottom="18dp"
+                android:weightSum="2">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtTagFriend"
-                    android:layout_width="match_parent"
+                <!-- Ngày giao dịch -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilDate"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:minHeight="56dp"
-                    android:focusable="false"
-                    android:clickable="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black"/>
-            </com.google.android.material.textfield.TextInputLayout>
-            <!-- ⭐⭐⭐ -->
+                    android:layout_marginEnd="8dp"
+                    android:hint="Ngày"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusBottomEnd="14dp"
+                    app:boxStrokeColor="@color/outline_focused"
+                    app:boxStrokeWidth="1.5dp"
+                    app:boxStrokeWidthFocused="2.5dp"
+                    app:startIconDrawable="@drawable/ic_calendar_wrap_24"
+                    app:startIconTint="@color/accent_orange"
+                    app:endIconMode="custom"
+                    app:endIconDrawable="@android:drawable/arrow_down_float"
+                    app:endIconTint="@color/text_secondary">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="58dp"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Tag bạn bè -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilTagFriend"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:hint="Bạn bè"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusBottomEnd="14dp"
+                    app:boxStrokeColor="@color/outline_focused"
+                    app:boxStrokeWidth="1.5dp"
+                    app:boxStrokeWidthFocused="2.5dp"
+                    app:startIconDrawable="@drawable/ic_user_group_24"
+                    app:startIconTint="@color/accent_green"
+                    app:endIconMode="custom"
+                    app:endIconDrawable="@android:drawable/arrow_down_float"
+                    app:endIconTint="@color/text_secondary">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtTagFriend"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="58dp"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        android:textSize="15sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
             <!-- Số tiền -->
             <com.google.android.material.textfield.TextInputLayout
@@ -110,7 +208,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Số tiền (VNĐ)"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="28dp"
+                app:boxCornerRadiusTopStart="14dp"
+                app:boxCornerRadiusTopEnd="14dp"
+                app:boxCornerRadiusBottomStart="14dp"
+                app:boxCornerRadiusBottomEnd="14dp"
+                app:boxStrokeColor="@color/app_bg_start"
+                app:boxStrokeWidth="2dp"
+                app:boxStrokeWidthFocused="3dp"
+                app:hintTextColor="@color/text_secondary"
                 app:startIconDrawable="@drawable/ic_money_wrap_24"
                 app:startIconTint="@color/income_green">
 
@@ -118,12 +224,17 @@
                     android:id="@+id/edtAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="56dp"
-                    android:inputType="numberDecimal"
-                    android:textColor="@color/black"/>
+                    android:minHeight="70dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:imeOptions="actionDone"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Buttons -->
+            <!-- Buttons với design gradient -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -132,18 +243,37 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnCancel"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:text="Hủy"/>
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="56dp"
+                    android:layout_marginEnd="12dp"
+                    android:text="Hủy"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="14dp"
+                    app:strokeWidth="2dp"
+                    app:strokeColor="@color/border_medium"
+                    app:rippleColor="@color/gray_300"
+                    tools:ignore="HardcodedText"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSave"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_marginStart="12dp"
-                    android:text="Lưu"
-                    app:backgroundTint="@color/accent"/>
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="56dp"
+                    android:text="LƯU GIAO DỊCH"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    app:backgroundTint="@color/accent"
+                    app:cornerRadius="14dp"
+                    android:elevation="8dp"
+                    app:icon="@android:drawable/ic_menu_save"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/white"
+                    tools:ignore="HardcodedText"/>
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

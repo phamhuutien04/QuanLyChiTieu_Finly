@@ -31,6 +31,8 @@ import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import android.app.DatePickerDialog
+import java.util.Calendar
 
 class HomeFragment : Fragment() {
 
@@ -45,6 +47,8 @@ class HomeFragment : Fragment() {
     private var tvBalance: TextView? = null
     private var tvCount: TextView? = null
 
+    private var selectedDate: Date = Date()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -57,7 +61,9 @@ class HomeFragment : Fragment() {
         bindUserHeader(view)
 
         rvTransactions = view.findViewById(R.id.rvTransactions)
-        adapter = TransactionAdapter(transactionList)
+
+        adapter = TransactionAdapter { transaction ->
+        }
         rvTransactions.layoutManager = LinearLayoutManager(requireContext())
         rvTransactions.adapter = adapter
 
@@ -90,6 +96,7 @@ class HomeFragment : Fragment() {
         setupViewAllButton(view)
         return view
     }
+
     private fun openSearchFriends() {
         val intent = Intent(requireContext(), SearchFriendsActivity::class.java)
         startActivity(intent)
@@ -184,6 +191,7 @@ class HomeFragment : Fragment() {
         val edtCategory = v.findViewById<TextInputEditText>(R.id.edtCategory)
         val edtAmount = v.findViewById<TextInputEditText>(R.id.edtAmount)
         val edtTagFriend = v.findViewById<TextInputEditText>(R.id.edtTagFriend)
+        val edtDate = v.findViewById<TextInputEditText>(R.id.edtDate)
         val btnSave = v.findViewById<MaterialButton>(R.id.btnSave)
         val btnCancel = v.findViewById<MaterialButton>(R.id.btnCancel)
 
@@ -193,7 +201,34 @@ class HomeFragment : Fragment() {
 
         val taggedFriends = mutableListOf<User>()
 
-        // chọn category
+        selectedDate = Date()
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        edtDate.setText(dateFormat.format(selectedDate))
+
+        // 1. CHỌN NGÀY THÁNG
+        edtDate.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            calendar.time = selectedDate
+
+            val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                calendar.set(Calendar.YEAR, year)
+                calendar.set(Calendar.MONTH, monthOfYear)
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+                selectedDate = calendar.time
+                edtDate.setText(dateFormat.format(selectedDate))
+            }
+
+            DatePickerDialog(
+                requireContext(),
+                dateSetListener,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
+
+        // 2. CHỌN CATEGORY
         edtCategory.setOnClickListener {
             val pick = BottomSheetDialog(requireContext())
             val pv = layoutInflater.inflate(R.layout.bottom_sheet_category_picker, null)
@@ -204,7 +239,10 @@ class HomeFragment : Fragment() {
 
             val listUI = categories.map { CatUI(it.id, it.name, it.iconUrl ?: "") }
 
-            rv.adapter = CategoryPickerAdapter(listUI) {
+            // --- SỬA: Truyền ID đang chọn (selectedId) vào Adapter ---
+            val currentSelectedId = chosen?.id
+
+            rv.adapter = CategoryPickerAdapter(listUI, currentSelectedId) {
                 chosen = categories.find { c -> c.id == it.id }
                 edtCategory.setText(it.name)
                 pick.dismiss()
@@ -214,7 +252,7 @@ class HomeFragment : Fragment() {
             pick.show()
         }
 
-        // chọn bạn để tag
+        // 3. CHỌN BẠN BÈ
         edtTagFriend.setOnClickListener {
             openFriendPicker(taggedFriends) { newList ->
                 taggedFriends.clear()
@@ -227,7 +265,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // format tiền
+        // 4. FORMAT TIỀN
         val vnFormat = NumberFormat.getInstance(Locale("vi", "VN"))
         edtAmount.keyListener = DigitsKeyListener.getInstance("0123456789.,")
         edtAmount.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(18))
@@ -265,6 +303,8 @@ class HomeFragment : Fragment() {
                 edtAmount.text?.toString()?.replace(".", "")?.replace(",", "")?.trim().orEmpty()
             val amount = clean.toDoubleOrNull() ?: 0.0
 
+            val transactionTimestamp = Timestamp(selectedDate)
+
             if (title.isEmpty() || chosen == null || amount <= 0) {
                 Toast.makeText(requireContext(), "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT)
                     .show()
@@ -279,7 +319,7 @@ class HomeFragment : Fragment() {
             val perShare = amount / participantIds.size
 
             saveTransactionForUsers(
-                type, title, chosen!!, perShare, participantIds
+                type, title, chosen!!, perShare, participantIds, transactionTimestamp
             )
 
             dialog.dismiss()
@@ -294,7 +334,8 @@ class HomeFragment : Fragment() {
         title: String,
         category: Category,
         amountEach: Double,
-        users: List<String>
+        users: List<String>,
+        date: Timestamp
     ) {
         val me = auth.currentUser?.uid
 
@@ -311,7 +352,7 @@ class HomeFragment : Fragment() {
                     categoryIconUrl = category.iconUrl,
                     amount = amountEach,
                     type = type,
-                    date = Timestamp.now()
+                    date = date
                 )
 
                 batch.set(txCol.document(txId), tx)
@@ -325,9 +366,6 @@ class HomeFragment : Fragment() {
                 }
             }
         }.addOnSuccessListener {
-
-
-
             val myId = auth.currentUser?.uid ?: return@addOnSuccessListener
             loadRecentTransactionsForUser(myId)
         }.addOnFailureListener {
@@ -414,14 +452,17 @@ class HomeFragment : Fragment() {
         db.collection("users").document(userId)
             .collection("transactions")
             .orderBy("date", Query.Direction.DESCENDING)
-            .limit(3)
+            .limit(3) // Lấy 3 giao dịch gần nhất
             .addSnapshotListener { snapshot, e ->
                 if (e != null) return@addSnapshotListener
                 transactionList.clear()
                 snapshot?.forEach { doc ->
                     transactionList.add(doc.toObject(Transaction::class.java))
                 }
-                adapter.notifyDataSetChanged()
+
+                // Hàm setData sẽ tự động gom nhóm theo ngày
+                adapter.setData(transactionList)
+
                 tvCount?.text = "${transactionList.size} giao dịch gần đây"
             }
     }
