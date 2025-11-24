@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- 1. Icon Container: Nền tròn mờ phía sau icon -->
+        <!-- 1. Icon Container -->
         <FrameLayout
             android:id="@+id/iconContainer"
             android:layout_width="48dp"
@@ -36,7 +36,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:contentDescription="Icon danh mục"
+                android:contentDescription="@string/category_icon_desc"
                 android:scaleType="centerInside"
                 android:src="@android:drawable/ic_menu_gallery" />
         </FrameLayout>
@@ -47,7 +47,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:text="Tên danh mục"
+            android:text="@string/category_name_default"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -56,8 +56,7 @@
             app:layout_constraintStart_toEndOf="@+id/iconContainer"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- 3. Chỉ báo chọn (Radio Button giả) -->
-        <!-- Dùng ImageView thay vì RadioButton thật để dễ control logic trong Adapter -->
+        <!-- 3. RadioButton giả -->
         <ImageView
             android:id="@+id/rbSelected"
             android:layout_width="24dp"

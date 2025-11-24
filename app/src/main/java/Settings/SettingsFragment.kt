@@ -63,6 +63,8 @@ class SettingsFragment : Fragment() {
     private val imagePickRequest = 1001
     private var isUpdatingSwitch = false
 
+    private lateinit var tvCurrentLanguage: TextView
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -81,6 +83,7 @@ class SettingsFragment : Fragment() {
         tvUserEmail = view.findViewById(R.id.tvUserEmail)
         imgAvatar = view.findViewById(R.id.imgAvatar)
 
+        tvCurrentLanguage = view.findViewById(R.id.tvCurrentLanguage)
 
         // Tải thông tin người dùng
         loadUserInfo()
@@ -141,8 +144,52 @@ class SettingsFragment : Fragment() {
             }
         }
 
+        // Language
+        view.findViewById<LinearLayout>(R.id.btnLanguage).setOnClickListener {
+            showLanguageDialog()
+        }
+
+        val lang = sharedPreferences.getString("app_language", "vi")!!
+        tvCurrentLanguage.text = if (lang == "en") "English" else "Tiếng Việt"
+
         return view
     }
+
+    private fun showLanguageDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_language)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val rbVN = dialog.findViewById<RadioButton>(R.id.rbVietnamese)
+        val rbEN = dialog.findViewById<RadioButton>(R.id.rbEnglish)
+        val btnCancel = dialog.findViewById<TextView>(R.id.btnCancelLang)
+        val btnApply = dialog.findViewById<TextView>(R.id.btnApplyLang)
+
+        // Load trạng thái ngôn ngữ hiện tại
+        val currentLang = sharedPreferences.getString("app_language", "vi")
+        if (currentLang == "en") {
+            rbEN.isChecked = true
+        } else {
+            rbVN.isChecked = true
+        }
+
+        btnCancel.setOnClickListener { dialog.dismiss() }
+
+        btnApply.setOnClickListener {
+            val newLang = if (rbEN.isChecked) "en" else "vi"
+            setLocale(newLang)
+            dialog.dismiss()
+        }
+
+        dialog.show()
+
+        // Set width dialog
+        val metrics = resources.displayMetrics
+        val width = metrics.widthPixels - (40 * metrics.density).toInt()
+        dialog.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
+    }
+
 
     private fun saveTwoFAStatus(userId: String, enabled: Boolean) {
         db.collection("users").document(userId)
@@ -488,6 +535,25 @@ class SettingsFragment : Fragment() {
             imgAvatar.setImageResource(R.drawable.ic_user_placeholder)
         }
     }
+
+    private fun setLocale(lang: String) {
+        val locale = Locale(lang)
+        Locale.setDefault(locale)
+
+        val config = resources.configuration
+        config.setLocale(locale)
+
+        requireContext().createConfigurationContext(config)
+
+        // Lưu lại ngôn ngữ
+        sharedPreferences.edit().putString("app_language", lang).apply()
+
+        // Restart Activity để áp dụng ngôn ngữ
+        val intent = requireActivity().intent
+        requireActivity().finish()
+        startActivity(intent)
+    }
+
 
     private fun showLogoutDialog() {
         val dialog = Dialog(requireContext())

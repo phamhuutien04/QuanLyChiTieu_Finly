@@ -22,6 +22,7 @@
             android:id="@+id/tvTheirMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/chat_their_message_placeholder"
             android:textColor="#1F2937"
             android:textSize="15sp"/>
     </LinearLayout>

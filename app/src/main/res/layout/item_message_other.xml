@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="14dp"
         android:paddingVertical="10dp"
+        android:text="@string/chat_message_other_placeholder"
         android:textColor="#1F2937"
         android:background="@drawable/bg_msg_other"
         android:textSize="15sp" />

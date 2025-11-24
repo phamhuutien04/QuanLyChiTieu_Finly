@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="76dp"
-        android:text="Hoá đơn &amp; Tiện ích"
+        android:text="@string/category_bill_utility"
         android:textColor="#212121"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -49,7 +49,7 @@
         android:maxLines="1"
         android:ellipsize="end" />
 
-    <!-- Gạch phân cách giống ảnh (không chạy dưới icon) -->
+    <!-- Divider -->
     <View
         android:id="@+id/bottomDivider"
         android:layout_width="match_parent"

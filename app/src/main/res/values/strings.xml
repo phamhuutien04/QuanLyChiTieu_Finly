@@ -23,7 +23,6 @@
 
     <!-- Password Rules -->
     <string name="password_requirements">Yêu cầu mật khẩu</string>
-    <string name="pwd_require_title">Mật khẩu phải có:</string>
     <string name="pwd_error_full">Chưa đạt: ≥6 ký tự, có 1 chữ hoa, 1 số, 1 ký tự đặc biệt</string>
     <string name="fill_all_fields">Vui lòng nhập đầy đủ thông tin.</string>
     <string name="pwd_not_match">Mật khẩu nhập lại không khớp.</string>
@@ -350,4 +349,72 @@
 
     <string name="sort_by_amount">Số tiền</string>
 
+    <string name="home_username">NameUser</string>
+    <string name="home_date_today">Thứ Năm, 18 tháng 09 2025</string>
+
+    <string name="home_total_balance">Tổng số dư</string>
+
+    <string name="report">Báo cáo</string>
+
+    <string name="recent_transactions">Giao dịch gần đây</string>
+    <string name="transaction_count_zero">0 giao dịch</string>
+
+    <string name="view_all_transactions">Xem tất cả giao dịch</string>
+
+    <string name="item_name">Tên khoản</string>
+    <string name="item_amount_default">0 đ</string>
+
+    <string name="category_food">Ăn uống</string>
+    <string name="category_amount_default">2,000,000đ</string>
+
+    <string name="category_icon_desc">Icon danh mục</string>
+    <string name="category_name_default">Tên danh mục</string>
+
+    <string name="category_bill_utility">Hoá đơn &amp; Tiện ích</string>
+
+    <string name="list_username">Tên người dùng</string>
+    <string name="list_last_message">Tin nhắn cuối...</string>
+    <string name="list_time_example">09:45</string>
+
+    <string name="chat_my_message_placeholder">Nội dung tin nhắn</string>
+
+    <string name="chat_their_message_placeholder">Tin nhắn</string>
+
+    <string name="friend_name_default">Tên bạn</string>
+
+    <string name="request_user_name">Tên người dùng</string>
+    <string name="request_accept">Đồng ý</string>
+    <string name="request_reject">Xóa</string>
+
+    <string name="user_item_name">Tên người dùng</string>
+    <string name="user_item_email">email@gmail.com</string>
+    <string name="user_item_add_friend">Kết bạn</string>
+
+    <string name="chat_message_me_placeholder">Tin nhắn</string>
+
+    <string name="chat_message_other_placeholder">Tin nhắn</string>
+
+    <string name="goal_category_name">Ăn uống</string>
+    <string name="goal_transaction_count">32 giao dịch</string>
+    <string name="goal_amount">8.500.000 đ</string>
+    <string name="goal_trend_arrow">↗</string>
+    <string name="goal_percentage">+12%</string>
+
+    <string name="transaction_title_default">An banh mi</string>
+    <string name="transaction_category_default">Ăn uống</string>
+    <string name="transaction_date_default">23/11/2025</string>
+    <string name="transaction_amount_default">-50.000 đ</string>
+    <string name="transaction_type_default">Chi tiêu</string>
+
+    <string name="pwd_require_title">Yêu cầu mật khẩu</string>
+
+    <string name="pwd_rule_min_length">• Tối thiểu 6 ký tự</string>
+    <string name="pwd_rule_uppercase">• Ít nhất 1 chữ hoa (A–Z)</string>
+    <string name="pwd_rule_number">• Ít nhất 1 chữ số (0–9)</string>
+    <string name="pwd_rule_special">• Ít nhất 1 ký tự đặc biệt (!@#…)</string>
+
+    <string name="header_day_number" translatable="false">29</string>
+    <string name="header_day_of_week" translatable="false">Thứ Tư</string>
+    <string name="header_month_year" translatable="false">tháng 10 2025</string>
+    <string name="header_total_amount" translatable="false">-168,000</string>
 </resources>

@@ -29,7 +29,7 @@
                 android:id="@+id/tvHeaderDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="29"
+                android:text="@string/header_day_number"
                 android:textSize="34sp"
                 android:textColor="#000000"
                 android:textStyle="normal"
@@ -46,7 +46,7 @@
                     android:id="@+id/tvHeaderDayOfWeek"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Thứ Tư"
+                    android:text="@string/header_day_of_week"
                     android:textSize="14sp"
                     android:textColor="#616161"
                     android:textStyle="bold"/>
@@ -55,7 +55,7 @@
                     android:id="@+id/tvHeaderMonthYear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="tháng 10 2025"
+                    android:text="@string/header_month_year"
                     android:textSize="13sp"
                     android:textColor="#9E9E9E"/>
             </LinearLayout>
@@ -64,7 +64,7 @@
                 android:id="@+id/tvHeaderTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="-168,000"
+                android:text="@string/header_total_amount"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="#000000"/>

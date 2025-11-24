@@ -1,2 +1,418 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <!-- App -->
+    <string name="app_name">Finly</string>
+    <string name="welcome_message">Welcome to the app!</string>
+
+    <!-- Auth -->
+    <string name="register_button">Register</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="dont_have_account">Don’t have an account? Register</string>
+    <string name="already_have_account">Already have an account? Login</string>
+
+    <!-- Labels -->
+    <string name="username_label">Username</string>
+    <string name="username_hint">Enter username</string>
+    <string name="email">Email</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+
+    <string name="confirm_password_label">Confirm password</string>
+    <string name="confirm_password_hint">Re-enter password</string>
+
+    <!-- Password Rules -->
+    <string name="password_requirements">Password requirements</string>
+    <string name="pwd_error_full">Not valid: ≥6 chars, contains uppercase, number, special character</string>
+    <string name="fill_all_fields">Please fill in all fields.</string>
+    <string name="pwd_not_match">Passwords do not match.</string>
+    <string name="register_success">Registration successful!</string>
+
+    <!-- Styled Text -->
+    <string name="already_have_accountt">
+        <![CDATA[
+        <font color="#FFFFFF">Already have an account? </font>
+        <b><u><font color="#FFFFFF">Login</font></u></b>
+        ]]>
+    </string>
+
+    <!-- All Transactions -->
+    <string name="all_tx_back">Back</string>
+    <string name="all_tx_tip">💡 Tip: Tap a transaction to edit</string>
+    <string name="all_tx_overview">📊 Transaction overview</string>
+    <string name="all_tx_total_income">Total income</string>
+    <string name="all_tx_total_expense">Total expense</string>
+    <string name="all_tx_list_title">Transaction list</string>
+    <string name="all_tx_search_hint">Search title...</string>
+    <string name="all_tx_filter_category">Category</string>
+    <string name="all_tx_filter_income">Income</string>
+    <string name="all_tx_filter_expense">Expense</string>
+
+    <!-- Chat -->
+    <string name="chatting_title">Chatting</string>
+    <string name="chat_input_hint">Enter message...</string>
+    <string name="chat_list_title">Messages</string>
+    <string name="chat_search_hint">Search messages or names...</string>
+
+    <!-- Forgot Password -->
+    <string name="forgot_password_title">Forgot password?</string>
+    <string name="forgot_password_subtitle">Enter your registered email to receive a 6-digit code.</string>
+    <string name="send_otp">Send verification code</string>
+    <string name="back_to_login">Back to login</string>
+
+    <!-- Friend Requests -->
+    <string name="friend_request_title">Friend requests</string>
+
+    <!-- Other -->
+    <string name="category_image">Add category</string>
+    <string name="show_password">Show password</string>
+    <string name="no_account">No account yet?</string>
+
+    <!-- Bottom Tabs -->
+    <string name="tab_home">Home</string>
+    <string name="tab_category">Categories</string>
+    <string name="tab_analytics">Analytics</string>
+    <string name="tab_settings">Settings</string>
+
+    <string name="reset_password">Reset password</string>
+    <string name="reset_password_desc">Enter your new password</string>
+
+    <string name="new_password">New password</string>
+    <string name="confirm_new_password">Confirm new password</string>
+
+    <string name="password_must_have">Password must contain:</string>
+    <string name="pwd_req_min">• At least 8 characters</string>
+    <string name="pwd_req_number">• At least 1 number</string>
+    <string name="pwd_req_upper">• At least 1 uppercase letter</string>
+
+    <string name="confirm_change_password">Confirm password change</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="search_friend_hint">Search friends...</string>
+
+    <string name="profile_title">Profile</string>
+    <string name="profile_username">Username</string>
+    <string name="profile_no_bio">No bio yet</string>
+    <string name="profile_unknown_location">Unknown</string>
+
+    <string name="profile_add_friend">Add friend</string>
+    <string name="profile_message">Message</string>
+
+    <string name="profile_tab_posts">Posts</string>
+    <string name="profile_tab_goals">Goals</string>
+    <string name="profile_tab_activity">Activity</string>
+
+    <string name="sheet_add_transaction">Add transaction</string>
+    <string name="amount_hint">Amount (VND)</string>
+    <string name="transaction_title_hint">Title (e.g. Shopping)</string>
+    <string name="category_hint">Category</string>
+    <string name="date_hint">Date</string>
+    <string name="friend_hint">Friend</string>
+    <string name="save">Save</string>
+
+    <string name="select_category">Select category</string>
+
+    <string name="progress_detail_title">Progress details</string>
+    <string name="progress_month_goal">This month goal</string>
+    <string name="spent_label">spent</string>
+    <string name="on_track_status">⚡ You’re on track!</string>
+    <string name="spent">Spent</string>
+    <string name="goal">Goal</string>
+    <string name="month_remaining">Remaining this month</string>
+    <string name="daily_budget">📊 Daily budget</string>
+    <string name="days_left">📅 Days left</string>
+    <string name="tips_spending_daily">Stay within your daily budget to reach your goal!</string>
+
+    <string name="pick_friend_title">Choose a friend</string>
+    <string name="done">Done</string>
+
+    <string name="edit_transaction">Edit transaction</string>
+    <string name="transaction_title">Title</string>
+    <string name="transaction_type">Transaction type</string>
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+    <string name="delete">Delete</string>
+    <string name="save_changes">Save changes</string>
+
+    <string name="transaction_saved">Transaction saved</string>
+    <string name="sample_amount">1,500,000 đ</string>
+    <string name="sample_type_category">Expense • Food</string>
+    <string name="sample_datetime">On 20/11/2025 14:35</string>
+    <string name="sample_note">Note: Coffee with friend</string>
+
+    <string name="add_another">Add another</string>
+    <string name="view_all">View all</string>
+    <string name="close">Close</string>
+
+    <string name="two_fa_title">Two-factor authentication (2FA)</string>
+    <string name="two_fa_subtitle">Enable additional protection when unusual devices or IPs are detected.</string>
+
+    <string name="two_fa_feature_device">Automatically checks device &amp; IP on login</string>
+    <string name="two_fa_feature_code">Requires verification code on suspicious login</string>
+
+    <string name="two_fa_enable">Enable 2FA</string>
+    <string name="two_fa_skip">Later</string>
+
+    <!-- About -->
+    <string name="about_app_title">Finly</string>
+    <string name="about_app_slogan">Finance Friendly</string>
+    <string name="about_app_version">Version 1.0.0</string>
+
+    <string name="about_app_description">
+        Smart personal finance management app helping you track expenses, plan budgets, and achieve financial goals.
+    </string>
+
+    <string name="about_developed_by">Developed by</string>
+    <string name="about_developer_name">Group 8 - TDMU - D22CNT05</string>
+    <string name="about_copyright">© 2025 Academic year 2022 - 2027</string>
+
+    <string name="transaction_title_gd">Transaction name</string>
+    <string name="category_label">Category</string>
+    <string name="amount_label">Amount (e.g. 50000)</string>
+
+    <!-- Change Password -->
+    <string name="change_password_title">Change password</string>
+    <string name="change_password_subtitle">Protect your account</string>
+
+    <string name="current_password">Current password</string>
+    <string name="hint_current_password">Enter current password</string>
+
+    <string name="new_password_label">New password</string>
+    <string name="hint_new_password">Enter new password</string>
+
+    <string name="confirm_password">Confirm password</string>
+    <string name="hint_confirm_password">Re-enter new password</string>
+
+    <string name="password_requirements_title">Password requirements</string>
+    <string name="password_requirements_detail">
+        • Minimum 8 characters\n• Uppercase &amp; lowercase\n• At least 1 digit
+    </string>
+
+    <!-- Currency Selector -->
+    <string name="currency_select_title">Choose currency</string>
+    <string name="currency_auto_convert_desc">Data will be automatically converted</string>
+
+    <string name="currency_vnd">VND (₫)</string>
+    <string name="currency_vnd_full">Vietnamese Dong</string>
+
+    <string name="currency_usd">USD ($)</string>
+    <string name="currency_usd_full">US Dollar</string>
+
+    <string name="currency_eur">EUR (€)</string>
+    <string name="currency_eur_full">Euro</string>
+
+    <string name="currency_thb">THB (฿)</string>
+    <string name="currency_thb_full">Thai Baht</string>
+
+    <string name="apply">Apply</string>
+
+    <!-- Transaction Type -->
+    <string name="transaction_type_title">Transaction type</string>
+    <string name="transaction_type_subtitle">Choose your transaction type</string>
+
+    <string name="expense_desc">Money spent</string>
+    <string name="income_desc">Money earned</string>
+
+    <!-- Goal Management -->
+    <string name="goal_manage_title">Goal management</string>
+    <string name="goal_manage_sub">Set your spending goals</string>
+
+    <string name="goal_quick_presets">Quick presets</string>
+
+    <string name="goal_preset_low">Saving</string>
+    <string name="goal_preset_low_value">15M/month</string>
+
+    <string name="goal_preset_medium">Balanced</string>
+    <string name="goal_preset_medium_value">30M/month</string>
+
+    <string name="goal_preset_high">Comfortable</string>
+    <string name="goal_preset_high_value">60M/month</string>
+
+    <string name="goal_smart_title">Smart goal</string>
+    <string name="goal_smart_sub">Based on your average spending</string>
+
+    <string name="goal_spend_title">Spending goals</string>
+
+    <string name="goal_daily">Daily goal</string>
+    <string name="goal_daily_placeholder">e.g. 1,000,000</string>
+
+    <string name="goal_monthly">Monthly goal</string>
+    <string name="goal_monthly_placeholder">e.g. 30,000,000</string>
+
+    <string name="goal_yearly">Yearly goal</string>
+    <string name="goal_yearly_placeholder">e.g. 360,000,000</string>
+
+    <string name="goal_notif_title">Notifications</string>
+    <string name="goal_notif_enable">Enable notification</string>
+    <string name="goal_notif_sub">Alert when reaching goal threshold</string>
+
+    <string name="goal_threshold">Threshold</string>
+
+    <string name="save_goal">Save goal</string>
+
+    <string name="goal_tip">Tip: Set goals 10–20% below current spending for easier achievement!</string>
+
+    <string name="warning_limit_exceeded">You have exceeded your spending threshold!</string>
+    <string name="understood">Understood</string>
+
+    <!-- Language -->
+    <string name="lang_select_title">Choose language</string>
+    <string name="lang_vietnamese">Vietnamese</string>
+    <string name="lang_english">English</string>
+
+    <!-- Logout -->
+    <string name="logout_title">Logout</string>
+    <string name="logout_message">Are you sure you want to logout?</string>
+    <string name="logout_warning_unsynced">Unsynced data will be lost</string>
+    <string name="logout_confirm">Logout</string>
+
+    <!-- OTP -->
+    <string name="otp_title">Enter verification code</string>
+    <string name="otp_subtitle">A 6-digit code has been sent to your email</string>
+    <string name="otp_hint">0 0 0 0 0 0</string>
+    <string name="confirm">Confirm</string>
+
+    <!-- OTP 4 -->
+    <string name="otp_email_instruction">Check your email and enter the 4-digit code</string>
+    <string name="otp_hint_4">0 0 0 0</string>
+
+    <!-- OTP Verification -->
+    <string name="otp_verify_title">Verify OTP</string>
+    <string name="otp_enter_code">Enter OTP</string>
+    <string name="otp_verify">Verify</string>
+
+    <!-- Add Category -->
+    <string name="add_category_title">Add Category</string>
+    <string name="category_image_title">Category image</string>
+    <string name="tap_to_select_image">Tap to select image</string>
+    <string name="category_name_hint">Category name</string>
+    <string name="category_type">Category type</string>
+
+    <!-- Dashboard -->
+    <string name="home_hello">Hello!</string>
+    <string name="home_today_finance">Today’s Finance</string>
+
+    <string name="home_income_value">41,000,350 đ</string>
+    <string name="home_income_growth">↗ +12.5% from last month</string>
+
+    <string name="home_expense_value">28,351,000 đ</string>
+    <string name="home_expense_growth">↗ +8.2% from last month</string>
+
+    <string name="home_balance_label">Balance</string>
+    <string name="home_balance_value">12,649,350 đ</string>
+
+    <string name="home_month_goal_label">Monthly goal</string>
+    <string name="home_goal_progress_percent">68%</string>
+    <string name="home_goal_amount">28M/41M</string>
+
+    <string name="home_quick_stats_title">Quick stats</string>
+
+    <string name="home_period_day">Day</string>
+    <string name="home_period_month">Month</string>
+    <string name="home_period_year">Year</string>
+
+    <string name="home_avg_daily_label">Average/day</string>
+    <string name="home_avg_daily_value">945K</string>
+
+    <string name="home_highest_label">Highest</string>
+    <string name="home_highest_value">2.1M</string>
+
+    <string name="home_trend_label">Trend</string>
+    <string name="home_trend_icon">↗</string>
+    <string name="home_trend_percent">8.2%</string>
+
+    <string name="home_goal_manage_sub">Set and track your spending goals</string>
+
+    <string name="home_goal_day_label">Day</string>
+    <string name="home_goal_day_value">1.5M</string>
+
+    <string name="home_goal_month_label">Month</string>
+    <string name="home_goal_month_value">41M</string>
+
+    <string name="home_goal_year_label">Year</string>
+    <string name="home_goal_year_value">500M</string>
+
+    <string name="home_expense_analysis_title">Spending analysis</string>
+
+    <string name="home_detail_list_title">Detailed transactions</string>
+
+    <string name="category_title">Categories</string>
+    <string name="category_subtitle">Manage grouped spending</string>
+
+    <string name="tab_spending">Expense</string>
+    <string name="tab_income">Income</string>
+
+    <string name="total_cost">Total cost</string>
+
+    <string name="transaction_count">Transactions</string>
+
+    <string name="category_spending_list_title">Spending categories</string>
+
+    <string name="sort_by_amount">Amount</string>
+
+    <string name="home_username">NameUser</string>
+    <string name="home_date_today">Thursday, September 18, 2025</string>
+
+    <string name="home_total_balance">Total balance</string>
+
+    <string name="report">Report</string>
+
+    <string name="recent_transactions">Recent transactions</string>
+    <string name="transaction_count_zero">0 transactions</string>
+
+    <string name="view_all_transactions">View all transactions</string>
+
+    <string name="item_name">Item name</string>
+    <string name="item_amount_default">0 đ</string>
+
+    <string name="category_food">Food &amp; Drinks</string>
+    <string name="category_amount_default">2,000,000 đ</string>
+
+    <string name="category_icon_desc">Category icon</string>
+    <string name="category_name_default">Category name</string>
+
+    <string name="category_bill_utility">Bills &amp; Utilities</string>
+
+    <string name="list_username">Username</string>
+    <string name="list_last_message">Last message...</string>
+    <string name="list_time_example">09:45</string>
+
+    <string name="chat_my_message_placeholder">Message</string>
+
+    <string name="chat_their_message_placeholder">Message</string>
+
+    <string name="friend_name_default">Friend name</string>
+
+    <string name="request_user_name">Username</string>
+    <string name="request_accept">Accept</string>
+    <string name="request_reject">Remove</string>
+
+    <string name="user_item_name">Username</string>
+    <string name="user_item_email">email@gmail.com</string>
+    <string name="user_item_add_friend">Add friend</string>
+
+    <string name="chat_message_me_placeholder">Message</string>
+
+    <string name="chat_message_other_placeholder">Message</string>
+
+    <string name="goal_category_name">Food</string>
+    <string name="goal_transaction_count">32 transactions</string>
+    <string name="goal_amount">8,500,000 đ</string>
+    <string name="goal_trend_arrow">↗</string>
+    <string name="goal_percentage">+12%</string>
+
+    <string name="transaction_title_default">Eat banh mi</string>
+    <string name="transaction_category_default">Food</string>
+    <string name="transaction_date_default">23/11/2025</string>
+    <string name="transaction_amount_default">-50,000 đ</string>
+    <string name="transaction_type_default">Expense</string>
+
+    <string name="pwd_require_title">Password requirements</string>
+
+    <string name="pwd_rule_min_length">• Minimum 6 characters</string>
+    <string name="pwd_rule_uppercase">• At least 1 uppercase letter</string>
+    <string name="pwd_rule_number">• At least 1 number</string>
+    <string name="pwd_rule_special">• At least 1 special character (!@#…)</string>
+
+</resources>

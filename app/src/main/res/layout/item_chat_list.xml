@@ -22,7 +22,7 @@
 
         <TextView
             android:id="@+id/tvListName"
-            android:text="Tên người dùng"
+            android:text="@string/list_username"
             android:textSize="16sp"
             android:textColor="#1F2937"
             android:textStyle="bold"
@@ -31,7 +31,7 @@
 
         <TextView
             android:id="@+id/tvListLastMsg"
-            android:text="Tin nhắn cuối..."
+            android:text="@string/list_last_message"
             android:textColor="#6B7280"
             android:textSize="14sp"
             android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
 
     <TextView
         android:id="@+id/tvListTime"
-        android:text="09:45"
+        android:text="@string/list_time_example"
         android:textColor="#9CA3AF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

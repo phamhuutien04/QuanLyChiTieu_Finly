@@ -46,7 +46,7 @@
                 android:id="@+id/tvCategoryName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ăn uống"
+                android:text="@string/goal_category_name"
                 android:textSize="16sp"
                 android:textColor="#1F2937"
                 android:textStyle="bold"
@@ -55,7 +55,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="32 giao dịch"
+                android:text="@string/goal_transaction_count"
                 android:textSize="12sp"
                 android:textColor="#9CA3AF"
                 android:layout_marginTop="2dp"/>
@@ -72,7 +72,7 @@
                 android:id="@+id/tvAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="8.500.000 đ"
+                android:text="@string/goal_amount"
                 android:textSize="16sp"
                 android:textColor="#1F2937"
                 android:textStyle="bold"
@@ -89,7 +89,7 @@
                     android:id="@+id/tvTrend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="↗"
+                    android:text="@string/goal_trend_arrow"
                     android:textSize="12sp"
                     android:textColor="#EF4444"/>
 
@@ -97,7 +97,7 @@
                     android:id="@+id/tvPercentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+12%"
+                    android:text="@string/goal_percentage"
                     android:textSize="12sp"
                     android:textColor="#EF4444"
                     android:textStyle="bold"

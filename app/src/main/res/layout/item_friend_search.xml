@@ -24,7 +24,7 @@
             android:id="@+id/tvUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tên người dùng"
+            android:text="@string/user_item_name"
             android:textSize="16sp"
             android:textStyle="bold"/>
 
@@ -32,17 +32,16 @@
             android:id="@+id/tvEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="email@gmail.com"
+            android:text="@string/user_item_email"
             android:textSize="13sp"
             android:textColor="#6B7280"/>
-
     </LinearLayout>
 
     <TextView
         android:id="@+id/btnAddFriend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kết bạn"
+        android:text="@string/user_item_add_friend"
         android:textColor="#FFFFFF"
         android:paddingVertical="6dp"
         android:paddingHorizontal="16dp"
