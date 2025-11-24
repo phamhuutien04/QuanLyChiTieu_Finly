@@ -26,7 +26,7 @@ class FriendRequestActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_friend_request)
+        setContentView(R.layout.activity_notify)
 
         currentUid = auth.currentUser?.uid ?: ""
 
