@@ -46,13 +46,20 @@ class FriendRequestActivity : AppCompatActivity() {
     }
 
     private fun loadRequests() {
-        db.collection("users")
-            .document(currentUid)
-            .collection("friend_requests")
+
+        db.collection("friend_requests")
+            .whereEqualTo("receiverId", currentUid)
             .whereEqualTo("status", "pending")
             .addSnapshotListener { snap, _ ->
+
                 if (snap == null) return@addSnapshotListener
+
                 val temp = mutableListOf<User>()
+
+                if (snap.isEmpty) {
+                    adapter.update(temp)
+                    return@addSnapshotListener
+                }
 
                 snap.documents.forEach { doc ->
                     val senderId = doc.getString("senderId") ?: return@forEach
@@ -68,44 +75,42 @@ class FriendRequestActivity : AppCompatActivity() {
                                     avatarUrl = u.getString("avatarUrl") ?: ""
                                 )
                             )
+
                             adapter.update(temp)
                         }
                 }
             }
     }
 
-    // Accept friend
+
     private fun acceptFriend(user: User) {
 
         val since = mapOf("since" to System.currentTimeMillis())
 
-        // both sides
-        db.collection("friends").document(currentUid)
-            .collection("list").document(user.id).set(since)
+        db.collection("users").document(currentUid)
+            .collection("friends").document(user.id).set(since)
 
-        db.collection("friends").document(user.id)
-            .collection("list").document(currentUid).set(since)
+        db.collection("users").document(user.id)
+            .collection("friends").document(currentUid).set(since)
 
-        // delete request
         deleteRequest(user.id)
 
-        Toast.makeText(this, "Đã là bạn bè!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Đã là bạn bè", Toast.LENGTH_SHORT).show()
     }
 
-    // Reject request
     private fun rejectFriend(user: User) {
         deleteRequest(user.id)
-        Toast.makeText(this, "Đã xóa lời mời!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Đã xóa lời mời", Toast.LENGTH_SHORT).show()
     }
 
     private fun deleteRequest(senderId: String) {
-        db.collection("users")
-            .document(currentUid)
-            .collection("friend_requests")
+        db.collection("friend_requests")
             .whereEqualTo("senderId", senderId)
+            .whereEqualTo("receiverId", currentUid)
             .get()
             .addOnSuccessListener { snap ->
                 snap.documents.forEach { it.reference.delete() }
             }
     }
+
 }

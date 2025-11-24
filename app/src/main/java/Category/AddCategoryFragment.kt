@@ -37,7 +37,6 @@ import kotlin.concurrent.thread
 
 class AddCategoryFragment : Fragment() {
 
-    // UI
     private lateinit var toolbar: MaterialToolbar
     private lateinit var cardImagePreview: MaterialCardView
     private lateinit var ivCategoryImage: ImageView
@@ -50,12 +49,10 @@ class AddCategoryFragment : Fragment() {
     private lateinit var btnSave: MaterialButton
     private lateinit var progressBar: ProgressBar
 
-    // Firebase & Cloudinary
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private lateinit var cloudinary: Cloudinary
 
-    // Lưu ảnh khi chọn
     private var selectedImageUri: Uri? = null
     private var selectedResId: Int? = null
 
@@ -87,13 +84,10 @@ class AddCategoryFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         initViews(view)
         initFirebase()
 
         toolbar.setNavigationOnClickListener { parentFragmentManager.popBackStack() }
-
         cardImagePreview.setOnClickListener { showImagePickerDialog() }
         btnCancel.setOnClickListener { parentFragmentManager.popBackStack() }
         btnSave.setOnClickListener { saveCategory() }
@@ -128,14 +122,11 @@ class AddCategoryFragment : Fragment() {
             oldType = b.getString("type")
             oldIconUrl = b.getString("iconUrl")
 
-            // Đổ dữ liệu UI
             etCategoryName.setText(oldName)
 
-            // Set loại
             if (oldType == "spending") rbExpense.isChecked = true
             else rbIncome.isChecked = true
 
-            // Load ảnh cũ
             Glide.with(requireContext())
                 .load(oldIconUrl)
                 .error(R.drawable.ic_categorys)
@@ -163,24 +154,22 @@ class AddCategoryFragment : Fragment() {
     }
 
     private fun updateCategory(name: String) {
-        uploadAndSave(name, newId = editId)
+        uploadAndSave(name, newId = editId)  // ✔ giữ nguyên ID
     }
 
     private fun uploadAndSave(name: String, newId: String?) {
         val userId = auth.currentUser!!.uid
         val type = if (rbExpense.isChecked) "spending" else "income"
 
-        var needUpload = true
-
-        if (newId != null && selectedImageUri == null && selectedResId == null) {
-            needUpload = false
-        }
+        val needUpload = selectedImageUri != null || selectedResId != null
 
         progressBar.visibility = View.VISIBLE
 
         thread {
             try {
+
                 val finalImageUrl = if (needUpload) {
+                    // xử lý ảnh Cloudinary
                     val bitmap = when {
                         selectedImageUri != null ->
                             MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, selectedImageUri)
@@ -190,48 +179,52 @@ class AddCategoryFragment : Fragment() {
                             (drawable as BitmapDrawable).bitmap
                         }
 
-                        else -> {
-                            val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_categorys)!!
-                            (drawable as BitmapDrawable).bitmap
-                        }
+                        else -> null
                     }
 
                     val baos = ByteArrayOutputStream()
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
+                    bitmap!!.compress(Bitmap.CompressFormat.PNG, 100, baos)
                     val inputStream = ByteArrayInputStream(baos.toByteArray())
 
                     val uploadResult = cloudinary.uploader().upload(inputStream, mapOf(
                         "folder" to "users/$userId/categories",
-                        "public_id" to name,
                         "overwrite" to true
                     ))
 
                     uploadResult["secure_url"].toString()
+
                 } else {
                     oldIconUrl ?: ""
                 }
 
+                // ✔ KHÔNG TẠO ID MỚI KHI UPDATE
                 val id = newId ?: db.collection("tmp").document().id
 
                 val data = mapOf(
                     "id" to id,
                     "name" to name,
                     "type" to type,
-                    "iconUrl" to finalImageUrl,
-                    "totalAmount" to 0L
+                    "iconUrl" to finalImageUrl
                 )
 
                 db.collection("users")
                     .document(userId)
                     .collection("categories")
                     .document(id)
-                    .set(data)
+                    .update(data)  // ✔ UPDATE thay vì SET
                     .addOnSuccessListener {
-                        Toast.makeText(context, "Thành công!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Thành công", Toast.LENGTH_SHORT).show()
                         parentFragmentManager.popBackStack()
                     }
                     .addOnFailureListener {
-                        Toast.makeText(context, "Lỗi Firestore!", Toast.LENGTH_SHORT).show()
+                        // Nếu danh mục mới → dùng set
+                        db.collection("users")
+                            .document(userId)
+                            .collection("categories")
+                            .document(id)
+                            .set(data)
+                        Toast.makeText(context, "Thành công", Toast.LENGTH_SHORT).show()
+                        parentFragmentManager.popBackStack()
                     }
 
             } catch (e: Exception) {

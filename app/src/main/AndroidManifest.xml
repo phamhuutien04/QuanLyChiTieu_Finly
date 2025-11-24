@@ -27,7 +27,7 @@
             android:name=".SocialActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileAddActivity"
+            android:name=".FriendRequestActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
