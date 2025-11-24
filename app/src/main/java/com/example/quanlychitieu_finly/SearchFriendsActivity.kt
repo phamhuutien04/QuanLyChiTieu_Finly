@@ -45,7 +45,6 @@ class SearchFriendsActivity : AppCompatActivity() {
         setupSearchListener()
     }
 
-    /** 🔥 Load toàn bộ user nhưng KHÔNG hiển thị lên UI */
     private fun loadAllUsers() {
         db.collection("users")
             .get()
@@ -65,12 +64,10 @@ class SearchFriendsActivity : AppCompatActivity() {
                     )
                 }
 
-                // ❌ KHÔNG show list ở đây → màn hình trống ban đầu
                 adapter.setData(emptyList())
             }
     }
 
-    /** 🔍 Khi nhập text → filter user theo tên hoặc email */
     private fun setupSearchListener() {
         edtSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -80,7 +77,7 @@ class SearchFriendsActivity : AppCompatActivity() {
                 val keyword = s.toString().trim().lowercase()
 
                 if (keyword.isEmpty()) {
-                    adapter.setData(emptyList())   // không nhập → không hiện list
+                    adapter.setData(emptyList())
                     return
                 }
 

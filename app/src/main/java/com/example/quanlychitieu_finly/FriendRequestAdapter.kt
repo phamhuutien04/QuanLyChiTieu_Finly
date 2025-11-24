@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-
 class FriendRequestAdapter(
     private val list: MutableList<User>,
     private val onAccept: (User) -> Unit,
@@ -15,8 +14,8 @@ class FriendRequestAdapter(
 ) : RecyclerView.Adapter<FriendRequestAdapter.ViewHolder>() {
 
     inner class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
-        val img: ImageView = item.findViewById(R.id.imgAvatar)
-        val name: TextView = item.findViewById(R.id.tvName)
+        val img: ImageView = item.findViewById(R.id.imgAvatarReq)
+        val name: TextView = item.findViewById(R.id.tvNameReq)
         val accept: TextView = item.findViewById(R.id.btnAccept)
         val reject: TextView = item.findViewById(R.id.btnReject)
     }
@@ -31,8 +30,10 @@ class FriendRequestAdapter(
         val user = list[position]
 
         holder.name.text = user.username
+
         Glide.with(holder.img.context)
             .load(user.avatarUrl)
+            .placeholder(R.drawable.ic_user)
             .circleCrop()
             .into(holder.img)
 
