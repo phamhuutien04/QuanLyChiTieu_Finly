@@ -37,12 +37,6 @@ import android.widget.EditText
 import android.widget.RadioButton
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
-<<<<<<< HEAD
-=======
-import com.example.quanlychitieu_finly.FriendRequestActivity
-import com.example.quanlychitieu_finly.SearchFriendsActivity
-import com.example.quanlychitieu_finly.SocialActivity
->>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -106,17 +100,12 @@ class SettingsFragment : Fragment() {
         view.findViewById<LinearLayout>(R.id.btnExportExcel).setOnClickListener {
             showDialogExportExcel()
         }
-<<<<<<< HEAD
 
         // === 2FA Setup ===
         val btnTwoFA = view.findViewById<LinearLayout>(R.id.btnTwoFA)
 
         btnTwoFA.setOnClickListener {
             showTwoFADialog()
-=======
-        view.findViewById<LinearLayout>(R.id.row2FA).setOnClickListener {
-            openFriendRequest()
->>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
         }
 
         val switch2FA = view.findViewById<androidx.appcompat.widget.SwitchCompat>(R.id.switch2FA)
@@ -202,7 +191,6 @@ class SettingsFragment : Fragment() {
     }
 
 
-<<<<<<< HEAD
     private fun saveTwoFAStatus(userId: String, enabled: Boolean) {
         db.collection("users").document(userId)
             .update("twoFAEnabled", enabled)
@@ -212,15 +200,6 @@ class SettingsFragment : Fragment() {
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Lỗi cập nhật 2FA", Toast.LENGTH_SHORT).show()
             }
-=======
-        val intent = Intent(requireContext(), FriendRequestActivity::class.java)
-        intent.putExtra("profileUid", uid)
-        startActivity(intent)
->>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
-    }
-    private fun openFriendRequest() {
-        val intent = Intent(requireContext(), FriendRequestActivity::class.java)
-        startActivity(intent)
     }
 
     private fun showTwoFADialog() {
