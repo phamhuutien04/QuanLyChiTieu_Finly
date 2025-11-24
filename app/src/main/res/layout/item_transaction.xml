@@ -71,6 +71,19 @@
             android:maxLines="1"
             android:ellipsize="end" />
 
+        <!-- ❗ GHI CHÚ TAG BẠN BÈ -->
+        <TextView
+            android:id="@+id/tvTagNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Chia với 2 người"
+            android:textSize="12sp"
+            android:textColor="#00897B"
+            android:visibility="gone"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+
         <TextView
             android:id="@+id/tvDate"
             android:visibility="gone"
