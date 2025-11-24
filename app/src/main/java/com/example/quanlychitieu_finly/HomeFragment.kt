@@ -299,10 +299,8 @@ class HomeFragment : Fragment() {
 
         btnSave.setOnClickListener {
             val title = edtTitle.text?.toString()?.trim().orEmpty()
-
             val clean =
                 edtAmount.text?.toString()?.replace(".", "")?.replace(",", "")?.trim().orEmpty()
-
             val amount = clean.toDoubleOrNull() ?: 0.0
 
             val transactionTimestamp = Timestamp(selectedDate)
@@ -312,7 +310,6 @@ class HomeFragment : Fragment() {
                     .show()
                 return@setOnClickListener
             }
-
 
             val currentUid = auth.currentUser!!.uid
             val participantIds = mutableListOf<String>()
@@ -325,33 +322,11 @@ class HomeFragment : Fragment() {
                 type, title, chosen!!, perShare, participantIds, transactionTimestamp
             )
 
-
             dialog.dismiss()
         }
 
-
         dialog.show()
     }
-    private fun showCenteredTransactionDialog() {
-        val dialog = Dialog(requireContext())
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.bottom_sheet_transaction_success)
-
-        dialog.window?.apply {
-            setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            setGravity(Gravity.CENTER)   // <-- Quan trọng: popup nằm giữa màn
-            clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-            addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-            setDimAmount(0.4f) // độ tối nền
-        }
-
-        dialog.show()
-    }
-
 
 
     private fun saveTransactionForUsers(
@@ -391,15 +366,12 @@ class HomeFragment : Fragment() {
                 }
             }
         }.addOnSuccessListener {
-
             val myId = auth.currentUser?.uid ?: return@addOnSuccessListener
             loadRecentTransactionsForUser(myId)
-
         }.addOnFailureListener {
             Toast.makeText(requireContext(), "Lỗi: ${it.message}", Toast.LENGTH_SHORT).show()
         }
     }
-
 
     // ============================================================
     // BOTTOM SHEET CHỌN BẠN BÈ
@@ -467,6 +439,9 @@ class HomeFragment : Fragment() {
         dialog.show()
     }
 
+    // ============================================================
+    // LOAD GIAO DỊCH & TỔNG
+    // ============================================================
     private fun loadRecentTransactions() {
         val userId = auth.currentUser?.uid ?: return
         loadRecentTransactionsForUser(userId)
@@ -523,71 +498,6 @@ class HomeFragment : Fragment() {
                 )
             }
     }
-
-    private fun showTransactionSuccessSheet(tx: Transaction) {
-        val dialog = Dialog(requireContext())
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.bottom_sheet_transaction_success)
-        dialog.setCancelable(true)
-
-        dialog.window?.apply {
-            setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            setGravity(Gravity.CENTER)                    // ⭐ Nằm giữa màn hình
-            addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-            setDimAmount(0.4f)                            // Nền tối mờ phía sau
-        }
-
-        val tvTitle = dialog.findViewById<TextView>(R.id.tvTitle)
-        val tvAmount = dialog.findViewById<TextView>(R.id.tvAmount)
-        val tvTypeCategory = dialog.findViewById<TextView>(R.id.tvTypeCategory)
-        val tvDate = dialog.findViewById<TextView>(R.id.tvDate)
-        val tvNote = dialog.findViewById<TextView>(R.id.tvNote)
-        val btnAddAnother = dialog.findViewById<MaterialButton>(R.id.btnAddAnother)
-        val btnViewAll = dialog.findViewById<MaterialButton>(R.id.btnViewAll)
-        val btnClose = dialog.findViewById<MaterialButton>(R.id.btnClose)
-
-        val vnFormat = NumberFormat.getInstance(Locale("vi", "VN"))
-        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale("vi", "VN"))
-
-        val typeLabel = if (tx.type == "income") "Thu nhập" else "Chi tiêu"
-
-        tvTitle.text = "Đã lưu $typeLabel"
-        tvAmount.text = "${vnFormat.format(tx.amount)} đ"
-        tvTypeCategory.text = "$typeLabel • ${tx.categoryName}"
-        tvDate.text = "Lúc ${sdf.format(tx.date.toDate())}"
-
-        if (tx.title.isNullOrBlank()) {
-            tvNote.visibility = View.GONE
-        } else {
-            tvNote.text = "Ghi chú: ${tx.title}"
-            tvNote.visibility = View.VISIBLE
-        }
-
-        btnAddAnother.setOnClickListener {
-            dialog.dismiss()
-            openAddTransactionFlow(tx.type)
-        }
-
-        btnViewAll.setOnClickListener {
-            dialog.dismiss()
-            startActivity(Intent(requireContext(), AllTransactionsActivity::class.java))
-            requireActivity().overridePendingTransition(
-                android.R.anim.slide_in_left,
-                android.R.anim.slide_out_right
-            )
-        }
-
-        btnClose.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.show()
-    }
-
 
     private fun formatVnd(value: Double): String =
         "${NumberFormat.getInstance(Locale("vi", "VN")).format(value)} đ"
