@@ -37,6 +37,7 @@ import android.widget.EditText
 import android.widget.RadioButton
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.quanlychitieu_finly.FriendRequestActivity
 import com.example.quanlychitieu_finly.SearchFriendsActivity
 import com.example.quanlychitieu_finly.SocialActivity
 import java.io.OutputStream
@@ -101,7 +102,7 @@ class SettingsFragment : Fragment() {
             showDialogExportExcel()
         }
         view.findViewById<LinearLayout>(R.id.row2FA).setOnClickListener {
-            openSearchFriends()
+            openFriendRequest()
         }
 
 
@@ -117,8 +118,12 @@ class SettingsFragment : Fragment() {
     private fun openSocialActivity() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
 
-        val intent = Intent(requireContext(), SocialActivity::class.java)
+        val intent = Intent(requireContext(), FriendRequestActivity::class.java)
         intent.putExtra("profileUid", uid)
+        startActivity(intent)
+    }
+    private fun openFriendRequest() {
+        val intent = Intent(requireContext(), FriendRequestActivity::class.java)
         startActivity(intent)
     }
 
