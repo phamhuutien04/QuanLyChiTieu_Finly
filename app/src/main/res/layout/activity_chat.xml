@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#F3F4F6"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- HEADER -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:paddingHorizontal="16dp"
+        android:gravity="center_vertical"
+        android:background="#2563EB">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_chevron_right"
+            android:rotation="180" />
+
+        <ImageView
+            android:id="@+id/imgChatAvatar"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="8dp"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/tvChatName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đang chat"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:layout_marginStart="12dp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <!-- DANH SÁCH TIN NHẮN -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerChat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="12dp" />
+
+    <!-- Ô NHẬP TIN NHẮN -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:background="#FFFFFF">
+
+        <EditText
+            android:id="@+id/edtMessage"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:hint="Nhập tin nhắn..."
+            android:paddingHorizontal="16dp"
+            android:background="@drawable/bg_input"
+            android:textColor="#1F2937"
+            android:textColorHint="#9CA3AF"
+            android:layout_marginEnd="10dp"/>
+
+        <ImageView
+            android:id="@+id/btnSend"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_back" />
+    </LinearLayout>
+
+</LinearLayout>

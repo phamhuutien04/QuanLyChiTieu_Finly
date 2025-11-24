@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#F9FAFB"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- HEADER -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:paddingHorizontal="20dp"
+        android:background="#FFFFFF"
+        android:elevation="4dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tin nhắn"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#111827" />
+
+        <!-- Nút tìm kiếm -->
+        <ImageView
+            android:id="@+id/btnSearchChat"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_white"
+            android:padding="8dp"
+            android:src="@drawable/ic_search" />
+
+    </LinearLayout>
+
+    <!-- Ô tìm kiếm -->
+    <LinearLayout
+        android:id="@+id/searchBox"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#FFFFFF"
+        android:paddingHorizontal="16dp"
+        android:gravity="center_vertical"
+        android:layout_marginTop="6dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_search" />
+
+        <EditText
+            android:id="@+id/edtSearchChat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:hint="Tìm tin nhắn hoặc tên..."
+            android:textColor="#111827"
+            android:textColorHint="#9CA3AF"
+            android:background="@android:color/transparent" />
+    </LinearLayout>
+
+    <!-- LIST TIN NHẮN -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerChatList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="6dp" />
+
+</LinearLayout>

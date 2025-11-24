@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.quanlychitieu_finly.AddCategoryFragment
+import Category.AddCategoryFragment
 import com.example.quanlychitieu_finly.R
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
@@ -57,16 +57,18 @@ class CategoryFragment : Fragment() {
         tvAverage = view.findViewById(R.id.tvAverage)
         tvHighest = view.findViewById(R.id.tvHighest)
 
+        // RecyclerView + adapter full long-click
+        adapter = CategoryAdapter(
+            list = emptyList(),
+            onClick = { }, // click bình thường
+            onLongClick = { category -> showOptions(category) } // nhấn giữ sửa / xoá
+        )
 
-
-        // RecyclerView
-        adapter = CategoryAdapter(emptyList()) {}
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerView.adapter = adapter
 
         // Mặc định tab Chi tiêu
         selectTab(tabSpending)
-
 
         tabSpending.setOnClickListener { selectTab(tabSpending) }
         tabIncome.setOnClickListener { selectTab(tabIncome) }
@@ -77,7 +79,55 @@ class CategoryFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
+
         return view
+    }
+
+    private fun showOptions(category: Category) {
+        val dialog = android.app.AlertDialog.Builder(requireContext())
+        dialog.setTitle("Tuỳ chọn danh mục")
+        dialog.setMessage("Bạn muốn làm gì với '${category.name}'?")
+
+        dialog.setPositiveButton("Sửa") { _, _ ->
+            val fragment = AddCategoryFragment()
+            val b = Bundle()
+
+            b.putString("id", category.id)
+            b.putString("name", category.name)
+            b.putString("type", category.type)
+            b.putString("iconUrl", category.iconUrl)
+
+            fragment.arguments = b
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
+
+        dialog.setNegativeButton("Xóa") { _, _ ->
+            deleteCategory(category)
+        }
+
+        dialog.setNeutralButton("Hủy", null)
+        dialog.show()
+    }
+
+    private fun deleteCategory(category: Category) {
+        val userId = auth.currentUser?.uid ?: return
+
+        db.collection("users")
+            .document(userId)
+            .collection("categories")
+            .document(category.id)
+            .delete()
+            .addOnSuccessListener {
+                Toast.makeText(context, "Đã xoá danh mục!", Toast.LENGTH_SHORT).show()
+                selectTab(tabSpending)
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(context, "Xoá thất bại: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun selectTab(selectedTab: TextView) {
@@ -91,10 +141,7 @@ class CategoryFragment : Fragment() {
     }
 
     private fun loadCategoriesFromFirestore(type: String) {
-        val userId = auth.currentUser?.uid ?: run {
-            Toast.makeText(context, "Người dùng chưa đăng nhập!", Toast.LENGTH_SHORT).show()
-            return
-        }
+        val userId = auth.currentUser?.uid ?: return
 
         db.collection("users").document(userId)
             .collection("categories")
@@ -116,6 +163,7 @@ class CategoryFragment : Fragment() {
         val total = list.sumOf { it.totalAmount }
         tvTotal.text = "%,dđ".format(total)
     }
+
     private fun loadTransactionCount(type: String) {
         val userId = auth.currentUser?.uid ?: return
 
@@ -142,13 +190,13 @@ class CategoryFragment : Fragment() {
                     tvHighest.text = "0k"
                 }
             }
-            .addOnFailureListener { e ->
+            .addOnFailureListener {
                 tvTransactionCount.text = "0"
                 tvAverage.text = "0đ"
                 tvHighest.text = "0đ"
-                Toast.makeText(context, "Lỗi tải giao dịch: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
     private fun formatShortNumber(value: Double): String {
         return when {
             value >= 1_000_000_000 -> String.format("%.1fb", value / 1_000_000_000).replace(".0", "")
@@ -157,14 +205,16 @@ class CategoryFragment : Fragment() {
             else -> value.toInt().toString()
         }
     }
+
     private fun highlightTab(selected: TextView) {
         val isSpending = selected == tabSpending
+
         tabSpending.setTextColor(ContextCompat.getColor(requireContext(), if (isSpending) R.color.bluesky else R.color.gray))
         tabIncome.setTextColor(ContextCompat.getColor(requireContext(), if (!isSpending) R.color.bluesky else R.color.gray))
         tvTotal.setTextColor(ContextCompat.getColor(requireContext(), if (isSpending) R.color.red else R.color.green))
         tvHighest.setTextColor(ContextCompat.getColor(requireContext(), if (isSpending) R.color.red else R.color.green))
+
         underlineSpending.visibility = if (isSpending) View.VISIBLE else View.INVISIBLE
         underlineIncome.visibility = if (!isSpending) View.VISIBLE else View.INVISIBLE
     }
-
 }

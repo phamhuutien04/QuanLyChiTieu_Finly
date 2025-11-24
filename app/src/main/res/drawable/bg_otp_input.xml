@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Trạng thái khi đang nhập (Focus): Viền xanh, nền trắng -->
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF"/>
+            <corners android:radius="12dp"/>
+            <stroke android:width="2dp" android:color="#4CAF50"/> <!-- Màu xanh lá chủ đạo -->
+        </shape>
+    </item>
+
+    <!-- Trạng thái bình thường: Nền xám nhạt, không viền -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#F3F4F6"/>
+            <corners android:radius="12dp"/>
+            <stroke android:width="1dp" android:color="#E5E7EB"/>
+        </shape>
+    </item>
+</selector>

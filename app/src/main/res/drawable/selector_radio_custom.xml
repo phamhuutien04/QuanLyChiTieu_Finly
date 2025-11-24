@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 1. Trạng thái ĐÃ CHỌN: Hình tròn xanh lá + dấu tích -->
+    <item android:state_selected="true">
+        <layer-list>
+            <item>
+                <shape android:shape="oval">
+                    <solid android:color="#4CAF50"/>
+                    <size android:width="24dp" android:height="24dp"/>
+                </shape>
+            </item>
+            <item android:gravity="center">
+                <!-- Vẽ dấu tích V màu trắng -->
+                <vector android:width="14dp" android:height="14dp" android:viewportWidth="24" android:viewportHeight="24">
+                    <path android:fillColor="#FFFFFF" android:pathData="M9,16.17L4.83,12l-1.42,1.41L9,19 21,7l-1.41,-1.41z"/>
+                </vector>
+            </item>
+        </layer-list>
+    </item>
+
+    <!-- 2. Trạng thái CHƯA CHỌN: Vòng tròn viền xám rỗng -->
+    <item>
+        <shape android:shape="oval">
+            <stroke android:width="2dp" android:color="#5C6185"/>
+            <solid android:color="@android:color/transparent"/>
+            <size android:width="24dp" android:height="24dp"/>
+        </shape>
+    </item>
+</selector>

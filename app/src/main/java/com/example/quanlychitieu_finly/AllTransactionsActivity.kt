@@ -1,5 +1,7 @@
 package com.example.quanlychitieu_finly
 
+import Category.Category
+import android.app.DatePickerDialog
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
@@ -25,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 class AllTransactionsActivity : AppCompatActivity() {
@@ -32,7 +35,13 @@ class AllTransactionsActivity : AppCompatActivity() {
     private lateinit var tgTypeFilter: MaterialButtonToggleGroup
     private lateinit var btnFilterIncome: MaterialButton
     private lateinit var btnFilterExpense: MaterialButton
-    private var currentFilter: String = "income"
+    private lateinit var edtSearchTransaction: TextInputEditText
+    private lateinit var btnSelectCategoryFilter: MaterialButton
+
+    private var currentTypeFilter: String = "income"
+    private var currentCategoryFilter: Category? = null
+    private var allCategories: List<Category> = emptyList()
+
     private var txListener: ListenerRegistration? = null
 
     private lateinit var rvAllTransactions: RecyclerView
@@ -42,8 +51,11 @@ class AllTransactionsActivity : AppCompatActivity() {
 
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
-    private val transactions = mutableListOf<Transaction>()
+
+    // Không cần list 'transactions' để hiển thị nữa, Adapter tự lo
+    private val fullTransactionList = mutableListOf<Transaction>()
     private val docIds = mutableListOf<String>()
+
     private lateinit var adapter: TransactionAdapter
 
     private val vnLocale = Locale("vi", "VN")
@@ -61,36 +73,130 @@ class AllTransactionsActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        // Ràng buộc Views
         rvAllTransactions = findViewById(R.id.rvAllTransactions)
         tvTotalIncome = findViewById(R.id.tvTotalIncome)
         tvTotalExpense = findViewById(R.id.tvTotalExpense)
         tgTypeFilter = findViewById(R.id.tgTypeFilter)
         btnFilterIncome = findViewById(R.id.btnFilterIncome)
         btnFilterExpense = findViewById(R.id.btnFilterExpense)
+        edtSearchTransaction = findViewById(R.id.edtSearchTransaction)
+        btnSelectCategoryFilter = findViewById(R.id.btnSelectCategoryFilter)
 
-        adapter = TransactionAdapter(transactions) { position, item ->
-            showEditDeleteSheet(position, item)
+        // Xóa tham số 'enableGrouping = true' vì Adapter mới mặc định đã gom nhóm
+        adapter = TransactionAdapter { item ->
+            showEditDeleteSheet(item)
         }
+
         rvAllTransactions.layoutManager = LinearLayoutManager(this)
         rvAllTransactions.adapter = adapter
         (rvAllTransactions.itemAnimator as? androidx.recyclerview.widget.SimpleItemAnimator)
             ?.supportsChangeAnimations = false
 
-        currentFilter = "income"
+        currentTypeFilter = "income"
         tgTypeFilter.check(btnFilterIncome.id)
         updateButtonColors()
         loadTotalAmounts()
+        loadAllCategories()
         attachTxListener()
 
         tgTypeFilter.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (!isChecked) return@addOnButtonCheckedListener
-            val newFilter = if (checkedId == btnFilterIncome.id) "income" else "spending"
-            if (newFilter != currentFilter) {
-                currentFilter = newFilter
+            val newType = if (checkedId == btnFilterIncome.id) "income" else "spending"
+            if (newType != currentTypeFilter) {
+                currentTypeFilter = newType
+                currentCategoryFilter = null // Reset Category khi đổi Type
+                btnSelectCategoryFilter.text = "Danh mục"
                 updateButtonColors()
-                attachTxListener()
+                filterAndDisplayTransactions() // Chỉ lọc lại
             }
         }
+
+        setupSearchAndFilter()
+    }
+
+    // ========================= NEW: SEARCH AND FILTER SETUP =================
+    private fun setupSearchAndFilter() {
+        // 1. Tìm kiếm theo tiêu đề giao dịch
+        edtSearchTransaction.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filterAndDisplayTransactions()
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        // 2. Lọc theo danh mục
+        btnSelectCategoryFilter.setOnClickListener {
+            showCategoryFilterSheet()
+        }
+    }
+
+    private fun loadAllCategories() {
+        val userId = auth.currentUser?.uid ?: return
+        db.collection("users").document(userId)
+            .collection("categories")
+            .orderBy("type")
+            .orderBy("name")
+            .get()
+            .addOnSuccessListener { snap ->
+                allCategories = snap.documents.mapNotNull { doc ->
+                    doc.toObject(Category::class.java)?.apply { id = doc.id }
+                }
+            }
+    }
+
+    // --- SỬA 1: Truyền ID danh mục đang lọc vào Adapter ---
+    private fun showCategoryFilterSheet() {
+        val categoriesOfType = allCategories.filter { it.type == currentTypeFilter }
+
+        if (categoriesOfType.isEmpty()) {
+            Toast.makeText(this, "Chưa có danh mục $currentTypeFilter", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val dialog = BottomSheetDialog(this)
+        val pv = layoutInflater.inflate(R.layout.bottom_sheet_category_picker, null)
+        dialog.setContentView(pv)
+
+        val rv = pv.findViewById<RecyclerView>(R.id.rvCategories)
+        rv.layoutManager = LinearLayoutManager(this)
+
+        val allCat = CatUI("all", "Tất cả Danh mục", "")
+        val listUI = mutableListOf(allCat)
+        listUI.addAll(categoriesOfType.map { CatUI(it.id, it.name, it.iconUrl ?: "") })
+
+        // Lấy ID đang chọn (nếu null thì mặc định là 'all')
+        val currentId = currentCategoryFilter?.id ?: "all"
+
+        rv.adapter = CategoryPickerAdapter(listUI, currentId) { selectedCatUI ->
+            currentCategoryFilter = if (selectedCatUI.id == "all") null else allCategories.find { c -> c.id == selectedCatUI.id }
+            btnSelectCategoryFilter.text = currentCategoryFilter?.name ?: "Danh mục"
+            filterAndDisplayTransactions()
+            dialog.dismiss()
+        }
+
+        pv.findViewById<MaterialButton>(R.id.btnCancel)?.setOnClickListener { dialog.dismiss() }
+        dialog.show()
+    }
+
+    /**
+     * Lọc và hiển thị giao dịch
+     */
+    private fun filterAndDisplayTransactions() {
+        val queryText = edtSearchTransaction.text?.toString().orEmpty().lowercase(vnLocale)
+
+        // Bắt đầu lọc từ danh sách đầy đủ
+        val finalFilteredList = fullTransactionList.filter { tx ->
+            val matchesType = tx.type.equals(currentTypeFilter, true)
+            val matchesCategory = if (currentCategoryFilter == null) true else tx.categoryId == currentCategoryFilter!!.id
+            val matchesTitle = tx.title.lowercase(vnLocale).contains(queryText)
+
+            matchesType && matchesCategory && matchesTitle
+        }
+
+        // Gọi setData của Adapter mới
+        adapter.setData(finalFilteredList)
     }
 
     // ========================= LOAD TRANSACTIONS ==============================
@@ -108,16 +214,15 @@ class AllTransactionsActivity : AppCompatActivity() {
                 return@addSnapshotListener
             }
 
-            val newList = mutableListOf<Transaction>()
+            fullTransactionList.clear()
             docIds.clear()
             documents?.forEach { doc ->
                 val t = doc.toObject(Transaction::class.java)
-                if (t.type.equals(currentFilter, true)) {
-                    newList.add(t)
-                    docIds.add(doc.id)
-                }
+                fullTransactionList.add(t)
+                docIds.add(doc.id)
             }
-            adapter.replaceAll(newList)
+
+            filterAndDisplayTransactions()
             loadTotalAmounts()
         }
     }
@@ -140,9 +245,12 @@ class AllTransactionsActivity : AppCompatActivity() {
             }
     }
 
-    // ========================= CATEGORY PICKER (BOTTOM SHEET) =================
+    // ========================= EDIT / DELETE LOGIC ============================
+
+    // --- SỬA 2: Thêm tham số currentId vào openCategorySheet và truyền cho Adapter ---
     private fun openCategorySheet(
         currentType: String,
+        currentId: String? = null,
         onPicked: (CatUI) -> Unit
     ) {
         val userId = auth.currentUser?.uid ?: return
@@ -172,7 +280,9 @@ class AllTransactionsActivity : AppCompatActivity() {
 
                 val rv = v.findViewById<RecyclerView>(R.id.rvCategories)
                 rv.layoutManager = LinearLayoutManager(this)
-                rv.adapter = CategoryPickerAdapter(list) {
+
+                // Truyền currentId vào Adapter
+                rv.adapter = CategoryPickerAdapter(list, currentId) {
                     onPicked(it)
                     dialog.dismiss()
                 }
@@ -182,8 +292,7 @@ class AllTransactionsActivity : AppCompatActivity() {
             }
     }
 
-    // ========================= EDIT / DELETE SHEET ============================
-    private fun showEditDeleteSheet(position: Int, item: Transaction) {
+    private fun showEditDeleteSheet(item: Transaction) {
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_transaction_actions, null)
         dialog.setContentView(view)
@@ -191,6 +300,8 @@ class AllTransactionsActivity : AppCompatActivity() {
         val edtTitle = view.findViewById<TextInputEditText>(R.id.edtTitle)
         val edtAmount = view.findViewById<TextInputEditText>(R.id.edtAmount)
         val edtCategory = view.findViewById<TextInputEditText>(R.id.edtCategory)
+        val edtDate = view.findViewById<TextInputEditText>(R.id.edtDate) // Ánh xạ View Ngày
+
         val toggle = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleType)
         val btnIncome = view.findViewById<MaterialButton>(R.id.btnIncome)
         val btnExpense = view.findViewById<MaterialButton>(R.id.btnExpense)
@@ -199,14 +310,38 @@ class AllTransactionsActivity : AppCompatActivity() {
 
         var chosenCat: CatUI? = null
 
+        // --- XỬ LÝ NGÀY THÁNG ---
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        var selectedDate: Date = item.date.toDate()
+        edtDate.setText(sdf.format(selectedDate))
+
+        edtDate.setOnClickListener {
+            val cal = Calendar.getInstance()
+            cal.time = selectedDate
+
+            DatePickerDialog(
+                this,
+                { _, year, month, dayOfMonth ->
+                    cal.set(year, month, dayOfMonth)
+                    selectedDate = cal.time
+                    edtDate.setText(sdf.format(selectedDate))
+                },
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
+
+        // --- SỬA 3: Helper pickCategory xác định ID danh mục hiện tại ---
         fun pickCategory(type: String) {
-            openCategorySheet(type) { picked ->
+            val currentSelectionId = chosenCat?.id ?: item.categoryId
+            openCategorySheet(type, currentSelectionId) { picked ->
                 chosenCat = picked
                 edtCategory.setText(picked.name)
             }
         }
 
-        // Prefill
+        // Prefill data
         edtTitle.setText(item.title)
         edtAmount.setText(formatPlainNumber(item.amount))
         edtAmount.setSelection(edtAmount.text?.length ?: 0)
@@ -225,15 +360,20 @@ class AllTransactionsActivity : AppCompatActivity() {
         toggle.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 val newType = if (checkedId == btnIncome.id) "income" else "spending"
+                // Reset chọn danh mục nếu đổi loại, vì ID cũ có thể không tồn tại bên loại mới
+                chosenCat = null
+                edtCategory.setText("")
                 pickCategory(newType)
             }
         }
 
+        // Xử lý XÓA: Truyền item
         btnDelete.setOnClickListener {
-            confirmDelete(position)
+            confirmDelete(item)
             dialog.dismiss()
         }
 
+        // Xử lý LƯU: Truyền item cũ
         btnSave.setOnClickListener {
             val newTitle = edtTitle.text?.toString()?.trim().orEmpty()
             val newAmount = parseVndToDouble(edtAmount.text?.toString().orEmpty())
@@ -249,25 +389,36 @@ class AllTransactionsActivity : AppCompatActivity() {
             }
 
             val catToSave = chosenCat ?: CatUI(item.categoryId, item.categoryName, item.categoryIconUrl)
-            updateTransaction(position, item, newTitle, newAmount, newType, catToSave)
+
+            // Gọi hàm Update, truyền thêm Timestamp(selectedDate)
+            updateTransaction(item, newTitle, newAmount, newType, catToSave, Timestamp(selectedDate))
             dialog.dismiss()
         }
 
         dialog.show()
     }
 
+    // --- Update Logic: Nhận thêm tham số newDate ---
     private fun updateTransaction(
-        position: Int,
         oldItem: Transaction,
         newTitle: String,
         newAmount: Double,
         newType: String,
-        newCat: CatUI
+        newCat: CatUI,
+        newDate: Timestamp
     ) {
-        if (position !in docIds.indices) return
+        // Tìm index trong list gốc để lấy ID tương ứng
+        val actualIndex = fullTransactionList.indexOfFirst {
+            it.date == oldItem.date && it.title == oldItem.title && it.amount == oldItem.amount
+        }
+
+        if (actualIndex == -1 || actualIndex >= docIds.size) {
+            Toast.makeText(this, "Lỗi: Không tìm thấy giao dịch gốc", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        val docId = docIds[actualIndex]
         val userId = auth.currentUser?.uid ?: return
-        val docRef = db.collection("users").document(userId)
-            .collection("transactions").document(docIds[position])
 
         val updates = mapOf(
             "title" to newTitle,
@@ -276,10 +427,12 @@ class AllTransactionsActivity : AppCompatActivity() {
             "categoryId" to newCat.id,
             "categoryName" to newCat.name,
             "categoryIconUrl" to newCat.iconUrl,
-            "date" to (oldItem.date ?: Timestamp.now())
+            "date" to newDate // Lưu ngày mới
         )
 
-        docRef.update(updates)
+        db.collection("users").document(userId)
+            .collection("transactions").document(docId)
+            .update(updates)
             .addOnSuccessListener {
                 Toast.makeText(this, "Đã lưu thay đổi", Toast.LENGTH_SHORT).show()
             }
@@ -288,26 +441,38 @@ class AllTransactionsActivity : AppCompatActivity() {
             }
     }
 
-    // ========================= DELETE ==============================
-    private fun confirmDelete(position: Int) {
+    private fun confirmDelete(item: Transaction) {
         AlertDialog.Builder(this)
             .setTitle("Xóa giao dịch")
-            .setMessage("Bạn có chắc muốn xóa giao dịch này?")
+            .setMessage("Bạn có chắc muốn xóa giao dịch: ${item.title}?")
             .setNegativeButton("Hủy", null)
-            .setPositiveButton("Xóa") { _, _ -> deleteTransaction(position) }
+            .setPositiveButton("Xóa") { _, _ -> deleteTransaction(item) }
             .show()
     }
 
-    private fun deleteTransaction(position: Int) {
+    // --- Delete Logic: Tìm ID dựa trên Object Transaction ---
+    private fun deleteTransaction(item: Transaction) {
+        val actualIndex = fullTransactionList.indexOfFirst {
+            it.date == item.date && it.title == item.title && it.amount == item.amount
+        }
+
+        if (actualIndex == -1 || actualIndex >= docIds.size) {
+            Toast.makeText(this, "Lỗi: Không tìm thấy giao dịch gốc để xóa", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        val docId = docIds[actualIndex]
         val userId = auth.currentUser?.uid ?: return
-        if (position !in docIds.indices) return
+
         db.collection("users").document(userId)
-            .collection("transactions").document(docIds[position])
+            .collection("transactions").document(docId)
             .delete()
             .addOnSuccessListener { Toast.makeText(this, "Đã xóa", Toast.LENGTH_SHORT).show() }
+            .addOnFailureListener { e -> Toast.makeText(this, "Lỗi xóa: ${e.message}", Toast.LENGTH_SHORT).show() }
     }
 
-    // ========================= UTILS ==============================
+    // ========================= UTILS ============================
+
     private fun formatPlainNumber(value: Double): String = vnNumberFormat.format(value)
     private fun formatVnd(value: Double): String = "${vnNumberFormat.format(value)} đ"
     private fun parseVndToDouble(input: String): Double? {
@@ -357,7 +522,7 @@ class AllTransactionsActivity : AppCompatActivity() {
             strokeColor = ColorStateList.valueOf(strokeGray)
         }
 
-        if (currentFilter == "income") {
+        if (currentTypeFilter == "income") {
             btnFilterIncome.setSelectedStyle(income)
             btnFilterExpense.setUnselectedStyle()
         } else {

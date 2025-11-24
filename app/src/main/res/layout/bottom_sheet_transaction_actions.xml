@@ -122,6 +122,37 @@
                     android:textColorHint="@color/text_white_70"/>
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Ngày giao dịch (MỚI THÊM VÀO) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilDate"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="Ngày giao dịch"
+                app:boxStrokeColor="@color/accent"
+                app:boxStrokeWidthFocused="2dp"
+                app:hintTextColor="@color/black"
+                app:startIconDrawable="@android:drawable/ic_menu_my_calendar"
+                app:startIconTint="@color/accent_blue"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="56dp"
+                    android:paddingVertical="12dp"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
             <!-- Label loại giao dịch -->
             <TextView
                 android:layout_width="wrap_content"
@@ -189,7 +220,7 @@
                     android:layout_marginStart="12dp"
                     android:text="Lưu thay đổi"
                     android:textColor="@color/text_white"
-                    app:backgroundTint="@color/teal_500"/>
+                    app:backgroundTint="@color/accent"/>
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
