@@ -11,3 +11,4 @@ data class Transaction(
     val type: String = "",           // "income" | "expense"
     val date: Timestamp = Timestamp.now()
 )
+

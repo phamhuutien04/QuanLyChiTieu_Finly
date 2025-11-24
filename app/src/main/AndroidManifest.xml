@@ -14,25 +14,7 @@
         android:roundIcon="@mipmap/ic_finly_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuanLyChiTieu_Finly">
-<<<<<<< HEAD
 
-=======
-        <activity
-            android:name=".ChatListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ChatActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SearchFriendsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SocialActivity"
-            android:exported="false" />
-        <activity
-            android:name=".FriendRequestActivity"
-            android:exported="false" />
->>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
         <activity
             android:name=".RegisterActivity"
             android:exported="true" />

@@ -45,7 +45,7 @@ class RegisterActivity : AppCompatActivity() {
 
     // OTP Variables
     private var generatedOTP: String = ""
-    private var otpAttempts = 0
+    private var otpAttempts = 0 // Biến đếm số lần nhập sai
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,7 +96,7 @@ class RegisterActivity : AppCompatActivity() {
             val password = edtPassword.text?.toString()?.trim().orEmpty()
             val confirmPassword = edtConfirmPassword.text?.toString()?.trim().orEmpty()
 
-            // Validate Local
+            // Validate
             if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 Toast.makeText(this, getString(R.string.fill_all_fields), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -114,8 +114,8 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // THAY ĐỔI: Gọi hàm kiểm tra email trước khi gửi OTP
-            checkEmailAndSendOtp(email)
+            // Bắt đầu quy trình OTP
+            sendOtpAndVerify(email)
         }
 
         txtGoLogin.setOnClickListener {
@@ -124,45 +124,22 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    // --- HÀM MỚI: KIỂM TRA EMAIL TRƯỚC KHI GỬI OTP ---
-    private fun checkEmailAndSendOtp(email: String) {
-        showLoading(true) // Hiện loading
-
-        // Truy vấn Firestore xem email đã tồn tại chưa
-        db.collection("users")
-            .whereEqualTo("email", email)
-            .get()
-            .addOnSuccessListener { documents ->
-                if (!documents.isEmpty) {
-                    // Email đã tồn tại trong hệ thống
-                    showLoading(false)
-                    edtEmail.error = "Email này đã được sử dụng!"
-                    edtEmail.requestFocus()
-                    Toast.makeText(this, "Email đã tồn tại, vui lòng dùng email khác.", Toast.LENGTH_SHORT).show()
-                } else {
-                    // Email chưa tồn tại -> Tiến hành gửi OTP
-                    sendOtpAndVerify(email)
-                }
-            }
-            .addOnFailureListener { e ->
-                showLoading(false)
-                Toast.makeText(this, "Lỗi kiểm tra email: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-    }
-
     // --- GỬI EMAIL OTP ---
     private fun sendOtpAndVerify(email: String) {
-        // Lúc này showLoading đã được bật ở hàm checkEmail rồi, không cần bật lại
+        showLoading(true)
 
+        // Reset lại số lần thử mỗi khi gửi mã mới
         otpAttempts = 0
+
+        // Tạo mã 4 số ngẫu nhiên
         generatedOTP = Random.nextInt(1000, 9999).toString()
 
         val subject = "Mã xác thực đăng ký Finly"
-        val body = "Xin chào,\n\nMã xác thực (OTP) của bạn là: $generatedOTP\n\nMã này có hiệu lực để đăng ký tài khoản mới."
+        val body = "Xin chào,\n\nMã xác thực (OTP) của bạn là: $generatedOTP\n\nMã này có hiệu lực để đăng ký tài khoản mới. Vui lòng không chia sẻ cho người khác."
 
         GMailSender.sendEmail(email, subject, body) { isSuccess ->
             runOnUiThread {
-                showLoading(false) // Tắt loading khi gửi xong
+                showLoading(false)
                 if (isSuccess) {
                     Toast.makeText(this, "Đã gửi mã OTP đến $email", Toast.LENGTH_SHORT).show()
                     showOtpDialog(email)
@@ -180,17 +157,18 @@ class RegisterActivity : AppCompatActivity() {
 
         val dialog = AlertDialog.Builder(this)
             .setView(dialogView)
-            .setCancelable(false)
-            .setPositiveButton("Xác nhận", null)
+            .setCancelable(false) // Không cho tắt bằng cách bấm ra ngoài
+            .setPositiveButton("Xác nhận", null) // Sẽ override bên dưới
             .setNegativeButton("Hủy") { d, _ ->
                 d.dismiss()
+                // Có thể reset OTP ở đây nếu muốn hủy hẳn
                 generatedOTP = ""
             }
             .create()
 
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
 
+        // Override nút Positive để không tự động tắt dialog nếu nhập sai
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
             val inputOtp = edtOtpInput.text.toString().trim()
 
@@ -201,22 +179,27 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             if (inputOtp == generatedOTP) {
+                // ĐÚNG MÃ -> Cho phép đăng ký
                 dialog.dismiss()
                 Toast.makeText(this, "Xác thực thành công!", Toast.LENGTH_SHORT).show()
                 performRegisterFirebase()
             } else {
+                // SAI MÃ -> Xử lý đếm số lần
                 otpAttempts++
                 val remaining = 3 - otpAttempts
 
                 if (remaining > 0) {
                     edtOtpInput.error = "Mã sai. Còn lại $remaining lần thử."
-                    edtOtpInput.setText("")
+                    edtOtpInput.setText("") // Xóa ô nhập để nhập lại
                 } else {
-                    generatedOTP = ""
+                    // Hết lượt thử
+                    generatedOTP = "" // Hủy hiệu lực mã
                     dialog.dismiss()
+
+                    // Hiện thông báo chặn
                     AlertDialog.Builder(this)
                         .setTitle("Mã hết hiệu lực")
-                        .setMessage("Bạn đã nhập sai quá 3 lần. Vui lòng đăng ký lại.")
+                        .setMessage("Bạn đã nhập sai quá 3 lần. Vui lòng đăng ký lại để lấy mã mới.")
                         .setPositiveButton("Đóng", null)
                         .show()
                 }
@@ -224,7 +207,7 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    // --- ĐĂNG KÝ LÊN FIREBASE ---
+    // --- ĐĂNG KÝ LÊN FIREBASE (Chỉ chạy khi OTP đúng) ---
     private fun performRegisterFirebase() {
         val username = edtUsername.text.toString().trim()
         val email = edtEmail.text.toString().trim()
@@ -232,7 +215,6 @@ class RegisterActivity : AppCompatActivity() {
 
         showLoading(true)
 
-        // Vì đã check email tồn tại ở bước 1 rồi, nên ở đây tỉ lệ thành công rất cao
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -272,7 +254,6 @@ class RegisterActivity : AppCompatActivity() {
                         }
                 } else {
                     showLoading(false)
-                    // Vẫn giữ check này phòng trường hợp hy hữu 2 người đăng ký cùng lúc mili giây
                     val errorMsg = task.exception?.message ?: "Đăng ký thất bại"
                     if (errorMsg.contains("email address is already in use")) {
                         edtEmail.error = "Email này đã được sử dụng"
@@ -286,6 +267,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         btnRegister.isEnabled = !isLoading
         btnRegister.text = if (isLoading) "Đang xử lý..." else "Đăng ký"
+        // progressBar.isVisible = isLoading
     }
 
     private fun isStrongPassword(pw: String): Boolean {
@@ -296,6 +278,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun createDefaultCategories(userId: String) {
+        // (Giữ nguyên logic cũ của bạn để tạo danh mục)
         val defaultCategories = mapOf(
             "spending" to listOf(
                 Pair(R.drawable.ic_category_food, "Ăn uống"),
@@ -359,6 +342,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun uploadDefaultAvatar(userId: String) {
+        // (Giữ nguyên logic cũ của bạn)
         thread {
             try {
                 val drawable = ContextCompat.getDrawable(this, R.drawable.ic_avt) as? BitmapDrawable
