@@ -19,7 +19,11 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
+<<<<<<< HEAD
             <!-- Header -->
+=======
+            <!-- Header (Giữ nguyên) -->
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/headerContainer"
                 android:layout_width="match_parent"
@@ -28,7 +32,10 @@
                 android:paddingBottom="16dp"
                 android:layout_marginBottom="8dp">
 
+<<<<<<< HEAD
                 <!-- Avatar -->
+=======
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardAvatar"
                     android:layout_width="52dp"
@@ -42,6 +49,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
+<<<<<<< HEAD
                     <ImageView
                         android:id="@+id/imgAvatar"
                         android:layout_width="match_parent"
@@ -53,6 +61,8 @@
                         android:padding="12dp"
                         app:tint="#000000"/>
 
+=======
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
                     <ImageView
                         android:id="@+id/btnSearch"
                         android:layout_width="match_parent"
@@ -61,7 +71,6 @@
                         android:padding="12dp"
                         android:background="#667EEA"
                         android:src="@drawable/ic_search" />
-
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -88,12 +97,19 @@
                         android:background="#FBBF24"/>
                 </com.google.android.material.card.MaterialCardView>
 
+<<<<<<< HEAD
                 <!-- Username -->
+=======
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
                 <TextView
                     android:id="@+id/tvUserName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+<<<<<<< HEAD
                     android:text="@string/home_username"
+=======
+                    android:text="NameUser"
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:textColor="#000000"
@@ -101,14 +117,24 @@
                     app:layout_constraintEnd_toStartOf="@id/cardAvatar"
                     app:layout_constraintTop_toTopOf="@id/cardAvatar"
                     app:layout_constraintHorizontal_bias="0"
+<<<<<<< HEAD
                     android:layout_marginEnd="16dp"/>
 
                 <!-- Date -->
+=======
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="16dp"/>
+
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
                 <TextView
                     android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+<<<<<<< HEAD
                     android:text="@string/home_date_today"
+=======
+                    android:text="Thứ Năm, 18 tháng 09 2025"
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
                     android:textSize="12sp"
                     android:textColor="#E6000000"
                     android:paddingStart="10dp"
@@ -120,10 +146,13 @@
                     app:layout_constraintTop_toBottomOf="@id/tvUserName"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginTop="8dp"/>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+<<<<<<< HEAD
             <!-- Balance Card -->
+=======
+            <!-- Balance Card (Giữ nguyên) -->
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -295,7 +324,11 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
+<<<<<<< HEAD
             <!-- Quick Actions -->
+=======
+            <!-- Quick Actions (Giữ nguyên) -->
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -312,7 +345,12 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
+<<<<<<< HEAD
                     app:cardCornerRadius="12dp">
+=======
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp">
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -331,13 +369,16 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+<<<<<<< HEAD
                             android:text="@string/income"
+=======
+                            android:text="Thu nhập"
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
                             android:textSize="12sp"
                             android:textStyle="bold"
                             android:textColor="#000000"
                             android:layout_marginTop="8dp"/>
                     </LinearLayout>
-
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -345,11 +386,21 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+<<<<<<< HEAD
                     android:layout_marginHorizontal="4dp"
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
                     app:cardCornerRadius="12dp">
+=======
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp">
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -368,13 +419,16 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+<<<<<<< HEAD
                             android:text="@string/expense"
+=======
+                            android:text="Chi tiêu"
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
                             android:textSize="12sp"
                             android:textColor="#000000"
                             android:textStyle="bold"
                             android:layout_marginTop="8dp"/>
                     </LinearLayout>
-
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -386,7 +440,12 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
+<<<<<<< HEAD
                     app:cardCornerRadius="12dp">
+=======
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp">
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -405,18 +464,24 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+<<<<<<< HEAD
                             android:text="@string/report"
+=======
+                            android:text="Báo cáo"
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
                             android:textSize="12sp"
                             android:textColor="#000000"
                             android:textStyle="bold"
                             android:layout_marginTop="8dp"/>
                     </LinearLayout>
-
                 </com.google.android.material.card.MaterialCardView>
-
             </LinearLayout>
 
+<<<<<<< HEAD
             <!-- Transaction list header -->
+=======
+            <!-- Transaction List Header (Giữ nguyên) -->
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -428,7 +493,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+<<<<<<< HEAD
                     android:text="@string/recent_transactions"
+=======
+                    android:text="Giao dịch gần đây"
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="#0D0A0A"/>
@@ -437,17 +506,30 @@
                     android:id="@+id/tvTransactionCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+<<<<<<< HEAD
                     android:text="@string/transaction_count_zero"
+=======
+                    android:text="0 giao dịch"
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
                     android:textSize="13sp"
                     android:textColor="#070505"/>
             </LinearLayout>
 
+<<<<<<< HEAD
+=======
+            <!-- KHUNG CHỨA DANH SÁCH -->
+            <!-- SỬA Ở ĐÂY: Padding của RecyclerView -->
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="2dp"
+<<<<<<< HEAD
                 android:layout_marginBottom="12dp">
+=======
+                android:layout_marginBottom="8dp">
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvTransactions"
@@ -456,15 +538,27 @@
                     android:background="#F0F0F0"
                     android:clipToPadding="false"
                     android:minHeight="200dp"
+<<<<<<< HEAD
                     android:padding="4dp" />
             </com.google.android.material.card.MaterialCardView>
 
             <!-- View all button -->
+=======
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp" /> <!-- padding Trên Dưới bằng nhau (12dp) -->
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Button Xem tất cả -->
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnViewAllTransactions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                 android:text="@string/view_all_transactions"
+=======
+                android:text="Xem tất cả giao dịch"
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
                 android:textSize="15sp"
                 android:textColor="#FFFFFF"
                 android:backgroundTint="#4A77DB"
@@ -479,4 +573,8 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+<<<<<<< HEAD
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+=======
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4

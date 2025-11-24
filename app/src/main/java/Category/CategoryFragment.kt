@@ -10,7 +10,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import Category.AddCategoryFragment
 import com.example.quanlychitieu_finly.R
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
@@ -39,35 +38,33 @@ class CategoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.fragment_category, container, false)
 
-        // Firebase
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        // Ánh xạ view
         recyclerView = view.findViewById(R.id.rcvCategories)
         tabSpending = view.findViewById(R.id.tabSpending)
         tabIncome = view.findViewById(R.id.tabIncome)
         underlineSpending = view.findViewById(R.id.underlineSpending)
         underlineIncome = view.findViewById(R.id.underlineIncome)
+
         tvTotal = view.findViewById(R.id.tvTotal)
-        fabAddCategory = view.findViewById(R.id.fabAddCategory)
         tvTransactionCount = view.findViewById(R.id.tvTransactionCount)
         tvAverage = view.findViewById(R.id.tvAverage)
         tvHighest = view.findViewById(R.id.tvHighest)
+        fabAddCategory = view.findViewById(R.id.fabAddCategory)
 
-        // RecyclerView + adapter full long-click
         adapter = CategoryAdapter(
             list = emptyList(),
-            onClick = { }, // click bình thường
-            onLongClick = { category -> showOptions(category) } // nhấn giữ sửa / xoá
+            onClick = { },
+            onLongClick = { category -> showOptions(category) }
         )
 
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerView.adapter = adapter
 
-        // Mặc định tab Chi tiêu
         selectTab(tabSpending)
 
         tabSpending.setOnClickListener { selectTab(tabSpending) }
@@ -149,14 +146,42 @@ class CategoryFragment : Fragment() {
             .orderBy("name", Query.Direction.ASCENDING)
             .get()
             .addOnSuccessListener { docs ->
+
                 val list = docs.toObjects(Category::class.java)
+
+                updateCategoryTotals(list)
+
                 adapter.updateData(list)
+
                 updateTotal(list)
-                if (list.isEmpty()) Toast.makeText(context, "Không có danh mục nào", Toast.LENGTH_SHORT).show()
+
+                if (list.isEmpty()) {
+                    Toast.makeText(context, "Không có danh mục nào", Toast.LENGTH_SHORT).show()
+                }
             }
             .addOnFailureListener { e ->
                 Toast.makeText(context, "Lỗi tải danh mục: ${e.message}", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun updateCategoryTotals(list: List<Category>) {
+        val userId = auth.currentUser?.uid ?: return
+
+        list.forEach { category ->
+
+            db.collection("users").document(userId)
+                .collection("transactions")
+                .whereEqualTo("categoryId", category.id)  // 🔥 tính đúng theo id
+                .get()
+                .addOnSuccessListener { docs ->
+
+                    val total = docs.sumOf { it.getDouble("amount") ?: 0.0 }
+
+                    category.totalAmount = total.toLong()
+
+                    updateTotal(list)
+                }
+        }
     }
 
     private fun updateTotal(list: List<Category>) {
@@ -183,8 +208,8 @@ class CategoryFragment : Fragment() {
                     val avg = total / count
                     val max = amounts.maxOrNull() ?: 0.0
 
-                    tvAverage.text = "${formatShortNumber(avg)}"
-                    tvHighest.text = "${formatShortNumber(max)}"
+                    tvAverage.text = formatShortNumber(avg)
+                    tvHighest.text = formatShortNumber(max)
                 } else {
                     tvAverage.text = "0k"
                     tvHighest.text = "0k"
@@ -209,10 +234,16 @@ class CategoryFragment : Fragment() {
     private fun highlightTab(selected: TextView) {
         val isSpending = selected == tabSpending
 
-        tabSpending.setTextColor(ContextCompat.getColor(requireContext(), if (isSpending) R.color.bluesky else R.color.gray))
-        tabIncome.setTextColor(ContextCompat.getColor(requireContext(), if (!isSpending) R.color.bluesky else R.color.gray))
-        tvTotal.setTextColor(ContextCompat.getColor(requireContext(), if (isSpending) R.color.red else R.color.green))
-        tvHighest.setTextColor(ContextCompat.getColor(requireContext(), if (isSpending) R.color.red else R.color.green))
+        tabSpending.setTextColor(ContextCompat.getColor(requireContext(),
+            if (isSpending) R.color.bluesky else R.color.gray))
+        tabIncome.setTextColor(ContextCompat.getColor(requireContext(),
+            if (!isSpending) R.color.bluesky else R.color.gray))
+
+        tvTotal.setTextColor(ContextCompat.getColor(requireContext(),
+            if (isSpending) R.color.red else R.color.green))
+
+        tvHighest.setTextColor(ContextCompat.getColor(requireContext(),
+            if (isSpending) R.color.red else R.color.green))
 
         underlineSpending.visibility = if (isSpending) View.VISIBLE else View.INVISIBLE
         underlineIncome.visibility = if (!isSpending) View.VISIBLE else View.INVISIBLE

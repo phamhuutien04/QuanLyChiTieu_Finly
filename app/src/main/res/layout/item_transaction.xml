@@ -117,6 +117,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
+<<<<<<< HEAD
             <!-- TYPE BADGE -->
             <TextView
                 android:id="@+id/tvType"
@@ -136,7 +137,52 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvAmount"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
+=======
+        <!-- ❗ GHI CHÚ TAG BẠN BÈ -->
+        <TextView
+            android:id="@+id/tvTagNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Chia với 2 người"
+            android:textSize="12sp"
+            android:textColor="#00897B"
+            android:visibility="gone"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+<<<<<<< HEAD
 </com.google.android.material.card.MaterialCardView>
+=======
+    <LinearLayout
+        android:id="@+id/amountContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/tvAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-50.000"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#F44336" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+>>>>>>> 5d416def1614625fd1538704b61057941bcfb3f4
