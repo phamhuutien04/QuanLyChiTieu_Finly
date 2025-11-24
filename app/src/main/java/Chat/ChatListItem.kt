@@ -1,4 +1,4 @@
-package com.example.quanlychitieu_finly
+package Chat
 
 data class ChatListItem(
     val chatId: String = "",

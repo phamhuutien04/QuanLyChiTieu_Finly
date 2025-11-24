@@ -1,5 +1,6 @@
-package com.example.quanlychitieu_finly
+package Chat
 
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.quanlychitieu_finly.R
+
 class ChatListAdapter(
     private val list: MutableList<ChatListItem>,
     private val onClick: (ChatListItem) -> Unit
@@ -38,7 +41,7 @@ class ChatListAdapter(
 
         if (item.timestamp > 0) {
             holder.tvTime.text =
-                android.text.format.DateFormat.format("HH:mm", item.timestamp)
+                DateFormat.format("HH:mm", item.timestamp)
         } else {
             holder.tvTime.text = ""
         }

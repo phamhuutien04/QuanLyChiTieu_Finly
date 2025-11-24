@@ -1,4 +1,4 @@
-package com.example.quanlychitieu_finly
+package SearchFriend
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,9 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.quanlychitieu_finly.R
+import com.example.quanlychitieu_finly.SocialActivity
+import com.example.quanlychitieu_finly.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 

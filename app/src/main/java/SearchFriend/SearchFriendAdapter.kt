@@ -1,4 +1,4 @@
-package com.example.quanlychitieu_finly
+package SearchFriend
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.quanlychitieu_finly.R
+import com.example.quanlychitieu_finly.User
 
 class SearchFriendAdapter(
     private var list: MutableList<User>,

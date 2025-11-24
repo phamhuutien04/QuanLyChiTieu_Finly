@@ -36,10 +36,8 @@ import android.widget.LinearLayout
 import android.widget.EditText
 import android.widget.RadioButton
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatDelegate
-import com.example.quanlychitieu_finly.FriendRequestActivity
-import com.example.quanlychitieu_finly.SearchFriendsActivity
-import com.example.quanlychitieu_finly.SocialActivity
+import friend.FriendRequestActivity
+import SearchFriend.SearchFriendsActivity
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date

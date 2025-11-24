@@ -15,19 +15,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuanLyChiTieu_Finly">
         <activity
-            android:name=".ChatListActivity"
+            android:name="Chat.ChatListActivity"
             android:exported="false" />
         <activity
-            android:name=".ChatActivity"
+            android:name="Chat.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchFriendsActivity"
+            android:name="SearchFriend.SearchFriendsActivity"
             android:exported="false" />
         <activity
             android:name=".SocialActivity"
             android:exported="false" />
         <activity
-            android:name=".FriendRequestActivity"
+            android:name="friend.FriendRequestActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
