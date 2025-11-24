@@ -31,7 +31,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Danh mục"
+                    android:text="@string/category_title"
                     android:textSize="24sp"
                     android:textColor="#1F2937"
                     android:textStyle="bold"
@@ -40,7 +40,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Quản lý chi tiêu theo nhóm"
+                    android:text="@string/category_subtitle"
                     android:textSize="13sp"
                     android:textColor="#6B7280"
                     android:layout_marginTop="2dp"/>
@@ -69,7 +69,7 @@
                     android:id="@+id/tabSpending"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Chi tiêu"
+                    android:text="@string/tab_spending"
                     android:textColor="#3B82F6"
                     android:textStyle="bold"
                     android:textSize="15sp"
@@ -95,7 +95,7 @@
                     android:id="@+id/tabIncome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Thu nhập"
+                    android:text="@string/tab_income"
                     android:textColor="#8E8E8E"
                     android:textSize="15sp"
                     android:fontFamily="sans-serif"/>
@@ -159,7 +159,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tổng chi phí"
+                        android:text="@string/total_cost"
                         android:textSize="13sp"
                         android:textColor="#6B7280"/>
 
@@ -167,55 +167,13 @@
                         android:id="@+id/tvTotal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="28.351.000 đ"
+                        android:text="@string/sample_amount"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         android:textColor="@color/green"
                         android:fontFamily="sans-serif"
                         android:layout_marginTop="2dp"/>
                 </LinearLayout>
-
-                <!-- Period Selector -->
-<!--                <LinearLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="32dp"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:background="@drawable/bg_period_selector"-->
-<!--                    android:padding="3dp">-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/btnPeriodDay"-->
-<!--                        android:layout_width="48dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:text="Ngày"-->
-<!--                        android:textSize="11sp"-->
-<!--                        android:textColor="#6B7280"-->
-<!--                        android:gravity="center"-->
-<!--                        android:background="?attr/selectableItemBackground"-->
-<!--                        android:fontFamily="sans-serif-medium"/>-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/btnPeriodMonth"-->
-<!--                        android:layout_width="48dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:text="Tháng"-->
-<!--                        android:textSize="11sp"-->
-<!--                        android:textColor="#3B82F6"-->
-<!--                        android:background="@drawable/bg_period_selected"-->
-<!--                        android:gravity="center"-->
-<!--                        android:fontFamily="sans-serif-medium"/>-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/btnPeriodYear"-->
-<!--                        android:layout_width="48dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:text="Năm"-->
-<!--                        android:textSize="11sp"-->
-<!--                        android:textColor="#6B7280"-->
-<!--                        android:gravity="center"-->
-<!--                        android:background="?attr/selectableItemBackground"-->
-<!--                        android:fontFamily="sans-serif-medium"/>-->
-<!--                </LinearLayout>-->
             </LinearLayout>
 
             <!-- Divider -->
@@ -242,7 +200,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Số giao dịch"
+                        android:text="@string/transaction_count"
                         android:textSize="11sp"
                         android:textColor="#9CA3AF"/>
 
@@ -272,7 +230,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Trung bình"
+                        android:text="@string/home_avg_daily_label"
                         android:textSize="11sp"
                         android:textColor="#9CA3AF"/>
 
@@ -280,7 +238,7 @@
                         android:id="@+id/tvAverage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="945K đ"
+                        android:text="@string/home_avg_daily_value"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="#1F2937"
@@ -302,7 +260,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Cao nhất"
+                        android:text="@string/home_highest_label"
                         android:textSize="11sp"
                         android:textColor="#9CA3AF"/>
 
@@ -310,7 +268,7 @@
                         android:id="@+id/tvHighest"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2.1M đ"
+                        android:text="@string/home_highest_value"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="#EF4444"
@@ -333,7 +291,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Danh mục chi tiêu"
+            android:text="@string/category_spending_list_title"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="#1F2937"
@@ -358,7 +316,7 @@
                 android:id="@+id/tvSortBy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Số tiền"
+                android:text="@string/sort_by_amount"
                 android:textSize="13sp"
                 android:textColor="#6B7280"
                 android:fontFamily="sans-serif-medium"/>
@@ -383,7 +341,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        android:text="Thêm"
+        android:text="@string/add_category_title"
         android:textColor="@android:color/white"
         android:textSize="15sp"
         android:fontFamily="sans-serif-medium"

@@ -21,22 +21,22 @@
             android:padding="20dp"
             android:paddingBottom="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cài đặt"
-                android:textSize="28sp"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:fontFamily="sans-serif"
-                android:layout_marginBottom="4dp"/>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Cài đặt"-->
+<!--                android:textSize="28sp"-->
+<!--                android:textColor="#FFFFFF"-->
+<!--                android:textStyle="bold"-->
+<!--                android:fontFamily="sans-serif"-->
+<!--                android:layout_marginBottom="4dp"/>-->
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tùy chỉnh ứng dụng của bạn"
                 android:textSize="14sp"
-                android:textColor="#B3FFFFFF"
+                android:textColor="#6B7280"
                 android:fontFamily="sans-serif-medium"/>
         </LinearLayout>
 
@@ -119,7 +119,7 @@
             android:layout_marginBottom="12dp"
             android:text="Tài khoản &amp; Bảo mật"
             android:textSize="12sp"
-            android:textColor="#B3FFFFFF"
+            android:textColor="#6B7280"
             android:textStyle="bold"
             android:fontFamily="sans-serif-medium"/>
 
@@ -263,9 +263,7 @@
                     android:layout_marginHorizontal="16dp"
                     android:background="#F3F4F6"/>
 
-                <!-- Two-Factor Authentication -->
-                <LinearLayout
-                    android:id="@+id/row2FA"
+                <LinearLayout android:id="@+id/btnTwoFA"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -317,8 +315,8 @@
                         android:layout_height="wrap_content"
                         android:checked="false"
                         />
-<!--                        app:thumbTint="@color/switch_thumb"-->
-<!--                        app:trackTint="@color/switch_track"-->
+                    <!--                        app:thumbTint="@color/switch_thumb"-->
+                    <!--                        app:trackTint="@color/switch_track"-->
 
                 </LinearLayout>
             </LinearLayout>
@@ -332,7 +330,7 @@
             android:layout_marginBottom="12dp"
             android:text="Tài chính &amp; Đồng bộ"
             android:textSize="12sp"
-            android:textColor="#B3FFFFFF"
+            android:textColor="#6B7280"
             android:textStyle="bold"
             android:fontFamily="sans-serif-medium"/>
 
@@ -484,8 +482,8 @@
                         android:layout_height="wrap_content"
                         android:checked="true"
                         />
-<!--                    app:thumbTint="@color/switch_thumb"-->
-<!--                    app:trackTint="@color/switch_track"-->
+                    <!--                    app:thumbTint="@color/switch_thumb"-->
+                    <!--                    app:trackTint="@color/switch_track"-->
                 </LinearLayout>
 
                 <View
@@ -494,6 +492,7 @@
                     android:layout_marginHorizontal="16dp"
                     android:background="#F3F4F6"/>
 
+                <!-- OCR Scanner -->
                 <!-- OCR Scanner -->
                 <LinearLayout
                     android:id="@+id/btnOCRSettings"
@@ -516,7 +515,6 @@
                             android:layout_height="35dp"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_scan"/>
-
                     </androidx.cardview.widget.CardView>
 
                     <LinearLayout
@@ -543,13 +541,13 @@
                             android:layout_marginTop="2dp"/>
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        app:tint="#D1D5DB"
-                        android:src="@drawable/ic_chevron_right"/>
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switchScanInvoice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -561,7 +559,7 @@
             android:layout_marginBottom="12dp"
             android:text="Thông báo &amp; Cảnh báo"
             android:textSize="12sp"
-            android:textColor="#B3FFFFFF"
+            android:textColor="#6B7280"
             android:textStyle="bold"
             android:fontFamily="sans-serif-medium"/>
 
@@ -632,8 +630,8 @@
                         android:layout_height="wrap_content"
                         android:checked="true"
                         />
-<!--                    app:thumbTint="@color/switch_thumb"-->
-<!--                    app:trackTint="@color/switch_track"-->
+                    <!--                    app:thumbTint="@color/switch_thumb"-->
+                    <!--                    app:trackTint="@color/switch_track"-->
                 </LinearLayout>
 
                 <View
@@ -695,8 +693,8 @@
                         android:layout_height="wrap_content"
                         android:checked="true"
                         />
-<!--                    app:thumbTint="@color/switch_thumb"-->
-<!--                    app:trackTint="@color/switch_track"-->
+                    <!--                    app:thumbTint="@color/switch_thumb"-->
+                    <!--                    app:trackTint="@color/switch_track"-->
                 </LinearLayout>
 
                 <View
@@ -758,7 +756,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         app:tint="#D1D5DB"/>
-<!--                        android:src="@drawable/ic_chevron_right"-->
+                    <!--                        android:src="@drawable/ic_chevron_right"-->
 
                 </LinearLayout>
             </LinearLayout>
@@ -772,7 +770,7 @@
             android:layout_marginBottom="12dp"
             android:text="Giao diện &amp; Chủ đề"
             android:textSize="12sp"
-            android:textColor="#B3FFFFFF"
+            android:textColor="#6B7280"
             android:textStyle="bold"
             android:fontFamily="sans-serif-medium"/>
 
@@ -948,7 +946,7 @@
             android:layout_marginBottom="12dp"
             android:text="Ngôn ngữ &amp; Tiền tệ"
             android:textSize="12sp"
-            android:textColor="#B3FFFFFF"
+            android:textColor="#6B7280"
             android:textStyle="bold"
             android:fontFamily="sans-serif-medium"/>
 
@@ -1098,7 +1096,7 @@
             android:layout_marginBottom="12dp"
             android:text="Khác"
             android:textSize="12sp"
-            android:textColor="#B3FFFFFF"
+            android:textColor="#6B7280"
             android:textStyle="bold"
             android:fontFamily="sans-serif-medium"/>
 
@@ -1373,7 +1371,7 @@
                 android:layout_height="wrap_content"
                 android:text="Finly - Finance Friendly"
                 android:textSize="14sp"
-                android:textColor="#80FFFFFF"
+                android:textColor="#6B7280"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif"/>
 
@@ -1382,15 +1380,15 @@
                 android:layout_height="wrap_content"
                 android:text="Quản lý tài chính thông minh"
                 android:textSize="12sp"
-                android:textColor="#66FFFFFF"
+                android:textColor="#6B7280"
                 android:layout_marginTop="4dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="© 2025 Nhóm 8"
+                android:text="© 2025 Nhóm 8 - Group 3 People"
                 android:textSize="11sp"
-                android:textColor="#4DFFFFFF"
+                android:textColor="#6B7280"
                 android:layout_marginTop="8dp"/>
         </LinearLayout>
 

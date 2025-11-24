@@ -9,7 +9,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tên giao dịch">
+        android:hint="@string/transaction_title_gd">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtTitle"
             android:layout_width="match_parent"
@@ -21,7 +22,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Danh mục"
+        android:hint="@string/category_label"
         app:endIconMode="dropdown_menu"
         android:layout_marginTop="10dp">
 
@@ -34,8 +35,9 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Số tiền (VD: 50000)"
+        android:hint="@string/amount_label"
         android:layout_marginTop="10dp">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtAmount"
             android:layout_width="match_parent"

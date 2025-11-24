@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
     android:orientation="vertical"
+    app:cardBackgroundColor="#FFFFFF"
     android:paddingTop="8dp">
 
     <!-- 1. Thanh Handle Bar (Chỉ thị kéo xuống) -->
@@ -13,7 +14,7 @@
         android:layout_height="5dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp"
-        app:cardBackgroundColor="#DDDDDD"
+        app:cardBackgroundColor="#FFFFFF"
         app:cardCornerRadius="3dp"
         app:cardElevation="0dp" />
 
@@ -34,17 +35,36 @@
             android:paddingTop="24dp"
             android:paddingBottom="32dp">
 
-            <!-- Header Tiêu đề -->
-            <TextView
-                android:id="@+id/tvSheetTitle"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:gravity="center"
-                android:text="Thêm giao dịch"
-                android:textColor="#212121"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:id="@+id/tvSheetTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thêm giao dịch"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <ImageButton
+                    android:id="@+id/btnImageQr"
+                    android:layout_width="41dp"
+                    android:layout_height="41dp"
+                    android:padding="1dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/qrcode"
+                    android:scaleType="centerInside"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- A. SỐ TIỀN (Được làm nổi bật nhất) -->
             <com.google.android.material.textfield.TextInputLayout
@@ -221,7 +241,7 @@
                     android:text="Lưu"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:backgroundTint="#4CAF50"
+                    app:backgroundTint="#1fbbb4"
                     app:cornerRadius="12dp"
                     app:elevation="2dp" />
             </LinearLayout>

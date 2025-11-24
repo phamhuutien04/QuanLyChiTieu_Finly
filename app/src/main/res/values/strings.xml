@@ -1,27 +1,353 @@
 <resources>
+
+    <!-- App -->
     <string name="app_name">Finly</string>
     <string name="welcome_message">Chào mừng bạn đến ứng dụng!</string>
 
+    <!-- Auth -->
     <string name="register_button">Đăng ký</string>
-    <string name="username_hint">Tên người dùng</string>
+    <string name="login">Đăng nhập</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="dont_have_account">Chưa có tài khoản? Đăng ký</string>
+    <string name="already_have_account">Đã có tài khoản? Đăng nhập</string>
+
+    <!-- Labels -->
+    <string name="username_label">Tên người dùng</string>
+    <string name="username_hint">Nhập tên người dùng</string>
+    <string name="email">Email</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Mật khẩu</string>
+
+    <string name="confirm_password_label">Xác nhận mật khẩu</string>
     <string name="confirm_password_hint">Nhập lại mật khẩu</string>
-    <string name="already_have_account">Đã có tài khoản? Đăng nhập</string>
-    <string name="category_image">Thêm danh mục</string>
 
-
-    <string name="login">Đăng nhập</string>
-    <string name="dont_have_account">Chưa có tài khoản? Đăng ký</string>
-    <string name="forgot_password">Quên mật khẩu?</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="already_have_accountt"><font color="#FFFFFF">Đã có tài khoản? </font><b><u><font color="#FFFFFF">Đăng nhập</font></u></b></string>
+    <!-- Password Rules -->
     <string name="password_requirements">Yêu cầu mật khẩu</string>
     <string name="pwd_require_title">Mật khẩu phải có:</string>
     <string name="pwd_error_full">Chưa đạt: ≥6 ký tự, có 1 chữ hoa, 1 số, 1 ký tự đặc biệt</string>
     <string name="fill_all_fields">Vui lòng nhập đầy đủ thông tin.</string>
     <string name="pwd_not_match">Mật khẩu nhập lại không khớp.</string>
     <string name="register_success">Đăng ký thành công!</string>
+
+    <!-- Styled Text -->
+    <string name="already_have_accountt">
+        <![CDATA[
+        <font color="#FFFFFF">Đã có tài khoản? </font>
+        <b><u><font color="#FFFFFF">Đăng nhập</font></u></b>
+        ]]>
+    </string>
+
+    <!-- All Transactions -->
+    <string name="all_tx_back">Quay lại</string>
+    <string name="all_tx_tip">💡 Mẹo: Ấn vào giao dịch để chỉnh sửa</string>
+    <string name="all_tx_overview">📊 Tổng quan giao dịch</string>
+    <string name="all_tx_total_income">Tổng thu</string>
+    <string name="all_tx_total_expense">Tổng chi</string>
+    <string name="all_tx_list_title">Danh sách giao dịch</string>
+    <string name="all_tx_search_hint">Tìm kiếm tiêu đề...</string>
+    <string name="all_tx_filter_category">Danh mục</string>
+    <string name="all_tx_filter_income">Thu nhập</string>
+    <string name="all_tx_filter_expense">Chi tiêu</string>
+
+    <!-- Chat -->
+    <string name="chatting_title">Đang chat</string>
+    <string name="chat_input_hint">Nhập tin nhắn...</string>
+    <string name="chat_list_title">Tin nhắn</string>
+    <string name="chat_search_hint">Tìm tin nhắn hoặc tên...</string>
+
+    <!-- Forgot Password -->
+    <string name="forgot_password_title">Quên mật khẩu?</string>
+    <string name="forgot_password_subtitle">Nhập email đã đăng ký để nhận mã xác thực 6 số.</string>
+    <string name="send_otp">Gửi mã xác thực</string>
+    <string name="back_to_login">Quay lại đăng nhập</string>
+
+    <!-- Friend Requests -->
+    <string name="friend_request_title">Lời mời kết bạn</string>
+
+    <!-- Other -->
+    <string name="category_image">Thêm danh mục</string>
+    <string name="show_password">Hiện mật khẩu</string>
+    <string name="no_account">Chưa có tài khoản?</string>
+
+    <!-- Bottom Tabs -->
+    <string name="tab_home">Trang chủ</string>
+    <string name="tab_category">Danh mục</string>
+    <string name="tab_analytics">Phân tích</string>
+    <string name="tab_settings">Cài đặt</string>
+
+    <string name="reset_password">Đặt lại mật khẩu</string>
+    <string name="reset_password_desc">Nhập mật khẩu mới của bạn</string>
+
+    <string name="new_password">Mật khẩu mới</string>
+    <string name="confirm_new_password">Xác nhận mật khẩu mới</string>
+
+    <string name="password_must_have">Mật khẩu phải có:</string>
+    <string name="pwd_req_min">• Ít nhất 8 ký tự</string>
+    <string name="pwd_req_number">• Ít nhất 1 số</string>
+    <string name="pwd_req_upper">• Ít nhất 1 chữ hoa</string>
+
+    <string name="confirm_change_password">Xác nhận đổi mật khẩu</string>
+    <string name="cancel">Hủy</string>
+
+    <string name="search_friend_hint">Tìm bạn bè...</string>
+
+    <string name="profile_title">Trang cá nhân</string>
+    <string name="profile_username">Tên người dùng</string>
+    <string name="profile_no_bio">Chưa có mô tả</string>
+    <string name="profile_unknown_location">Không rõ</string>
+
+    <string name="profile_add_friend">Kết bạn</string>
+    <string name="profile_message">Nhắn tin</string>
+
+    <string name="profile_tab_posts">Bài viết</string>
+    <string name="profile_tab_goals">Mục tiêu</string>
+    <string name="profile_tab_activity">Hoạt động</string>
+
+    <string name="sheet_add_transaction">Thêm giao dịch</string>
+    <string name="amount_hint">Số tiền (VNĐ)</string>
+    <string name="transaction_title_hint">Tiêu đề (Ví dụ: Mua sắm)</string>
+    <string name="category_hint">Danh mục</string>
+    <string name="date_hint">Ngày</string>
+    <string name="friend_hint">Bạn bè</string>
+    <string name="save">Lưu</string>
+
+    <string name="select_category">Chọn danh mục</string>
+
+    <string name="progress_detail_title">Chi tiết tiến độ</string>
+    <string name="progress_month_goal">Mục tiêu tháng này</string>
+    <string name="spent_label">đã chi tiêu</string>
+    <string name="on_track_status">⚡ Bạn đang đi đúng hướng!</string>
+    <string name="spent">Đã chi</string>
+    <string name="goal">Mục tiêu</string>
+    <string name="month_remaining">Còn lại trong tháng</string>
+    <string name="daily_budget">📊 Ngân sách/ngày</string>
+    <string name="days_left">📅 Còn lại</string>
+    <string name="tips_spending_daily">Để đạt mục tiêu, hãy chi tiêu trong giới hạn ngân sách hàng ngày!</string>
+
+    <string name="pick_friend_title">Chọn bạn để chia tiền</string>
+    <string name="done">Xong</string>
+
+    <string name="edit_transaction">Chỉnh sửa giao dịch</string>
+    <string name="transaction_title">Tiêu đề</string>
+    <string name="transaction_type">Loại giao dịch</string>
+    <string name="income">Thu nhập</string>
+    <string name="expense">Chi tiêu</string>
+    <string name="delete">Xóa</string>
+    <string name="save_changes">Lưu thay đổi</string>
+
+    <string name="transaction_saved">Đã lưu giao dịch</string>
+    <string name="sample_amount">1.500.000 đ</string>
+    <string name="sample_type_category">Chi tiêu • Ăn uống</string>
+    <string name="sample_datetime">Lúc 20/11/2025 14:35</string>
+    <string name="sample_note">Ghi chú: Cà phê với bạn</string>
+
+    <string name="add_another">Thêm nữa</string>
+    <string name="view_all">Xem tất cả</string>
+    <string name="close">Đóng</string>
+
+    <string name="two_fa_title">Xác thực 2 lớp (2FA)</string>
+    <string name="two_fa_subtitle">Kích hoạt để bảo vệ tài khoản khi phát hiện truy cập từ thiết bị hoặc IP lạ.</string>
+
+    <string name="two_fa_feature_device">Tự động kiểm tra thiết bị và địa chỉ IP mỗi lần đăng nhập</string>
+    <string name="two_fa_feature_code">Yêu cầu mã xác minh khi phát hiện đăng nhập lạ</string>
+
+    <string name="two_fa_enable">Kích hoạt 2FA</string>
+    <string name="two_fa_skip">Để sau</string>
+
+    <!-- ABOUT DIALOG -->
+    <string name="about_app_title">Finly</string>
+    <string name="about_app_slogan">Finance Friendly</string>
+    <string name="about_app_version">Phiên bản 1.0.0</string>
+
+    <string name="about_app_description">
+    Ứng dụng quản lý tài chính cá nhân thông minh, giúp bạn theo dõi thu chi, lập kế hoạch ngân sách và đạt được các mục tiêu tài chính.
+    </string>
+
+    <string name="about_developed_by">Phát triển bởi</string>
+    <string name="about_developer_name">Nhóm 8 - TDMU - D22CNT05</string>
+    <string name="about_copyright">© 2025 Niên khóa 2022 - 2027</string>
+
+    <string name="transaction_title_gd">Tên giao dịch</string>
+    <string name="category_label">Danh mục</string>
+    <string name="amount_label">Số tiền (VD: 50000)</string>
+
+    <!-- Change Password Screen -->
+    <string name="change_password_title">Thay đổi mật khẩu</string>
+    <string name="change_password_subtitle">Bảo vệ tài khoản của bạn</string>
+
+    <string name="current_password">Mật khẩu hiện tại</string>
+    <string name="hint_current_password">Nhập mật khẩu hiện tại</string>
+
+    <string name="new_password_label">Mật khẩu mới</string>
+    <string name="hint_new_password">Nhập mật khẩu mới</string>
+
+    <string name="confirm_password">Xác nhận mật khẩu</string>
+    <string name="hint_confirm_password">Nhập lại mật khẩu mới</string>
+
+    <string name="password_requirements_title">Yêu cầu mật khẩu</string>
+    <string name="password_requirements_detail">
+    • Tối thiểu 8 ký tự\n• Có chữ hoa và chữ thường\n• Có ít nhất 1 chữ số
+    </string>
+
+    <!-- Currency Selector -->
+    <string name="currency_select_title">Chọn đơn vị tiền tệ</string>
+    <string name="currency_auto_convert_desc">Dữ liệu sẽ được chuyển đổi tự động</string>
+
+    <string name="currency_vnd">VND (₫)</string>
+    <string name="currency_vnd_full">Việt Nam Đồng</string>
+
+    <string name="currency_usd">USD ($)</string>
+    <string name="currency_usd_full">US Dollar</string>
+
+    <string name="currency_eur">EUR (€)</string>
+    <string name="currency_eur_full">Euro</string>
+
+    <string name="currency_thb">THB (฿)</string>
+    <string name="currency_thb_full">Thai Baht</string>
+
+    <string name="apply">Áp dụng</string>
+
+    <!-- Transaction Type Dialog -->
+    <string name="transaction_type_title">Loại giao dịch</string>
+    <string name="transaction_type_subtitle">Chọn loại giao dịch của bạn</string>
+
+    <string name="expense_desc">Khoản chi ra</string>
+
+    <string name="income_desc">Khoản thu vào</string>
+
+    <!-- GOAL MANAGEMENT -->
+    <string name="goal_manage_title">Quản lý mục tiêu</string>
+    <string name="goal_manage_sub">Thiết lập mục tiêu chi tiêu của bạn</string>
+
+    <string name="goal_quick_presets">Gói mục tiêu nhanh</string>
+
+    <string name="goal_preset_low">Tiết kiệm</string>
+    <string name="goal_preset_low_value">15M/tháng</string>
+
+    <string name="goal_preset_medium">Cân bằng</string>
+    <string name="goal_preset_medium_value">30M/tháng</string>
+
+    <string name="goal_preset_high">Thoải mái</string>
+    <string name="goal_preset_high_value">60M/tháng</string>
+
+    <string name="goal_smart_title">Mục tiêu thông minh</string>
+    <string name="goal_smart_sub">Dựa trên chi tiêu trung bình của bạn</string>
+
+    <string name="goal_spend_title">Mục tiêu chi tiêu</string>
+
+    <string name="goal_daily">Mục tiêu hàng ngày</string>
+    <string name="goal_daily_placeholder">VD: 1.000.000</string>
+
+    <string name="goal_monthly">Mục tiêu hàng tháng</string>
+    <string name="goal_monthly_placeholder">VD: 30.000.000</string>
+
+    <string name="goal_yearly">Mục tiêu hàng năm</string>
+    <string name="goal_yearly_placeholder">VD: 360.000.000</string>
+
+    <string name="goal_notif_title">Thông báo</string>
+    <string name="goal_notif_enable">Nhận thông báo</string>
+    <string name="goal_notif_sub">Cảnh báo khi đạt ngưỡng mục tiêu</string>
+
+    <string name="goal_threshold">Ngưỡng cảnh báo</string>
+
+    <string name="save_goal">Lưu mục tiêu</string>
+
+    <string name="goal_tip">Mẹo: Đặt mục tiêu thấp hơn 10-20% so với chi tiêu hiện tại để dễ đạt được!</string>
+
+    <string name="warning_limit_exceeded">Bạn đã vượt ngưỡng chi tiêu!</string>
+    <string name="understood">Đã hiểu</string>
+
+    <!-- Language Selection -->
+    <string name="lang_select_title">Chọn ngôn ngữ</string>
+    <string name="lang_vietnamese">Tiếng Việt</string>
+    <string name="lang_english">English</string>
+
+    <!-- Logout Dialog -->
+    <string name="logout_title">Đăng xuất</string>
+    <string name="logout_message">Bạn có chắc chắn muốn đăng xuất khỏi tài khoản?</string>
+    <string name="logout_warning_unsynced">Dữ liệu chưa đồng bộ sẽ bị mất</string>
+    <string name="logout_confirm">Đăng xuất</string>
+
+    <!-- OTP Dialog -->
+    <string name="otp_title">Nhập mã xác thực</string>
+    <string name="otp_subtitle">Mã 6 số đã được gửi đến email của bạn</string>
+    <string name="otp_hint">0 0 0 0 0 0</string>
+    <string name="confirm">Xác nhận</string>
+
+    <!-- OTP 4-digit dialog -->
+    <string name="otp_email_instruction">Vui lòng kiểm tra email và nhập mã 4 số</string>
+    <string name="otp_hint_4">0 0 0 0</string>
+
+    <!-- OTP Verification -->
+    <string name="otp_verify_title">Xác minh OTP</string>
+    <string name="otp_enter_code">Nhập mã OTP</string>
+    <string name="otp_verify">Xác minh</string>
+
+    <string name="add_category_title">Thêm Danh Mục</string>
+    <string name="category_image_title">Ảnh danh mục</string>
+    <string name="tap_to_select_image">Nhấn để chọn ảnh</string>
+    <string name="category_name_hint">Tên danh mục</string>
+    <string name="category_type">Loại danh mục</string>
+
+    <string name="home_hello">Xin chào!</string>
+    <string name="home_today_finance">Tài chính hôm nay</string>
+
+    <string name="home_income_value">41.000.350 đ</string>
+    <string name="home_income_growth">↗ +12.5% từ tháng trước</string>
+
+    <string name="home_expense_value">28.351.000 đ</string>
+    <string name="home_expense_growth">↗ +8.2% từ tháng trước</string>
+
+    <string name="home_balance_label">Số dư</string>
+    <string name="home_balance_value">12.649.350 đ</string>
+
+    <string name="home_month_goal_label">Mục tiêu tháng</string>
+    <string name="home_goal_progress_percent">68%</string>
+    <string name="home_goal_amount">28M/41M đ</string>
+
+    <string name="home_quick_stats_title">Thống kê nhanh</string>
+
+    <string name="home_period_day">Ngày</string>
+    <string name="home_period_month">Tháng</string>
+    <string name="home_period_year">Năm</string>
+
+    <string name="home_avg_daily_label">Trung bình/ngày</string>
+    <string name="home_avg_daily_value">945K đ</string>
+
+    <string name="home_highest_label">Cao nhất</string>
+    <string name="home_highest_value">2.1M đ</string>
+
+    <string name="home_trend_label">Xu hướng</string>
+    <string name="home_trend_icon">↗</string>
+    <string name="home_trend_percent">8.2%</string>
+
+    <string name="home_goal_manage_sub">Đặt và theo dõi mục tiêu chi tiêu</string>
+
+    <string name="home_goal_day_label">Ngày</string>
+    <string name="home_goal_day_value">1.5M đ</string>
+
+    <string name="home_goal_month_label">Tháng</string>
+    <string name="home_goal_month_value">41M đ</string>
+
+    <string name="home_goal_year_label">Năm</string>
+    <string name="home_goal_year_value">500M đ</string>
+
+    <string name="home_expense_analysis_title">Phân tích chi tiêu</string>
+
+    <string name="home_detail_list_title">Chi tiết các khoản</string>
+
+    <string name="category_title">Danh mục</string>
+    <string name="category_subtitle">Quản lý chi tiêu theo nhóm</string>
+
+    <string name="tab_spending">Chi tiêu</string>
+    <string name="tab_income">Thu nhập</string>
+
+    <string name="total_cost">Tổng chi phí</string>
+
+    <string name="transaction_count">Số giao dịch</string>
+
+    <string name="category_spending_list_title">Danh mục chi tiêu</string>
+
+    <string name="sort_by_amount">Số tiền</string>
 
 </resources>

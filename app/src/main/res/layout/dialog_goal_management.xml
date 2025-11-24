@@ -30,7 +30,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Quản lý mục tiêu"
+                        android:text="@string/goal_manage_title"
                         android:textSize="24sp"
                         android:textColor="#1F2937"
                         android:textStyle="bold"
@@ -39,7 +39,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Thiết lập mục tiêu chi tiêu của bạn"
+                        android:text="@string/goal_manage_sub"
                         android:textSize="14sp"
                         android:textColor="#6B7280"
                         android:layout_marginTop="4dp"/>
@@ -61,7 +61,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gói mục tiêu nhanh"
+                android:text="@string/goal_quick_presets"
                 android:textSize="16sp"
                 android:textColor="#1F2937"
                 android:textStyle="bold"
@@ -102,7 +102,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Tiết kiệm"
+                            android:text="@string/goal_preset_low"
                             android:textSize="12sp"
                             android:textColor="#10B981"
                             android:textStyle="bold"
@@ -111,7 +111,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="15M/tháng"
+                            android:text="@string/goal_preset_low_value"
                             android:textSize="11sp"
                             android:textColor="#6B7280"
                             android:layout_marginTop="2dp"/>
@@ -146,7 +146,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Cân bằng"
+                            android:text="@string/goal_preset_medium"
                             android:textSize="12sp"
                             android:textColor="#3B82F6"
                             android:textStyle="bold"
@@ -155,7 +155,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="30M/tháng"
+                            android:text="@string/goal_preset_medium_value"
                             android:textSize="11sp"
                             android:textColor="#6B7280"
                             android:layout_marginTop="2dp"/>
@@ -190,7 +190,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Thoải mái"
+                            android:text="@string/goal_preset_high"
                             android:textSize="12sp"
                             android:textColor="#F59E0B"
                             android:textStyle="bold"
@@ -199,7 +199,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="60M/tháng"
+                            android:text="@string/goal_preset_high_value"
                             android:textSize="11sp"
                             android:textColor="#6B7280"
                             android:layout_marginTop="2dp"/>
@@ -241,7 +241,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Mục tiêu thông minh"
+                            android:text="@string/goal_smart_title"
                             android:textSize="14sp"
                             android:textColor="#7C3AED"
                             android:textStyle="bold"/>
@@ -249,7 +249,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Dựa trên chi tiêu trung bình của bạn"
+                            android:text="@string/goal_smart_sub"
                             android:textSize="12sp"
                             android:textColor="#6B7280"
                             android:layout_marginTop="2dp"/>
@@ -263,30 +263,31 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Goal Input Fields -->
+            <!-- Goal Inputs -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mục tiêu chi tiêu"
+                android:text="@string/goal_spend_title"
                 android:textSize="16sp"
                 android:textColor="#1F2937"
                 android:textStyle="bold"
                 android:layout_marginBottom="16dp"/>
 
+            <!-- DAILY -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Mục tiêu hàng ngày"
+                android:hint="@string/goal_daily"
+                app:placeholderText="@string/goal_daily_placeholder"
+                app:placeholderTextColor="#9CA3AF"
                 app:boxBackgroundMode="outline"
                 app:boxCornerRadiusTopStart="14dp"
                 app:boxCornerRadiusTopEnd="14dp"
                 app:boxCornerRadiusBottomStart="14dp"
                 app:boxCornerRadiusBottomEnd="14dp"
                 app:boxStrokeColor="#3B82F6"
-                app:hintTextColor="#3B82F6"
-                app:placeholderText="VD: 1.000.000"
-                app:placeholderTextColor="#9CA3AF">
+                app:hintTextColor="#3B82F6">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etDailyGoal"
@@ -294,24 +295,24 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:textSize="16sp"
-                    android:padding="16dp"
-                    android:drawablePadding="12dp"/>
+                    android:padding="16dp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- MONTHLY -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Mục tiêu hàng tháng"
+                android:hint="@string/goal_monthly"
+                app:placeholderText="@string/goal_monthly_placeholder"
+                app:placeholderTextColor="#9CA3AF"
                 app:boxBackgroundMode="outline"
                 app:boxCornerRadiusTopStart="14dp"
                 app:boxCornerRadiusTopEnd="14dp"
                 app:boxCornerRadiusBottomStart="14dp"
                 app:boxCornerRadiusBottomEnd="14dp"
                 app:boxStrokeColor="#3B82F6"
-                app:hintTextColor="#3B82F6"
-                app:placeholderText="VD: 30.000.000"
-                app:placeholderTextColor="#9CA3AF">
+                app:hintTextColor="#3B82F6">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etMonthlyGoal"
@@ -319,24 +320,24 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:textSize="16sp"
-                    android:padding="16dp"
-                    android:drawablePadding="12dp"/>
+                    android:padding="16dp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- YEARLY -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:hint="Mục tiêu hàng năm"
+                android:hint="@string/goal_yearly"
+                app:placeholderText="@string/goal_yearly_placeholder"
+                app:placeholderTextColor="#9CA3AF"
                 app:boxBackgroundMode="outline"
                 app:boxCornerRadiusTopStart="14dp"
                 app:boxCornerRadiusTopEnd="14dp"
                 app:boxCornerRadiusBottomStart="14dp"
                 app:boxCornerRadiusBottomEnd="14dp"
                 app:boxStrokeColor="#3B82F6"
-                app:hintTextColor="#3B82F6"
-                app:placeholderText="VD: 360.000.000"
-                app:placeholderTextColor="#9CA3AF">
+                app:hintTextColor="#3B82F6">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etYearlyGoal"
@@ -344,15 +345,14 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:textSize="16sp"
-                    android:padding="16dp"
-                    android:drawablePadding="12dp"/>
+                    android:padding="16dp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Notification Settings -->
+            <!-- Notifications -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Thông báo"
+                android:text="@string/goal_notif_title"
                 android:textSize="16sp"
                 android:textColor="#1F2937"
                 android:textStyle="bold"
@@ -372,6 +372,7 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
+                    <!-- Switch Row -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -387,7 +388,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Nhận thông báo"
+                                android:text="@string/goal_notif_enable"
                                 android:textSize="14sp"
                                 android:textColor="#1F2937"
                                 android:textStyle="bold"/>
@@ -395,7 +396,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Cảnh báo khi đạt ngưỡng mục tiêu"
+                                android:text="@string/goal_notif_sub"
                                 android:textSize="12sp"
                                 android:textColor="#6B7280"
                                 android:layout_marginTop="2dp"/>
@@ -414,6 +415,7 @@
                         android:background="#E5E7EB"
                         android:layout_marginVertical="16dp"/>
 
+                    <!-- Threshold -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -425,7 +427,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Ngưỡng cảnh báo"
+                            android:text="@string/goal_threshold"
                             android:textSize="14sp"
                             android:textColor="#1F2937"/>
 
@@ -498,7 +500,7 @@
                     android:layout_height="56dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    android:text="Hủy"
+                    android:text="@string/cancel"
                     android:textSize="16sp"
                     android:textColor="#6B7280"
                     android:background="@drawable/bg_button_outline"
@@ -510,14 +512,14 @@
                     android:layout_height="56dp"
                     android:layout_weight="1"
                     android:layout_marginStart="8dp"
-                    android:text="Lưu mục tiêu"
+                    android:text="@string/save_goal"
                     android:textSize="16sp"
                     android:textColor="#FFFFFF"
                     android:background="@drawable/bg_button_primary"
                     android:fontFamily="sans-serif-medium"/>
             </LinearLayout>
 
-            <!-- Pro Tips -->
+            <!-- Tips -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -544,7 +546,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="12dp"
-                        android:text="Mẹo: Đặt mục tiêu thấp hơn 10-20% so với chi tiêu hiện tại để dễ đạt được!"
+                        android:text="@string/goal_tip"
                         android:textSize="12sp"
                         android:textColor="#92400E"
                         android:lineSpacingExtra="2dp"/>

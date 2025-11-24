@@ -31,10 +31,11 @@
                 android:background="?attr/selectableItemBackgroundBorderless"/>
 
             <TextView
+                android:id="@+id/tvProfileHeader"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Trang cá nhân"
+                android:text="@string/profile_title"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:gravity="center"
@@ -97,7 +98,7 @@
                             android:id="@+id/tvProfileName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Tên người dùng"
+                            android:text="@string/profile_username"
                             android:textSize="22sp"
                             android:textColor="#1F2937"
                             android:textStyle="bold"/>
@@ -106,7 +107,7 @@
                             android:id="@+id/tvProfileBio"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Chưa có mô tả"
+                            android:text="@string/profile_no_bio"
                             android:textSize="14sp"
                             android:textColor="#6B7280"
                             android:layout_marginTop="4dp"/>
@@ -126,7 +127,7 @@
                                 android:id="@+id/tvProfileLocation"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Không rõ"
+                                android:text="@string/profile_unknown_location"
                                 android:textSize="12sp"
                                 android:textColor="#9CA3AF"
                                 android:layout_marginStart="4dp"/>
@@ -138,13 +139,12 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:padding="6dp"
-
                         app:tint="#3B82F6"
                         android:background="@drawable/bg_color_circle"
                         android:backgroundTint="#DBEAFE"/>
                 </LinearLayout>
 
-                <!-- Nút kết bạn + nhắn tin -->
+                <!-- Buttons -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -158,7 +158,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:padding="12dp"
-                        android:text="Kết bạn"
+                        android:text="@string/profile_add_friend"
                         android:textColor="#FFFFFF"
                         android:background="@drawable/bg_btn_blue"
                         android:textSize="14sp"
@@ -171,7 +171,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:padding="12dp"
-                        android:text="Nhắn tin"
+                        android:text="@string/profile_message"
                         android:textColor="#FFFFFF"
                         android:layout_marginStart="12dp"
                         android:background="@drawable/bg_btn_green"
@@ -196,7 +196,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Bài viết"
+                android:text="@string/profile_tab_posts"
                 android:padding="12dp"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
@@ -208,7 +208,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Mục tiêu"
+                android:text="@string/profile_tab_goals"
                 android:padding="12dp"
                 android:textColor="#9CA3AF"
                 android:gravity="center"/>
@@ -218,14 +218,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Hoạt động"
+                android:text="@string/profile_tab_activity"
                 android:padding="12dp"
                 android:textColor="#9CA3AF"
                 android:gravity="center"/>
         </LinearLayout>
-
-        <!-- Section Posts -->
-
 
         <!-- Floating Add Post -->
         <androidx.cardview.widget.CardView

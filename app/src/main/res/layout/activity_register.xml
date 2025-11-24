@@ -33,13 +33,13 @@
                 <!-- Icon / Banner -->
                 <ImageView
                     android:id="@+id/imgBanner"
-                    android:layout_width="110dp"
-                    android:layout_height="107dp"
+                    android:layout_width="230dp"
+                    android:layout_height="101dp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="16dp"
                     android:contentDescription="@string/register_button"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/login" />
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/register" />
 
                 <!-- Tiêu đề -->
                 <TextView
@@ -58,7 +58,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tên người dùng"
+                    android:text="@string/username_label"
                     android:textColor="#475569"
                     android:textStyle="bold"
                     android:textSize="13sp"
@@ -85,7 +85,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:inputType="textPersonName"
-                        android:hint="Nhập tên người dùng"
+                        android:hint="@string/username_hint"
                         android:textStyle="bold"
                         android:textColor="#0F172A"
                         android:textColorHint="#94A3B8"
@@ -95,7 +95,7 @@
                 </LinearLayout>
 
 
-                <!-- EMAIL (giống trang login) -->
+                <!-- EMAIL -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
                 </LinearLayout>
 
 
-                <!-- MẬT KHẨU -->
+                <!-- PASSWORD -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -177,11 +177,11 @@
                 </LinearLayout>
 
 
-                <!-- XÁC NHẬN MẬT KHẨU -->
+                <!-- CONFIRM PASSWORD -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Xác nhận mật khẩu"
+                    android:text="@string/confirm_password_label"
                     android:textColor="#475569"
                     android:textStyle="bold"
                     android:textSize="13sp"
@@ -207,7 +207,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:inputType="textPassword"
-                        android:hint="Nhập lại mật khẩu"
+                        android:hint="@string/confirm_password_hint"
                         android:textColor="#0F172A"
                         android:textStyle="bold"
                         android:textColorHint="#94A3B8"
@@ -216,8 +216,7 @@
                         android:textSize="16sp"/>
                 </LinearLayout>
 
-
-                <!-- Khối yêu cầu mật khẩu -->
+                <!-- Password Requirement -->
                 <include
                     android:id="@+id/pwdRequirements"
                     layout="@layout/view_password_requirements"
@@ -225,7 +224,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp" />
 
-                <!-- Nút đăng ký -->
+                <!-- REGISTER BUTTON -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnRegister"
                     android:layout_width="match_parent"
@@ -243,7 +242,7 @@
 
             </LinearLayout>
 
-            <!-- Link chuyển sang đăng nhập -->
+            <!-- Link to login -->
             <TextView
                 android:id="@+id/txtGoLogin"
                 android:layout_width="wrap_content"

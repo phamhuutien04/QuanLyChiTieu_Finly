@@ -9,7 +9,7 @@
         android:id="@+id/tvTitlePickFriend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chọn bạn để chia tiền"
+        android:text="@string/pick_friend_title"
         android:textSize="18sp"
         android:textStyle="bold"
         android:paddingBottom="8dp" />
@@ -31,13 +31,13 @@
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hủy" />
+            android:text="@string/cancel" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnDone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Xong"
+            android:text="@string/done"
             android:layout_marginStart="12dp" />
     </LinearLayout>
 </LinearLayout>

@@ -15,27 +15,27 @@
         android:padding="16dp"
         android:background="@drawable/bg_circle"
         android:backgroundTint="#D1FAE5"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Xác thực 2 lớp (2FA)"
+        android:text="@string/two_fa_title"
         android:textSize="22sp"
         android:textColor="#1F2937"
         android:textStyle="bold"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Tăng cường bảo mật tài khoản"
+        android:text="@string/two_fa_subtitle"
         android:textSize="14sp"
         android:textColor="#6B7280"
         android:gravity="center"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="24dp" />
 
     <!-- Feature List -->
     <LinearLayout
@@ -55,16 +55,16 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_check"
-                app:tint="#10B981"/>
+                app:tint="#10B981" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="12dp"
-                android:text="Bảo vệ tài khoản khỏi truy cập trái phép"
+                android:text="@string/two_fa_feature_device"
                 android:textSize="14sp"
-                android:textColor="#374151"/>
+                android:textColor="#374151" />
         </LinearLayout>
 
         <LinearLayout
@@ -78,62 +78,38 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_check"
-                app:tint="#10B981"/>
+                app:tint="#10B981" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="12dp"
-                android:text="Nhận mã xác thực qua SMS hoặc Email"
+                android:text="@string/two_fa_feature_code"
                 android:textSize="14sp"
-                android:textColor="#374151"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_check"
-                app:tint="#10B981"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="12dp"
-                android:text="Tương thích với Google Authenticator"
-                android:textSize="14sp"
-                android:textColor="#374151"/>
+                android:textColor="#374151" />
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Enable Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnEnable2FA"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:text="Kích hoạt 2FA"
+        android:text="@string/two_fa_enable"
         android:textSize="16sp"
         android:textStyle="bold"
         app:cornerRadius="12dp"
         app:backgroundTint="#10B981"
-        android:layout_marginBottom="12dp"/>
+        android:layout_marginBottom="12dp" />
 
-    <!-- Skip Button -->
     <TextView
         android:id="@+id/btnSkip2FA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Để sau"
+        android:text="@string/two_fa_skip"
         android:textSize="14sp"
         android:textColor="#9CA3AF"
         android:padding="8dp"
-        android:background="?attr/selectableItemBackground"/>
+        android:background="?attr/selectableItemBackground" />
 </LinearLayout>

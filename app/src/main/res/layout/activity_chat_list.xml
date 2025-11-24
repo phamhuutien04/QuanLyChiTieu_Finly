@@ -19,7 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Tin nhắn"
+            android:text="@string/chat_list_title"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#111827" />
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="10dp"
-            android:hint="Tìm tin nhắn hoặc tên..."
+            android:hint="@string/chat_search_hint"
             android:textColor="#111827"
             android:textColorHint="#9CA3AF"
             android:background="@android:color/transparent" />

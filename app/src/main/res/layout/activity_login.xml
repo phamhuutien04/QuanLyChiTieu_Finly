@@ -18,12 +18,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-
         <ImageView
             android:id="@+id/imgBanner"
             android:layout_gravity="center_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_width="280dp"
+            android:layout_height="151dp"
             android:src="@drawable/adsad"
             android:contentDescription="@string/login"
             android:scaleType="centerCrop"/>
@@ -48,7 +47,7 @@
             app:lineHeight="32dp" />
     </LinearLayout>
 
-    <!-- Form Card (shape + shadow nhẹ) -->
+    <!-- Form Card -->
     <LinearLayout
         android:id="@+id/card"
         android:layout_width="0dp"
@@ -63,18 +62,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-<!--        &lt;!&ndash; Email &ndash;&gt;-->
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/email_hint"-->
-<!--            android:textColor="#475569"-->
-<!--            android:textStyle="bold"-->
-<!--            android:textSize="13sp"-->
-<!--            android:layout_marginBottom="6dp"/>-->
-
-        <!-- ...các phần khác giữ nguyên... -->
-
+        <!-- Email -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -105,7 +93,7 @@
                 android:textSize="16sp"/>
         </LinearLayout>
 
-        <!-- Mật khẩu -->
+        <!-- Password -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -135,7 +123,7 @@
                 android:textSize="16sp"/>
         </LinearLayout>
 
-        <!-- Hiện mật khẩu + Quên mật khẩu -->
+        <!-- Show password + Forgot password -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -148,7 +136,7 @@
                 android:id="@+id/cbShowPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hiện mật khẩu"
+                android:text="@string/show_password"
                 android:textColor="#64748B"
                 android:textStyle="bold"
                 app:buttonTint="#2563EB"/>
@@ -165,7 +153,7 @@
                 android:gravity="end"/>
         </LinearLayout>
 
-        <!-- Nút đăng nhập -->
+        <!-- Login button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
@@ -178,7 +166,7 @@
             app:backgroundTint="@null"
             app:useMaterialThemeColors="false" />
 
-        <!-- Đăng ký -->
+        <!-- Register -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -187,9 +175,10 @@
             android:layout_marginTop="14dp">
 
             <TextView
+                android:id="@+id/tvNoAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chưa có tài khoản? "
+                android:text="@string/no_account"
                 android:textColor="#64748B"
                 android:textStyle="bold"
                 android:textSize="14sp"/>
@@ -198,7 +187,7 @@
                 android:id="@+id/txtGoRegister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Đăng ký"
+                android:text="@string/register_button"
                 android:textStyle="bold"
                 android:textColor="#2563EB"
                 android:textSize="14.5sp"/>

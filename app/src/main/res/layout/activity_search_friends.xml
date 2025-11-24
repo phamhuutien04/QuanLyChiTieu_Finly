@@ -11,7 +11,7 @@
         android:id="@+id/edtSearchFriend"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:hint="Tìm bạn bè..."
+        android:hint="@string/search_friend_hint"
         android:paddingHorizontal="16dp"
         android:textSize="16sp" />
 

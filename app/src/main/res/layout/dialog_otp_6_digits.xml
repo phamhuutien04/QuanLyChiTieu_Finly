@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nhập mã xác thực"
+        android:text="@string/otp_title"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="#000000"
@@ -22,7 +22,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mã 6 số đã được gửi đến email của bạn"
+        android:text="@string/otp_subtitle"
         android:textSize="14sp"
         android:textColor="#757575"
         android:layout_marginBottom="24dp"/>
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_otp_input"
-        android:hint="0 0 0 0 0 0"
+        android:hint="@string/otp_hint"
         android:gravity="center"
         android:inputType="number"
         android:maxLength="6"
@@ -43,12 +43,12 @@
         android:padding="16dp"
         android:layout_marginBottom="32dp"/>
 
-    <!-- Nút Xác nhận (Dùng MaterialButton cần có xmlns:app) -->
+    <!-- Nút Xác nhận -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnConfirmOtp"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:text="Xác nhận"
+        android:text="@string/confirm"
         app:cornerRadius="12dp"
         android:backgroundTint="#4CAF50"
         android:textColor="#FFFFFF"/>
@@ -58,8 +58,7 @@
         android:id="@+id/btnCancelOtp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hủy"
+        android:text="@string/cancel"
         android:textColor="#757575"
         style="@style/Widget.MaterialComponents.Button.TextButton"/>
-
 </LinearLayout>

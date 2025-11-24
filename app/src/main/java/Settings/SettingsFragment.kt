@@ -37,8 +37,6 @@ import android.widget.EditText
 import android.widget.RadioButton
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.quanlychitieu_finly.SearchFriendsActivity
-import com.example.quanlychitieu_finly.SocialActivity
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -55,8 +53,6 @@ class SettingsFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private lateinit var cloudinary: Cloudinary
-    private lateinit var row2FA: LinearLayout
-
 
     // Views
     private lateinit var tvUserName: TextView
@@ -65,6 +61,7 @@ class SettingsFragment : Fragment() {
     private var selectedType: String = "Speeding"
 
     private val imagePickRequest = 1001
+    private var isUpdatingSwitch = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -74,7 +71,7 @@ class SettingsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
 
         // Khởi tạo Firebase và Cloudinary
-        sharedPreferences = requireContext().getSharedPreferences("AppSettings", Context.MODE_PRIVATE)
+        sharedPreferences = requireContext().getSharedPreferences("FinlyPrefs", Context.MODE_PRIVATE)
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
         cloudinary = CloudinaryConfig.cloudinaryInstance
@@ -100,28 +97,89 @@ class SettingsFragment : Fragment() {
         view.findViewById<LinearLayout>(R.id.btnExportExcel).setOnClickListener {
             showDialogExportExcel()
         }
-        view.findViewById<LinearLayout>(R.id.row2FA).setOnClickListener {
-            openSearchFriends()
+
+        // === 2FA Setup ===
+        val btnTwoFA = view.findViewById<LinearLayout>(R.id.btnTwoFA)
+
+        btnTwoFA.setOnClickListener {
+            showTwoFADialog()
         }
 
+        val switch2FA = view.findViewById<androidx.appcompat.widget.SwitchCompat>(R.id.switch2FA)
+        switch2FA.setOnCheckedChangeListener { _, isChecked ->
+            if (isUpdatingSwitch) return@setOnCheckedChangeListener  // ⛔ Ngăn trigger ngoài ý muốn
 
+            val user = auth.currentUser ?: return@setOnCheckedChangeListener
+            val userId = user.uid
 
+            if (isChecked) {
+                showTwoFADialog()
+                saveTwoFAStatus(userId, true)
+            } else {
+                saveTwoFAStatus(userId, false)
+                Toast.makeText(requireContext(), "Đã tắt xác thực 2 bước", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // === AUTO SCAN INVOICE QR (LOCAL ONLY) ===
+        val switchScanInvoice = view.findViewById<androidx.appcompat.widget.SwitchCompat>(R.id.switchScanInvoice)
+
+        // 1) Load trạng thái đã lưu
+        val isScanEnabled = sharedPreferences.getBoolean("scan_invoice_enabled", false)
+        switchScanInvoice.isChecked = isScanEnabled
+
+        // 2) Lắng nghe bật/tắt và lưu vào SharedPreferences
+        switchScanInvoice.setOnCheckedChangeListener { _, isChecked ->
+            sharedPreferences.edit()
+                .putBoolean("scan_invoice_enabled", isChecked)
+                .apply()
+
+            if (isChecked) {
+                Toast.makeText(requireContext(), "Đã bật quét hóa đơn tự động", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Đã tắt quét hóa đơn tự động", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         return view
     }
-    private fun openSearchFriends() {
-        val intent = Intent(requireContext(), SearchFriendsActivity::class.java)
-        startActivity(intent)
+
+    private fun saveTwoFAStatus(userId: String, enabled: Boolean) {
+        db.collection("users").document(userId)
+            .update("twoFAEnabled", enabled)
+            .addOnSuccessListener {
+                // Thành công
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Lỗi cập nhật 2FA", Toast.LENGTH_SHORT).show()
+            }
     }
 
-    private fun openSocialActivity() {
-        val uid = FirebaseAuth.getInstance().currentUser?.uid
+    private fun showTwoFADialog() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_2fa_setup)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-        val intent = Intent(requireContext(), SocialActivity::class.java)
-        intent.putExtra("profileUid", uid)
-        startActivity(intent)
+        val btnEnable = dialog.findViewById<TextView>(R.id.btnEnable2FA)
+        val btnSkip = dialog.findViewById<TextView>(R.id.btnSkip2FA)
+
+        btnEnable?.setOnClickListener {
+            Toast.makeText(requireContext(), "Chuẩn bị setup 2FA…", Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
+        }
+
+        btnSkip?.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+
+        // Set chiều rộng đẹp như các dialog khác
+        val metrics = resources.displayMetrics
+        val width = metrics.widthPixels - (40 * metrics.density).toInt()
+        dialog.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
-
 
     fun showDialogExportExcel() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_export_excel, null)
@@ -235,8 +293,6 @@ class SettingsFragment : Fragment() {
                 Toast.makeText(requireContext(), "Lỗi tải dữ liệu Firestore!", Toast.LENGTH_SHORT).show()
             }
     }
-
-
 
     private fun showChangePasswordDialog() {
         val dialog = Dialog(requireContext())
@@ -412,6 +468,15 @@ class SettingsFragment : Fragment() {
                         } else {
                             imgAvatar.setImageResource(R.drawable.ic_user_placeholder)
                         }
+
+                        // 🔥 Load trạng thái 2FA từ Firestore
+                        val switch2FA = view?.findViewById<androidx.appcompat.widget.SwitchCompat>(R.id.switch2FA)
+
+                        val twoFAEnabled = document.getBoolean("twoFAEnabled") ?: false
+
+                        isUpdatingSwitch = true
+                        switch2FA?.isChecked = twoFAEnabled
+                        isUpdatingSwitch = false
                     }
                 }
                 .addOnFailureListener {

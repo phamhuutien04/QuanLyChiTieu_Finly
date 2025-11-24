@@ -11,9 +11,8 @@ import javax.mail.internet.MimeMessage
 
 object GMailSender {
 
-    // Thay bằng email của bạn (người gửi)
     private const val SENDER_EMAIL = "sidat3241@gmail.com"
-    // Thay bằng MẬT KHẨU ỨNG DỤNG (16 ký tự), KHÔNG phải mật khẩu đăng nhập gmail
+
     private const val SENDER_PASSWORD = "wtxg soyr vjnb zymp"
 
     fun sendEmail(recipientEmail: String, subject: String, body: String, onResult: (Boolean) -> Unit) {
@@ -36,14 +35,13 @@ object GMailSender {
             message.subject = subject
             message.setText(body)
 
-            // Gửi mail trong background thread để không chặn UI
             Thread {
                 try {
                     Transport.send(message)
-                    onResult(true) // Gửi thành công
+                    onResult(true)
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    onResult(false) // Gửi thất bại
+                    onResult(false)
                 }
             }.start()
 

@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Chọn đơn vị tiền tệ"
+        android:text="@string/currency_select_title"
         android:textSize="20sp"
         android:textColor="#1F2937"
         android:textStyle="bold"
@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dữ liệu sẽ được chuyển đổi tự động"
+        android:text="@string/currency_auto_convert_desc"
         android:textSize="14sp"
         android:textColor="#6B7280"
         android:layout_marginBottom="20dp"/>
@@ -55,7 +55,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="VND (₫)"
+                        android:text="@string/currency_vnd"
                         android:textSize="16sp"
                         android:textColor="#1F2937"
                         android:textStyle="bold"/>
@@ -63,7 +63,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Việt Nam Đồng"
+                        android:text="@string/currency_vnd_full"
                         android:textSize="12sp"
                         android:textColor="#9CA3AF"
                         android:layout_marginEnd="12dp"/>
@@ -97,14 +97,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="USD ($)"
+                        android:text="@string/currency_usd"
                         android:textSize="16sp"
                         android:textColor="#1F2937"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="US Dollar"
+                        android:text="@string/currency_usd_full"
                         android:textSize="12sp"
                         android:textColor="#9CA3AF"
                         android:layout_marginEnd="12dp"/>
@@ -137,14 +137,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="EUR (€)"
+                        android:text="@string/currency_eur"
                         android:textSize="16sp"
                         android:textColor="#1F2937"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Euro"
+                        android:text="@string/currency_eur_full"
                         android:textSize="12sp"
                         android:textColor="#9CA3AF"
                         android:layout_marginEnd="12dp"/>
@@ -176,14 +176,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="THB (฿)"
+                        android:text="@string/currency_thb"
                         android:textSize="16sp"
                         android:textColor="#1F2937"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Thai Baht"
+                        android:text="@string/currency_thb_full"
                         android:textSize="12sp"
                         android:textColor="#9CA3AF"
                         android:layout_marginEnd="12dp"/>
@@ -194,6 +194,7 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
         </RadioGroup>
     </androidx.core.widget.NestedScrollView>
 
@@ -208,7 +209,7 @@
             android:id="@+id/btnCancelCurrency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hủy"
+            android:text="@string/cancel"
             android:textSize="16sp"
             android:textColor="#6B7280"
             android:padding="12dp"
@@ -218,7 +219,7 @@
             android:id="@+id/btnApplyCurrency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Áp dụng"
+            android:text="@string/apply"
             android:textSize="16sp"
             android:textColor="#3B82F6"
             android:textStyle="bold"

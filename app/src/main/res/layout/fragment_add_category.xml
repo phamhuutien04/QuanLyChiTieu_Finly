@@ -13,7 +13,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
         android:elevation="4dp"
-        app:title="Thêm Danh Mục"
+        app:title="@string/add_category_title"
         app:titleCentered="true"
         app:titleTextColor="#333333"
         app:navigationIcon="@drawable/ic_back"
@@ -54,7 +54,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
-                        android:text="Ảnh danh mục"
+                        android:text="@string/category_image_title"
                         android:textColor="#555555"
                         android:textSize="15sp" />
 
@@ -81,8 +81,6 @@
                             android:background="@drawable/bg_circle"
                             android:padding="8dp"
                             app:tint="@null" />
-
-
                     </com.google.android.material.card.MaterialCardView>
 
                     <TextView
@@ -90,7 +88,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Nhấn để chọn ảnh"
+                        android:text="@string/tap_to_select_image"
                         android:textColor="#999999"
                         android:textSize="13sp" />
 
@@ -117,7 +115,7 @@
                         android:id="@+id/tilCategoryName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Tên danh mục"
+                        android:hint="@string/category_name_hint"
                         app:boxCornerRadiusTopStart="8dp"
                         app:boxCornerRadiusTopEnd="8dp"
                         app:boxCornerRadiusBottomStart="8dp"
@@ -159,7 +157,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
-                        android:text="Loại danh mục"
+                        android:text="@string/category_type"
                         android:textColor="#333333"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -175,7 +173,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:checked="true"
-                            android:text="Chi tiêu"
+                            android:text="@string/expense"
                             android:textColor="#333333"
                             android:textSize="15sp"
                             app:buttonTint="#F44336" />
@@ -184,7 +182,7 @@
                             android:id="@+id/rbIncome"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Thu nhập"
+                            android:text="@string/income"
                             android:textColor="#333333"
                             android:textSize="15sp"
                             app:buttonTint="#4CAF50" />
@@ -208,7 +206,7 @@
                     android:layout_height="50dp"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:text="Hủy"
+                    android:text="@string/cancel"
                     android:textColor="#555555"
                     android:textSize="16sp"
                     app:backgroundTint="@color/white"
@@ -222,7 +220,7 @@
                     android:layout_height="50dp"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:text="Lưu"
+                    android:text="@string/save"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
                     app:backgroundTint="#2196F3"

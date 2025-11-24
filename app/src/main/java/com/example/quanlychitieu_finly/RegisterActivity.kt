@@ -219,12 +219,22 @@ class RegisterActivity : AppCompatActivity() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val userId = auth.currentUser?.uid ?: return@addOnCompleteListener
+                    val deviceId = android.provider.Settings.Secure.getString(
+                        contentResolver,
+                        android.provider.Settings.Secure.ANDROID_ID
+                    )
+
                     val user = hashMapOf(
                         "id" to userId,
                         "username" to username,
                         "email" to email,
                         "balance" to 0L,
-                        "createdAt" to System.currentTimeMillis()
+                        "createdAt" to System.currentTimeMillis(),
+                        "twoFAEnabled" to true,
+                        "twoFASecret" to "",
+                        "lastDeviceId" to deviceId,
+                        "lastIP" to "",
+                        "loginHistory" to listOf<String>()
                     )
 
                     db.collection("users").document(userId)

@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Chi tiết tiến độ"
+        android:text="@string/progress_detail_title"
         android:textSize="24sp"
         android:textColor="#1F2937"
         android:textStyle="bold"
@@ -29,7 +29,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mục tiêu tháng này"
+        android:text="@string/progress_month_goal"
         android:textSize="14sp"
         android:textColor="#6B7280"
         android:layout_marginBottom="24dp"/>
@@ -81,7 +81,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="đã chi tiêu"
+                        android:text="@string/spent_label"
                         android:textSize="12sp"
                         android:textColor="#6B7280"
                         android:layout_marginTop="4dp"/>
@@ -104,7 +104,7 @@
             android:id="@+id/tvStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="⚡ Bạn đang đi đúng hướng!"
+            android:text="@string/on_track_status"
             android:textSize="14sp"
             android:textColor="#3B82F6"
             android:textStyle="bold"
@@ -146,7 +146,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Đã chi"
+                        android:text="@string/spent"
                         android:textSize="12sp"
                         android:textColor="#6B7280"/>
 
@@ -181,7 +181,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Mục tiêu"
+                        android:text="@string/goal"
                         android:textSize="12sp"
                         android:textColor="#6B7280"/>
 
@@ -230,7 +230,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Còn lại trong tháng"
+                        android:text="@string/month_remaining"
                         android:textSize="12sp"
                         android:textColor="#10B981"/>
 
@@ -273,7 +273,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📊 Ngân sách/ngày"
+                        android:text="@string/daily_budget"
                         android:textSize="11sp"
                         android:textColor="#6B7280"/>
 
@@ -308,7 +308,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📅 Còn lại"
+                        android:text="@string/days_left"
                         android:textSize="11sp"
                         android:textColor="#6B7280"/>
 
@@ -353,7 +353,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="12dp"
-                android:text="Để đạt mục tiêu, hãy chi tiêu trong giới hạn ngân sách hàng ngày!"
+                android:text="@string/tips_spending_daily"
                 android:textSize="12sp"
                 android:textColor="#92400E"
                 android:lineSpacingExtra="2dp"/>

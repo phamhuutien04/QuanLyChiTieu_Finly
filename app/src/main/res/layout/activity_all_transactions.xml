@@ -22,7 +22,7 @@
             android:background="#1A1D2E"
             android:paddingHorizontal="20dp"
             app:contentInsetStartWithNavigation="0dp"
-            android:title="Quay lại"
+            android:title="@string/all_tx_back"
             app:titleCentered="true"
             app:titleTextColor="#FFFFFF"
             app:navigationIconTint="#FFFFFF"
@@ -36,7 +36,7 @@
         android:paddingHorizontal="16dp"
         android:paddingVertical="12dp"
         android:textStyle="bold"
-        android:text="💡 Mẹo: Ấn vào giao dịch để chỉnh sửa"
+        android:text="@string/all_tx_tip"
         android:textColor="#FFA500"
         android:textSize="14dp"
         android:gravity="center"
@@ -74,7 +74,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📊 Tổng quan giao dịch"
+                        android:text="@string/all_tx_overview"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="#FFFFFF"
@@ -99,7 +99,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Tổng thu"
+                                android:text="@string/all_tx_total_income"
                                 android:textStyle="bold"
                                 android:textSize="14sp"
                                 android:textColor="#000000"
@@ -128,7 +128,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Tổng chi"
+                                android:text="@string/all_tx_total_expense"
                                 android:textSize="14sp"
                                 android:textStyle="bold"
                                 android:textColor="#000000"
@@ -158,7 +158,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Danh sách giao dịch"
+                    android:text="@string/all_tx_list_title"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="#121111"/>
@@ -191,7 +191,7 @@
                         android:id="@+id/edtSearchTransaction"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Tìm kiếm tiêu đề..."
+                        android:hint="@string/all_tx_search_hint"
                         android:drawableStart="@drawable/ic_searchh"
                         android:drawablePadding="8dp"
                         android:padding="12dp"
@@ -203,13 +203,14 @@
                     android:id="@+id/btnSelectCategoryFilter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Danh mục"
+                    android:text="@string/all_tx_filter_category"
                     app:icon="@drawable/ic_filter"
                     app:iconTint="#FFFFFF"
                     android:backgroundTint="#2563EB"
                     app:cornerRadius="12dp"
                     android:paddingVertical="12dp"/>
             </LinearLayout>
+
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:id="@+id/tgTypeFilter"
                 android:layout_width="match_parent"
@@ -224,7 +225,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:text="Thu nhập"
+                    android:text="@string/all_tx_filter_income"
                     android:textStyle="bold"
                     android:textColor="@color/toggle_gray_text"
                     app:backgroundTint="#F0F0F0" />
@@ -236,7 +237,7 @@
                     android:textStyle="bold"
                     android:layout_weight="1"
                     style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:text="Chi tiêu"
+                    android:text="@string/all_tx_filter_expense"
                     android:textColor="@color/toggle_gray_text"
                     app:backgroundTint="#F0F0F0" />
             </com.google.android.material.button.MaterialButtonToggleGroup>

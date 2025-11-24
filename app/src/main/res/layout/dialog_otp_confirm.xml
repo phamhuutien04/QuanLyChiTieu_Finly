@@ -9,7 +9,7 @@
     android:paddingBottom="12dp"
     android:gravity="center_horizontal">
 
-    <!-- 1. Icon Minh họa (Hình cái khóa hoặc Email) -->
+    <!-- 1. Icon Minh họa -->
     <ImageView
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -19,17 +19,17 @@
         android:padding="12dp"
         android:layout_marginBottom="16dp"/>
 
-    <!-- 2. Dòng hướng dẫn nhỏ -->
+    <!-- 2. Dòng hướng dẫn -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vui lòng kiểm tra email và nhập mã 4 số"
+        android:text="@string/otp_email_instruction"
         android:textSize="14sp"
         android:textColor="#757575"
         android:gravity="center"
         android:layout_marginBottom="24dp"/>
 
-    <!-- 3. Ô nhập OTP (Trông như 4 ô rời nhờ letterSpacing) -->
+    <!-- 3. Ô nhập OTP -->
     <EditText
         android:id="@+id/edtOtpInput"
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
         android:background="@drawable/bg_otp_input"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
-        android:hint="0 0 0 0"
+        android:hint="@string/otp_hint_4"
         android:inputType="number"
         android:maxLength="4"
         android:letterSpacing="0.6"
@@ -47,6 +47,4 @@
         android:textSize="32sp"
         android:textStyle="bold"
         android:cursorVisible="false"/>
-    <!-- cursorVisible=false để ẩn con trỏ nhấp nháy cho đẹp giống mã PIN -->
-
 </LinearLayout>

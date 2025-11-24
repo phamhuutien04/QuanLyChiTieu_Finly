@@ -43,7 +43,6 @@
                 android:layout_height="match_parent"
                 android:layout_margin="4dp">
 
-                <!-- Indicator bar xanh da trời -->
                 <View
                     android:id="@+id/indicator_home"
                     android:layout_width="40dp"
@@ -70,7 +69,7 @@
 
                     <TextView
                         android:id="@+id/text_home"
-                        android:text="Trang chủ"
+                        android:text="@string/tab_home"
                         android:textSize="11sp"
                         android:textColor="#9E9E9E"
                         android:layout_width="wrap_content"
@@ -113,7 +112,7 @@
 
                     <TextView
                         android:id="@+id/text_category"
-                        android:text="Danh mục"
+                        android:text="@string/tab_category"
                         android:textSize="11sp"
                         android:textColor="#9E9E9E"
                         android:layout_width="wrap_content"
@@ -156,7 +155,7 @@
 
                     <TextView
                         android:id="@+id/text_analytics"
-                        android:text="Phân tích"
+                        android:text="@string/tab_analytics"
                         android:textSize="11sp"
                         android:textColor="#9E9E9E"
                         android:layout_width="wrap_content"
@@ -199,7 +198,7 @@
 
                     <TextView
                         android:id="@+id/text_settings"
-                        android:text="Cài đặt"
+                        android:text="@string/tab_settings"
                         android:textSize="11sp"
                         android:textColor="#9E9E9E"
                         android:layout_width="wrap_content"
@@ -210,12 +209,4 @@
         </LinearLayout>
     </LinearLayout>
 
-<!--    &lt;!&ndash; Shadow effect cho FAB &ndash;&gt;-->
-<!--    <View-->
-<!--        android:layout_width="64dp"-->
-<!--        android:layout_height="64dp"-->
-<!--        android:layout_gravity="bottom|end"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        android:layout_marginBottom="88dp"-->
-<!--        android:alpha="0.3" />-->
 </FrameLayout>

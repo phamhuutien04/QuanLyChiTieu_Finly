@@ -84,9 +84,9 @@ class AllTransactionsActivity : AppCompatActivity() {
         btnSelectCategoryFilter = findViewById(R.id.btnSelectCategoryFilter)
 
         // Xóa tham số 'enableGrouping = true' vì Adapter mới mặc định đã gom nhóm
-        adapter = TransactionAdapter { item ->
-            showEditDeleteSheet(item)
-        }
+//        adapter = TransactionAdapter { item ->
+//            showEditDeleteSheet(item)
+//        }
 
         rvAllTransactions.layoutManager = LinearLayoutManager(this)
         rvAllTransactions.adapter = adapter

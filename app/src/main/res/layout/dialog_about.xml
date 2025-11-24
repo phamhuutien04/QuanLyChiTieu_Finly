@@ -12,33 +12,35 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp"/>
-<!--    android:src="@drawable/ic_app_logo"-->
+        android:layout_marginBottom="16dp" />
 
+    <!-- App Name -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Finly"
+        android:text="@string/about_app_title"
         android:textSize="28sp"
         android:textColor="#1F2937"
         android:textStyle="bold"
         android:layout_marginBottom="4dp"/>
 
+    <!-- App Slogan -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Finance Friendly"
+        android:text="@string/about_app_slogan"
         android:textSize="14sp"
         android:textColor="#6B7280"
         android:layout_marginBottom="8dp"/>
 
+    <!-- Version -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Phiên bản 1.0.0"
+        android:text="@string/about_app_version"
         android:textSize="12sp"
         android:textColor="#9CA3AF"
         android:layout_marginBottom="24dp"/>
@@ -49,11 +51,11 @@
         android:background="#E5E7EB"
         android:layout_marginBottom="20dp"/>
 
-    <!-- App Info -->
+    <!-- App Description -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ứng dụng quản lý tài chính cá nhân thông minh, giúp bạn theo dõi thu chi, lập kế hoạch ngân sách và đạt được các mục tiêu tài chính."
+        android:text="@string/about_app_description"
         android:textSize="14sp"
         android:textColor="#374151"
         android:gravity="center"
@@ -72,7 +74,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Phát triển bởi"
+            android:text="@string/about_developed_by"
             android:textSize="12sp"
             android:textColor="#9CA3AF"
             android:textStyle="bold"
@@ -81,7 +83,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nhóm 8 - TDMU - D22CNT05"
+            android:text="@string/about_developer_name"
             android:textSize="14sp"
             android:textColor="#1F2937"
             android:textStyle="bold"
@@ -90,7 +92,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="© 2025 Niên khóa 2022 - 2027"
+            android:text="@string/about_copyright"
             android:textSize="12sp"
             android:textColor="#6B7280"/>
     </LinearLayout>
@@ -109,7 +111,6 @@
             android:padding="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_marginEnd="12dp"/>
-<!--        android:src="@drawable/ic_facebook"-->
 
         <ImageView
             android:layout_width="40dp"
@@ -117,22 +118,19 @@
             android:padding="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_marginEnd="12dp"/>
-<!--        android:src="@drawable/ic_twitter"-->
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:padding="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"/>
-<!--        android:src="@drawable/ic_instagram"-->
     </LinearLayout>
 
-    <!-- Close Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCloseAbout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Đóng"
+        android:text="@string/close"
         android:textSize="16sp"
         android:textStyle="bold"
         app:cornerRadius="12dp"

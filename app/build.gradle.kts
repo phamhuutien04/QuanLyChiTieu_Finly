@@ -34,13 +34,12 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-
     packaging {
         resources {
-            excludes += "META-INF/NOTICE.md"
             excludes += "META-INF/LICENSE.md"
-            excludes += "META-INF/notice.txt"
-            excludes += "META-INF/license.txt"
+            excludes += "META-INF/NOTICE.md"
+            excludes += "META-INF/LICENSE"
+            excludes += "META-INF/NOTICE"
         }
     }
 }
@@ -63,6 +62,12 @@ dependencies {
     implementation("com.cloudinary:cloudinary-android:2.4.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("net.sourceforge.jexcelapi:jxl:2.6.12")
+    implementation("commons-codec:commons-codec:1.15")
     implementation("com.sun.mail:android-mail:1.6.7")
     implementation("com.sun.mail:android-activation:1.6.7")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:okhttp-urlconnection:4.12.0")
+    implementation("org.json:json:20210307")
+    implementation("androidx.activity:activity-ktx:1.9.2")
+    implementation("androidx.core:core-ktx:1.12.0")
 }

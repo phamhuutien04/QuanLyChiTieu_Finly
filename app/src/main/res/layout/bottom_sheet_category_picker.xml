@@ -19,7 +19,7 @@
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chọn danh mục"
+            android:text="@string/select_category"
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="#120D0D"
@@ -38,7 +38,7 @@
             android:layout_gravity="end"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
-            android:text="Hủy"
+            android:text="@string/cancel"
             android:textColor="#000000"
             app:backgroundTint="@android:color/transparent"/>
     </LinearLayout>
