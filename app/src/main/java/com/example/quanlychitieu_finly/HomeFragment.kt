@@ -34,6 +34,7 @@ import java.util.Date
 import java.util.Locale
 import android.app.DatePickerDialog
 import friend.FriendPickerAdapter
+import friend.User
 import java.util.Calendar
 
 class HomeFragment : Fragment() {

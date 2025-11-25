@@ -1,4 +1,4 @@
-package com.example.quanlychitieu_finly
+package friend
 
 data class User(
     val id: String = "",

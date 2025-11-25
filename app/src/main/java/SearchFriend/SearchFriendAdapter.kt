@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.quanlychitieu_finly.R
-import com.example.quanlychitieu_finly.User
+import friend.User
 
 class SearchFriendAdapter(
     private var list: MutableList<User>,
