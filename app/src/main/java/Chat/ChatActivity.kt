@@ -26,9 +26,9 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import java.io.ByteArrayOutputStream
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
+import java.io.ByteArrayOutputStream
 
 class ChatActivity : AppCompatActivity() {
 
@@ -38,6 +38,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var btnBack: ImageView
     private lateinit var btnLocation: ImageView
     private lateinit var btnImage: ImageView
+    private lateinit var btnRequestMoney: ImageView
     private lateinit var imgChatAvatar: ImageView
     private lateinit var tvChatName: TextView
 
@@ -69,6 +70,7 @@ class ChatActivity : AppCompatActivity() {
         btnBack = findViewById(R.id.btnBack)
         btnLocation = findViewById(R.id.btnLocation)
         btnImage = findViewById(R.id.btnImage)
+        btnRequestMoney = findViewById(R.id.btnRequestMoney)
         imgChatAvatar = findViewById(R.id.imgChatAvatar)
         tvChatName = findViewById(R.id.tvChatName)
 
@@ -85,6 +87,7 @@ class ChatActivity : AppCompatActivity() {
         btnLocation.setOnClickListener { sendLocation() }
         btnBack.setOnClickListener { animateBack() }
         btnImage.setOnClickListener { pickImageDialog() }
+        btnRequestMoney.setOnClickListener { openRequestMoneyDialog() }
     }
 
     private fun ensureChatExists() {
@@ -127,6 +130,9 @@ class ChatActivity : AppCompatActivity() {
                         type = d.getString("type") ?: "text",
                         latitude = d.getDouble("latitude"),
                         longitude = d.getDouble("longitude"),
+                        amount = d.getLong("amount"),
+                        note = d.getString("note"),
+                        paid = d.getBoolean("paid") ?: false,
                         timestamp = d.getLong("timestamp") ?: 0
                     )
                 }
@@ -171,17 +177,17 @@ class ChatActivity : AppCompatActivity() {
         edtMessage.setText("")
     }
 
-    // ---------------- LOCATION (OSM) ----------------
+    // ---------------- LOCATION ----------------
 
     private fun getStaticMap(lat: Double, lng: Double): String {
         val apiKey = "e25de4efcd7f4a09816b7cabd121eadd"
 
         return "https://maps.geoapify.com/v1/staticmap" +
                 "?style=osm-carto" +
-                "&width=800&height=400" +
+                "&width=600&height=300" +
                 "&center=lonlat:$lng,$lat" +
                 "&zoom=17" +
-                "&marker=lonlat:$lng,$lat;color:%23ff0000;size:large" +
+                "&marker=lonlat:$lng,$lat;color:%23ff0000;size:medium" +
                 "&apiKey=$apiKey"
     }
 
@@ -220,8 +226,6 @@ class ChatActivity : AppCompatActivity() {
             }
         }
     }
-
-
 
     // ---------------- PICK IMAGE ----------------
 
@@ -272,8 +276,6 @@ class ChatActivity : AppCompatActivity() {
         return Uri.parse(path)
     }
 
-    // ---------------- CLOUDINARY ----------------
-
     private fun uploadToCloudinary(uri: Uri) {
         Toast.makeText(this, "Đang tải ảnh...", Toast.LENGTH_SHORT).show()
 
@@ -301,6 +303,41 @@ class ChatActivity : AppCompatActivity() {
             "senderId" to currentUid,
             "type" to "image",
             "imageUrl" to url,
+            "timestamp" to System.currentTimeMillis(),
+            "seenBy" to listOf(currentUid)
+        )
+
+        db.collection("chats").document(chatId)
+            .collection("messages")
+            .add(msg)
+    }
+
+    // ---------------- REQUEST MONEY ----------------
+
+    private fun openRequestMoneyDialog() {
+        val v = layoutInflater.inflate(R.layout.dialog_request_money, null)
+        val edtAmount = v.findViewById<EditText>(R.id.edtAmount)
+        val edtNote = v.findViewById<EditText>(R.id.edtNote)
+
+        AlertDialog.Builder(this)
+            .setTitle("Đòi tiền")
+            .setView(v)
+            .setPositiveButton("Gửi") { _, _ ->
+                val amount = edtAmount.text.toString().toLongOrNull() ?: 0
+                val note = edtNote.text.toString()
+                if (amount > 0) sendMoneyRequest(amount, note)
+            }
+            .setNegativeButton("Hủy", null)
+            .show()
+    }
+
+    private fun sendMoneyRequest(amount: Long, note: String) {
+        val msg = mapOf(
+            "senderId" to currentUid,
+            "type" to "request_money",
+            "amount" to amount,
+            "note" to note,
+            "paid" to false,
             "timestamp" to System.currentTimeMillis(),
             "seenBy" to listOf(currentUid)
         )
