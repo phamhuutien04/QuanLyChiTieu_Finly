@@ -1,16 +1,32 @@
 package Chat
 
+import android.Manifest
+import android.app.AlertDialog
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.location.Location
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.view.animation.RotateAnimation
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.quanlychitieu_finly.CloudinaryConfig
 import com.example.quanlychitieu_finly.R
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.io.ByteArrayOutputStream
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 
@@ -19,8 +35,13 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var recyclerChat: RecyclerView
     private lateinit var edtMessage: EditText
     private lateinit var btnSend: ImageView
+    private lateinit var btnBack: ImageView
+    private lateinit var btnLocation: ImageView
+    private lateinit var btnImage: ImageView
     private lateinit var imgChatAvatar: ImageView
     private lateinit var tvChatName: TextView
+
+    private lateinit var fusedLocation: FusedLocationProviderClient
 
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
@@ -40,13 +61,18 @@ class ChatActivity : AppCompatActivity() {
         friendUid = intent.getStringExtra("friendUid") ?: ""
         currentUid = auth.currentUser?.uid ?: ""
 
-        ensureChatDocumentExists()
+        ensureChatExists()
 
         recyclerChat = findViewById(R.id.recyclerChat)
         edtMessage = findViewById(R.id.edtMessage)
         btnSend = findViewById(R.id.btnSend)
+        btnBack = findViewById(R.id.btnBack)
+        btnLocation = findViewById(R.id.btnLocation)
+        btnImage = findViewById(R.id.btnImage)
         imgChatAvatar = findViewById(R.id.imgChatAvatar)
         tvChatName = findViewById(R.id.tvChatName)
+
+        fusedLocation = LocationServices.getFusedLocationProviderClient(this)
 
         adapter = ChatAdapter(currentUid, "")
         recyclerChat.layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
@@ -55,31 +81,24 @@ class ChatActivity : AppCompatActivity() {
         loadFriendInfo()
         listenMessages()
 
-        btnSend.setOnClickListener { sendMessage() }
+        btnSend.setOnClickListener { sendTextMessage() }
+        btnLocation.setOnClickListener { sendLocation() }
+        btnBack.setOnClickListener { animateBack() }
+        btnImage.setOnClickListener { pickImageDialog() }
     }
 
-    // Tạo document chat + members nếu chưa có
-    private fun ensureChatDocumentExists() {
-        val chatRef = db.collection("chats").document(chatId)
-
-        chatRef.get().addOnSuccessListener { doc ->
+    private fun ensureChatExists() {
+        val ref = db.collection("chats").document(chatId)
+        ref.get().addOnSuccessListener { doc ->
             if (!doc.exists()) {
-                val data = mapOf(
-                    "members" to listOf(currentUid, friendUid)
-                )
-                chatRef.set(data)
-            } else {
-                if (!doc.contains("members")) {
-                    chatRef.update("members", listOf(currentUid, friendUid))
-                }
+                ref.set(mapOf("members" to listOf(currentUid, friendUid)))
             }
         }
     }
 
     private fun loadFriendInfo() {
         db.collection("users").document(friendUid)
-            .get()
-            .addOnSuccessListener { doc ->
+            .get().addOnSuccessListener { doc ->
 
                 val name = doc.getString("username") ?: "Đang chat"
                 tvChatName.text = name
@@ -92,8 +111,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun listenMessages() {
-        db.collection("chats")
-            .document(chatId)
+        db.collection("chats").document(chatId)
             .collection("messages")
             .orderBy("timestamp", Query.Direction.ASCENDING)
             .addSnapshotListener { snap, _ ->
@@ -104,6 +122,11 @@ class ChatActivity : AppCompatActivity() {
                     ChatMessage(
                         senderId = d.getString("senderId") ?: "",
                         text = d.getString("text") ?: "",
+                        imageUrl = d.getString("imageUrl") ?: "",
+                        mapUrl = d.getString("mapUrl") ?: "",
+                        type = d.getString("type") ?: "text",
+                        latitude = d.getDouble("latitude"),
+                        longitude = d.getDouble("longitude"),
                         timestamp = d.getLong("timestamp") ?: 0
                     )
                 }
@@ -111,40 +134,192 @@ class ChatActivity : AppCompatActivity() {
                 adapter.setMessages(msgs)
                 recyclerChat.scrollToPosition(msgs.size - 1)
 
-                // 🔥 Đánh dấu đã đọc
-                markMessagesAsSeen(snap)
+                markSeen(snap)
             }
     }
 
-    private fun markMessagesAsSeen(snap: QuerySnapshot) {
-        for (d in snap.documents) {
-            val senderId = d.getString("senderId") ?: ""
-            if (senderId == currentUid) continue   // tin mình gửi thì bỏ qua
+    private fun markSeen(snap: QuerySnapshot) {
+        snap.documents.forEach {
+            val sender = it.getString("senderId") ?: ""
+            if (sender == currentUid) return@forEach
 
-            val seenBy = d.get("seenBy") as? MutableList<String> ?: mutableListOf()
+            val seenBy = it.get("seenBy") as? MutableList<String> ?: mutableListOf()
             if (!seenBy.contains(currentUid)) {
                 seenBy.add(currentUid)
-                d.reference.update("seenBy", seenBy)
+                it.reference.update("seenBy", seenBy)
             }
         }
     }
 
-    private fun sendMessage() {
+    // ---------------- TEXT ----------------
+
+    private fun sendTextMessage() {
         val text = edtMessage.text.toString().trim()
         if (text.isEmpty()) return
 
         val msg = mapOf(
             "senderId" to currentUid,
             "text" to text,
+            "type" to "text",
             "timestamp" to System.currentTimeMillis(),
-            // 🔥 Người gửi luôn coi là đã xem
+            "seenBy" to listOf(currentUid)
+        )
+
+        db.collection("chats").document(chatId)
+            .collection("messages").add(msg)
+
+        edtMessage.setText("")
+    }
+
+    // ---------------- LOCATION (OSM) ----------------
+
+    private fun getStaticMap(lat: Double, lng: Double): String {
+        val apiKey = "e25de4efcd7f4a09816b7cabd121eadd"
+
+        return "https://maps.geoapify.com/v1/staticmap" +
+                "?style=osm-carto" +
+                "&width=800&height=400" +
+                "&center=lonlat:$lng,$lat" +
+                "&zoom=17" +
+                "&marker=lonlat:$lng,$lat;color:%23ff0000;size:large" +
+                "&apiKey=$apiKey"
+    }
+
+    private fun sendLocation() {
+
+        if (ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                111
+            )
+            return
+        }
+
+        fusedLocation.lastLocation.addOnSuccessListener { loc: Location? ->
+            if (loc != null) {
+
+                val mapUrl = getStaticMap(loc.latitude, loc.longitude)
+
+                val msg = mapOf(
+                    "senderId" to currentUid,
+                    "type" to "location_map",
+                    "mapUrl" to mapUrl,
+                    "latitude" to loc.latitude,
+                    "longitude" to loc.longitude,
+                    "timestamp" to System.currentTimeMillis(),
+                    "seenBy" to listOf(currentUid)
+                )
+
+                db.collection("chats").document(chatId)
+                    .collection("messages")
+                    .add(msg)
+            }
+        }
+    }
+
+
+
+    // ---------------- PICK IMAGE ----------------
+
+    private fun pickImageDialog() {
+        val options = arrayOf("Chụp ảnh", "Chọn ảnh từ thư viện")
+
+        AlertDialog.Builder(this)
+            .setTitle("Gửi ảnh bằng...")
+            .setItems(options) { _, which ->
+                if (which == 0) openCamera()
+                else openGallery()
+            }
+            .show()
+    }
+
+    private fun openGallery() {
+        val i = Intent(Intent.ACTION_PICK)
+        i.type = "image/*"
+        galleryLauncher.launch(i)
+    }
+
+    private fun openCamera() {
+        val i = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        cameraLauncher.launch(i)
+    }
+
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { res ->
+            if (res.resultCode == RESULT_OK) {
+                val uri = res.data?.data
+                if (uri != null) uploadToCloudinary(uri)
+            }
+        }
+
+    private val cameraLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { res ->
+            if (res.resultCode == RESULT_OK) {
+                val bmp = res.data?.extras?.get("data") as? Bitmap ?: return@registerForActivityResult
+                val uri = bitmapToUri(bmp)
+                uploadToCloudinary(uri)
+            }
+        }
+
+    private fun bitmapToUri(bmp: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(contentResolver, bmp, "chat_img", null)
+        return Uri.parse(path)
+    }
+
+    // ---------------- CLOUDINARY ----------------
+
+    private fun uploadToCloudinary(uri: Uri) {
+        Toast.makeText(this, "Đang tải ảnh...", Toast.LENGTH_SHORT).show()
+
+        Thread {
+            try {
+                val input = contentResolver.openInputStream(uri)
+                val bytes = input!!.readBytes()
+
+                val result = CloudinaryConfig.cloudinaryInstance.uploader().upload(
+                    bytes,
+                    mapOf("folder" to "chat")
+                )
+
+                val url = result["secure_url"].toString()
+                sendImageMessage(url)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }.start()
+    }
+
+    private fun sendImageMessage(url: String) {
+        val msg = mapOf(
+            "senderId" to currentUid,
+            "type" to "image",
+            "imageUrl" to url,
+            "timestamp" to System.currentTimeMillis(),
             "seenBy" to listOf(currentUid)
         )
 
         db.collection("chats").document(chatId)
             .collection("messages")
             .add(msg)
+    }
 
-        edtMessage.setText("")
+    // ---------------- BACK ----------------
+
+    private fun animateBack() {
+        val rotate = RotateAnimation(
+            0f, -180f,
+            RotateAnimation.RELATIVE_TO_SELF, 0.5f,
+            RotateAnimation.RELATIVE_TO_SELF, 0.5f
+        )
+        rotate.duration = 250
+        btnBack.startAnimation(rotate)
+        finish()
     }
 }
