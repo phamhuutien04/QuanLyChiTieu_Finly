@@ -268,7 +268,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun createDefaultCategories(userId: String) {
-        // (Giữ nguyên logic cũ của bạn để tạo danh mục)
         val defaultCategories = mapOf(
             "spending" to listOf(
                 Pair(R.drawable.ic_category_food, "Ăn uống"),
@@ -332,7 +331,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun uploadDefaultAvatar(userId: String) {
-        // (Giữ nguyên logic cũ của bạn)
         thread {
             try {
                 val drawable = ContextCompat.getDrawable(this, R.drawable.ic_avt) as? BitmapDrawable

@@ -83,7 +83,7 @@ class ChatActivity : AppCompatActivity() {
             currentUid,
             friendAvatar
         ) { msg ->
-            onPayRequest(msg)   // ⭐ callback từ adapter
+            onPayRequest(msg)
         }
 
         recyclerChat.layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
@@ -180,9 +180,6 @@ class ChatActivity : AppCompatActivity() {
             }
     }
 
-    // ================================================================================================
-    //                                          SEND MESSAGES
-    // ================================================================================================
 
     private fun sendTextMessage() {
         val text = edtMessage.text.toString().trim()
@@ -204,9 +201,6 @@ class ChatActivity : AppCompatActivity() {
         edtMessage.setText("")
     }
 
-    // ================================================================================================
-    //                                          IMAGE
-    // ================================================================================================
 
     private fun pickImageDialog() {
         AlertDialog.Builder(this)
@@ -283,9 +277,6 @@ class ChatActivity : AppCompatActivity() {
             .add(msg)
     }
 
-    // ================================================================================================
-    //                                          LOCATION
-    // ================================================================================================
 
     private fun sendLocation() {
 
@@ -329,9 +320,6 @@ class ChatActivity : AppCompatActivity() {
                 "&apiKey=$apiKey"
     }
 
-    // ================================================================================================
-    //                                      REQUEST MONEY
-    // ================================================================================================
 
     private fun openRequestMoneyDialog() {
 

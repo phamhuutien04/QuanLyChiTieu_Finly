@@ -7,5 +7,5 @@ data class ChatListItem(
     val friendAvatar: String = "",
     val lastMessage: String = "",
     val timestamp: Long = 0,
-    val unread: Boolean = false     // ⭐ trạng thái chưa đọc
+    val unread: Boolean = false
 )

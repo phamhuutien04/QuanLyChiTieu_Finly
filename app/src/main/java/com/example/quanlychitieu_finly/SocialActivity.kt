@@ -148,8 +148,6 @@ class SocialActivity : AppCompatActivity() {
             .collection("friends")
             .document(viewedUid)
             .set(data)
-
-        // viewedUser thêm bạn
         db.collection("users")
             .document(viewedUid)
             .collection("friends")

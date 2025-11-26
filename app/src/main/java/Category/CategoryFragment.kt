@@ -58,7 +58,7 @@ class CategoryFragment : Fragment() {
 
         adapter = CategoryAdapter(
             list = emptyList(),
-            onClick = { }, // giữ nguyên flow cũ
+            onClick = { },
             onLongClick = { category -> showOptions(category) }
         )
 
@@ -149,12 +149,10 @@ class CategoryFragment : Fragment() {
 
                 val list = docs.toObjects(Category::class.java)
 
-                // 🔥 FIX RESET TIỀN: cập nhật lại totalAmount từ Firestore
                 updateCategoryTotals(list)
 
                 adapter.updateData(list)
 
-                // 🔥 updateTotal() giữ nguyên thuật toán cũ
                 updateTotal(list)
 
                 if (list.isEmpty()) {
@@ -166,7 +164,6 @@ class CategoryFragment : Fragment() {
             }
     }
 
-    // 🔥🔥🔥 HÀM QUAN TRỌNG NHẤT — GIỮ TOTAL SAU KHI ĐỔI TÊN CATEGORY
     private fun updateCategoryTotals(list: List<Category>) {
         val userId = auth.currentUser?.uid ?: return
 
@@ -174,16 +171,14 @@ class CategoryFragment : Fragment() {
 
             db.collection("users").document(userId)
                 .collection("transactions")
-                .whereEqualTo("categoryId", category.id)  // 🔥 tính đúng theo id
+                .whereEqualTo("categoryId", category.id)
                 .get()
                 .addOnSuccessListener { docs ->
 
                     val total = docs.sumOf { it.getDouble("amount") ?: 0.0 }
 
-                    // 🔥 cập nhật lại totalAmount cho Category
                     category.totalAmount = total.toLong()
 
-                    // 🔥 cập nhật lại tổng tab
                     updateTotal(list)
                 }
         }

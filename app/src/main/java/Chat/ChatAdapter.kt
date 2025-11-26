@@ -176,7 +176,7 @@ class ChatAdapter(
                 btnPay.alpha = 1f
 
                 btnPay.setOnClickListener {
-                    onPay(m)   // ⭐ GỬI VỀ CHAT ACTIVITY
+                    onPay(m)
                 }
             }
         }

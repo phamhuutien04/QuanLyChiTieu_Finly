@@ -154,7 +154,7 @@ class AddCategoryFragment : Fragment() {
     }
 
     private fun updateCategory(name: String) {
-        uploadAndSave(name, newId = editId)  // ✔ giữ nguyên ID
+        uploadAndSave(name, newId = editId)
     }
 
     private fun uploadAndSave(name: String, newId: String?) {
@@ -197,7 +197,6 @@ class AddCategoryFragment : Fragment() {
                     oldIconUrl ?: ""
                 }
 
-                // ✔ KHÔNG TẠO ID MỚI KHI UPDATE
                 val id = newId ?: db.collection("tmp").document().id
 
                 val data = mapOf(
@@ -211,13 +210,12 @@ class AddCategoryFragment : Fragment() {
                     .document(userId)
                     .collection("categories")
                     .document(id)
-                    .update(data)  // ✔ UPDATE thay vì SET
+                    .update(data)
                     .addOnSuccessListener {
                         Toast.makeText(context, "Thành công", Toast.LENGTH_SHORT).show()
                         parentFragmentManager.popBackStack()
                     }
                     .addOnFailureListener {
-                        // Nếu danh mục mới → dùng set
                         db.collection("users")
                             .document(userId)
                             .collection("categories")

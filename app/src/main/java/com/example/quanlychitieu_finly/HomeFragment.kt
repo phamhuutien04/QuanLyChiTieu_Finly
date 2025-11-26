@@ -263,7 +263,6 @@ class HomeFragment : Fragment() {
             pick.show()
         }
 
-        // 3. CHỌN BẠN BÈ
         edtTagFriend.setOnClickListener {
             openFriendPicker(taggedFriends) { newList ->
                 taggedFriends.clear()
@@ -276,7 +275,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // 4. FORMAT TIỀN
         val vnFormat = NumberFormat.getInstance(Locale("vi", "VN"))
         edtAmount.keyListener = DigitsKeyListener.getInstance("0123456789.,")
         edtAmount.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(18))
@@ -384,9 +382,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    // ============================================================
-    // BOTTOM SHEET CHỌN BẠN BÈ
-    // ============================================================
+
     private fun openFriendPicker(
         currentSelected: List<User>,
         onDone: (List<User>) -> Unit

@@ -1,8 +1,8 @@
 package Chat
 
 data class ChatMessage(
-    var msgId: String = "",         // 🔥 ID của message trong Firestore
-    var chatId: String = "",        // 🔥 ID của phòng chat
+    var msgId: String = "",
+    var chatId: String = "",
 
     val senderId: String = "",
     val text: String = "",

@@ -99,10 +99,8 @@ class ChatListActivity : AppCompatActivity() {
                                         }
                                     }
 
-                                    // Xóa mục cũ nếu tồn tại
                                     finalList.removeAll { it.chatId == chatId }
 
-                                    // Thêm mục mới
                                     finalList.add(
                                         ChatListItem(
                                             chatId = chatId,
