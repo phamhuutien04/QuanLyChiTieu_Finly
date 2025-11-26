@@ -96,6 +96,30 @@ class ChatActivity : AppCompatActivity() {
         btnRequestMoney.setOnClickListener { openRequestMoneyDialog() }
         btnBack.setOnClickListener { animateBack() }
     }
+    override fun onResume() {
+        super.onResume()
+        markAllMessagesAsSeen()
+    }
+    private fun markAllMessagesAsSeen() {
+
+        val msgRef = db.collection("chats")
+            .document(chatId)
+            .collection("messages")
+
+        msgRef.whereNotEqualTo("senderId", currentUid)
+            .get()
+            .addOnSuccessListener { snap ->
+
+                for (d in snap.documents) {
+                    val seenBy = (d.get("seenBy") as? MutableList<String>) ?: mutableListOf()
+
+                    if (!seenBy.contains(currentUid)) {
+                        seenBy.add(currentUid)
+                        d.reference.update("seenBy", seenBy)
+                    }
+                }
+            }
+    }
 
     private fun ensureChatExists() {
         val ref = db.collection("chats").document(chatId)

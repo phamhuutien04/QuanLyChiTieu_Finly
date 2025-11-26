@@ -23,11 +23,10 @@ class ChatListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_list)
 
-        val user = auth.currentUser ?: return
-        currentUid = user.uid
+        currentUid = auth.currentUser?.uid ?: return
 
         recycler = findViewById(R.id.recyclerChatList)
-        adapter = ChatListAdapter(mutableListOf()) { item -> openChat(item) }
+        adapter = ChatListAdapter(mutableListOf()) { openChat(it) }
 
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = adapter
@@ -50,66 +49,69 @@ class ChatListActivity : AppCompatActivity() {
                 val total = snap.size()
                 var loaded = 0
 
-                for (doc in snap.documents) {
+                for (chatDoc in snap.documents) {
 
-                    val chatId = doc.id
-                    val members = doc.get("members") as? List<String> ?: continue
+                    val chatId = chatDoc.id
+                    val members = chatDoc.get("members") as? List<String> ?: continue
                     val friendUid = members.first { it != currentUid }
 
-                    // Lấy info user
                     db.collection("users").document(friendUid)
-                        .get()
-                        .addOnSuccessListener { userDoc ->
+                        .addSnapshotListener { userDoc, _ ->
+
+                            if (userDoc == null) return@addSnapshotListener
 
                             val name = userDoc.getString("username") ?: "Không tên"
                             val avatar = userDoc.getString("avatarUrl") ?: ""
 
-                            // Lấy tin nhắn cuối
                             db.collection("chats")
                                 .document(chatId)
                                 .collection("messages")
                                 .orderBy("timestamp", Query.Direction.DESCENDING)
                                 .limit(1)
-                                .get()
-                                .addOnSuccessListener { msgSnap ->
+                                .addSnapshotListener { msgSnap, _ ->
 
                                     var lastMsg = "Chưa có tin nhắn"
                                     var ts = 0L
+                                    var unread = false
 
-                                    if (!msgSnap.isEmpty) {
+                                    if (msgSnap != null && !msgSnap.isEmpty) {
 
                                         val d = msgSnap.documents[0]
 
                                         val type = d.getString("type") ?: "text"
                                         val text = d.getString("text") ?: ""
                                         val paid = d.getBoolean("paid") ?: false
+                                        val seenBy = d.get("seenBy") as? List<String> ?: emptyList()
+                                        val sender = d.getString("senderId") ?: ""
 
                                         ts = d.getLong("timestamp") ?: 0L
 
+                                        unread =
+                                            sender != currentUid &&
+                                                    !seenBy.contains(currentUid)
+
                                         lastMsg = when (type) {
-
                                             "text" -> text
-
                                             "image" -> "📷 Ảnh"
-
-                                            "location_map" -> "📍 Vị trí được chia sẻ"
-
+                                            "location_map" -> "📍 Vị trí"
                                             "request_money" ->
-                                                if (paid) "Đã thanh toán"
+                                                if (paid) "✔ Đã thanh toán"
                                                 else "💰 Yêu cầu thanh toán"
-
                                             else -> "Tin nhắn mới"
                                         }
                                     }
 
+                                    result.removeAll { it.chatId == chatId }
+
                                     result.add(
                                         ChatListItem(
-                                            chatId = chatId,
-                                            friendUid = friendUid,
-                                            friendName = name,
-                                            friendAvatar = avatar,
-                                            lastMessage = lastMsg,
-                                            timestamp = ts
+                                            chatId,
+                                            friendUid,
+                                            name,
+                                            avatar,
+                                            lastMsg,
+                                            ts,
+                                            unread
                                         )
                                     )
 
@@ -125,9 +127,9 @@ class ChatListActivity : AppCompatActivity() {
     }
 
     private fun openChat(item: ChatListItem) {
-        val intent = Intent(this, ChatActivity::class.java)
-        intent.putExtra("chatId", item.chatId)
-        intent.putExtra("friendUid", item.friendUid)
-        startActivity(intent)
+        val i = Intent(this, ChatActivity::class.java)
+        i.putExtra("chatId", item.chatId)
+        i.putExtra("friendUid", item.friendUid)
+        startActivity(i)
     }
 }
