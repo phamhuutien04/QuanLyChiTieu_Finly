@@ -1,21 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:padding="20dp"
+    android:background="@drawable/bg_dialog_round"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <TextView
+        android:id="@+id/tvDialogTitle"
+        android:text="Yêu cầu thanh toán"
+        android:textColor="#111827"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Số tiền -->
     <EditText
         android:id="@+id/edtAmount"
-        android:hint="Nhập số tiền"
+        android:hint="Nhập số tiền..."
         android:inputType="number"
+        android:textSize="16sp"
+        android:padding="14dp"
+        android:background="@drawable/bg_edittext"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
+    <!-- Ghi chú -->
     <EditText
         android:id="@+id/edtNote"
-        android:hint="Nội dung"
+        android:hint="Ghi chú (không bắt buộc)"
+        android:textSize="16sp"
+        android:padding="14dp"
+        android:background="@drawable/bg_edittext"
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

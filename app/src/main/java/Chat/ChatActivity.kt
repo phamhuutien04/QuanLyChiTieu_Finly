@@ -29,6 +29,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import android.text.Editable
+import android.text.TextWatcher
 import java.io.ByteArrayOutputStream
 
 class ChatActivity : AppCompatActivity() {
@@ -337,19 +339,53 @@ class ChatActivity : AppCompatActivity() {
         val edtAmount = v.findViewById<EditText>(R.id.edtAmount)
         val edtNote = v.findViewById<EditText>(R.id.edtNote)
 
-        AlertDialog.Builder(this)
-            .setTitle("Đòi tiền")
+        var current = ""
+
+        edtAmount.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                val str = s.toString()
+                if (str.isEmpty() || str == current) return
+
+                edtAmount.removeTextChangedListener(this)
+
+                // bỏ dấu chấm
+                val cleanStr = str.replace(".", "")
+                val num = cleanStr.toLongOrNull() ?: 0
+
+                // format 1.000.000
+                val formatted = String.format("%,d", num).replace(",", ".")
+                current = formatted
+
+                edtAmount.setText(formatted)
+                edtAmount.setSelection(formatted.length)
+
+                edtAmount.addTextChangedListener(this)
+            }
+        })
+
+
+        // BO GÓC GIAO DIỆN DIALOG
+        val dialog = AlertDialog.Builder(this)
             .setView(v)
             .setPositiveButton("Gửi") { _, _ ->
 
-                val amount = edtAmount.text.toString().toLongOrNull() ?: 0
+                val cleanAmount = edtAmount.text.toString().replace(".", "")
+                val amount = cleanAmount.toLongOrNull() ?: 0
                 val note = edtNote.text.toString()
 
                 if (amount > 0) sendMoneyRequest(amount, note)
             }
             .setNegativeButton("Hủy", null)
-            .show()
+            .create()
+
+        dialog.window?.setBackgroundDrawableResource(R.drawable.dialog_round_bg)
+        dialog.show()
     }
+
 
     private fun sendMoneyRequest(amount: Long, note: String) {
 

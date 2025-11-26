@@ -1,0 +1,25 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Khi focus -->
+    <item android:state_focused="true">
+        <shape>
+            <solid android:color="#FFFFFF"/>
+            <stroke android:width="2dp" android:color="#3B82F6"/> <!-- xanh -->
+            <corners android:radius="14dp"/>
+            <padding android:left="12dp" android:right="12dp"
+                android:top="8dp" android:bottom="8dp"/>
+        </shape>
+    </item>
+
+    <!-- Bình thường -->
+    <item>
+        <shape>
+            <solid android:color="#FFFFFF"/>
+            <stroke android:width="1dp" android:color="#D1D5DB"/> <!-- xám nhạt -->
+            <corners android:radius="14dp"/>
+            <padding android:left="12dp" android:right="12dp"
+                android:top="8dp" android:bottom="8dp"/>
+        </shape>
+    </item>
+
+</selector>
