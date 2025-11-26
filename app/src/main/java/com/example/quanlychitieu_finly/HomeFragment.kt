@@ -34,6 +34,7 @@ import java.util.Date
 import java.util.Locale
 import android.app.DatePickerDialog
 import friend.FriendPickerAdapter
+import friend.FriendRequestActivity
 import friend.User
 import java.util.Calendar
 
@@ -83,8 +84,11 @@ class HomeFragment : Fragment() {
         btnSearch.setOnClickListener { openSearchFriends() }
 
 
-        val btnNotify = view.findViewById<ImageView>(R.id.notify)
-        btnNotify.setOnClickListener { openChatList() }
+        val btnMessage = view.findViewById<ImageView>(R.id.message)
+        btnMessage.setOnClickListener { openChatList() }
+
+        val btnNotify = view.findViewById<ImageView>(R.id.btnNotify)
+        btnNotify.setOnClickListener { openFriendRequest()}
 
         tvIncome = view.findViewById(R.id.tvIncome)
         tvExpense = view.findViewById(R.id.tvExpense)
@@ -98,6 +102,10 @@ class HomeFragment : Fragment() {
         loadRecentTransactions()
         setupViewAllButton(view)
         return view
+    }
+    private fun openFriendRequest() {
+        val intent = Intent(requireContext(), FriendRequestActivity::class.java)
+        startActivity(intent)
     }
 
     private fun openSearchFriends() {

@@ -109,8 +109,6 @@
 
                 <com.google.android.material.card.MaterialCardView
 
-                    android:id="@+id/message"
-
                     android:layout_width="52dp"
 
                     android:layout_height="52dp"
@@ -137,7 +135,7 @@
 
                     <ImageView
 
-                        android:id="@+id/notify"
+                        android:id="@+id/message"
 
                         android:layout_width="match_parent"
 
@@ -271,6 +269,7 @@
                         app:layout_constraintTop_toTopOf="@id/ivInfo" />
 
                     <ImageView
+                        android:id="@+id/btnNotify"
                         android:layout_width="50dp"
                         android:layout_height="60dp"
                         android:alpha="0.8"

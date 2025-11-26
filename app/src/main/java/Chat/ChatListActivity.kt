@@ -56,6 +56,7 @@ class ChatListActivity : AppCompatActivity() {
                     val members = doc.get("members") as? List<String> ?: continue
                     val friendUid = members.first { it != currentUid }
 
+                    // Lấy info user
                     db.collection("users").document(friendUid)
                         .get()
                         .addOnSuccessListener { userDoc ->
@@ -63,6 +64,7 @@ class ChatListActivity : AppCompatActivity() {
                             val name = userDoc.getString("username") ?: "Không tên"
                             val avatar = userDoc.getString("avatarUrl") ?: ""
 
+                            // Lấy tin nhắn cuối
                             db.collection("chats")
                                 .document(chatId)
                                 .collection("messages")
@@ -71,17 +73,43 @@ class ChatListActivity : AppCompatActivity() {
                                 .get()
                                 .addOnSuccessListener { msgSnap ->
 
-                                    val lastMsg = if (!msgSnap.isEmpty)
-                                        msgSnap.documents[0].getString("text") ?: ""
-                                    else "Chưa có tin nhắn"
+                                    var lastMsg = "Chưa có tin nhắn"
+                                    var ts = 0L
 
-                                    val ts = if (!msgSnap.isEmpty)
-                                        msgSnap.documents[0].getLong("timestamp") ?: 0L
-                                    else 0L
+                                    if (!msgSnap.isEmpty) {
+
+                                        val d = msgSnap.documents[0]
+
+                                        val type = d.getString("type") ?: "text"
+                                        val text = d.getString("text") ?: ""
+                                        val paid = d.getBoolean("paid") ?: false
+
+                                        ts = d.getLong("timestamp") ?: 0L
+
+                                        lastMsg = when (type) {
+
+                                            "text" -> text
+
+                                            "image" -> "📷 Ảnh"
+
+                                            "location_map" -> "📍 Vị trí được chia sẻ"
+
+                                            "request_money" ->
+                                                if (paid) "Đã thanh toán"
+                                                else "💰 Yêu cầu thanh toán"
+
+                                            else -> "Tin nhắn mới"
+                                        }
+                                    }
 
                                     result.add(
                                         ChatListItem(
-                                            chatId, friendUid, name, avatar, lastMsg, ts
+                                            chatId = chatId,
+                                            friendUid = friendUid,
+                                            friendName = name,
+                                            friendAvatar = avatar,
+                                            lastMessage = lastMsg,
+                                            timestamp = ts
                                         )
                                     )
 

@@ -5,17 +5,16 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.quanlychitieu_finly.R
-import com.google.firebase.firestore.FirebaseFirestore
 
 class ChatAdapter(
     private val currentUid: String,
-    private var friendAvatar: String
+    private var friendAvatar: String,
+    private val onPayRequest: (ChatMessage) -> Unit // ⭐ callback về ChatActivity
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var messages = listOf<ChatMessage>()
@@ -34,61 +33,63 @@ class ChatAdapter(
         val m = messages[position]
 
         return when (m.type) {
+
             "image" -> 3
             "location_map" -> 4
-            "request_money" ->
-                if (m.senderId == currentUid) 6 else 5  // tách ME vs FRIEND
+
+            "request_money" -> if (m.senderId == currentUid) 6 else 5
+
             else -> if (m.senderId == currentUid) 0 else 1
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
-        return when (viewType) {
-            // TEXT ME
-            0 -> TextMeVH(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_chat_text_me, parent, false)
-            )
-
-            // TEXT FRIEND
-            1 -> TextFriendVH(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_chat_text_friend, parent, false)
-            )
-
-            // IMAGE
-            3 -> ImageVH(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_chat_image, parent, false)
-            )
-
-            // LOCATION MAP
-            4 -> LocationVH(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_chat_location, parent, false)
-            )
-
-            // REQUEST MONEY - FRIEND (bên trái – có nút thanh toán)
-            5 -> RequestMoneyFriendVH(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_request_money_friend, parent, false)
-            )
-
-            // REQUEST MONEY - ME (bên phải – không nút thanh toán)
-            6 -> RequestMoneyMeVH(
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_request_money_me, parent, false)
-            )
-
-            else -> throw IllegalStateException("Unknown viewType")
         }
     }
 
     override fun getItemCount() = messages.size
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
+        return when (viewType) {
+
+            0 -> TextMeVH(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_chat_text_me, parent, false)
+            )
+
+            1 -> TextFriendVH(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_chat_text_friend, parent, false)
+            )
+
+            3 -> ImageVH(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_chat_image, parent, false)
+            )
+
+            4 -> LocationVH(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_chat_location, parent, false)
+            )
+
+            5 -> RequestMoneyFriendVH(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_request_money_friend, parent, false),
+                onPayRequest
+            )
+
+            6 -> RequestMoneyMeVH(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_request_money_me, parent, false)
+            )
+
+            else -> error("Invalid viewType")
+        }
+    }
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, pos: Int) {
         val m = messages[pos]
+
+        // GẮN thêm chatId + msgId để ChatActivity xử lý
+        m.msgId = m.msgId
+        m.chatId = m.chatId
 
         when (holder) {
 
@@ -122,7 +123,6 @@ class ChatAdapter(
                 holder.map.setOnClickListener {
                     val uri = Uri.parse("geo:${m.latitude},${m.longitude}?q=${m.latitude},${m.longitude}")
                     val i = Intent(Intent.ACTION_VIEW, uri)
-                    i.setPackage("com.google.android.apps.maps")
                     holder.itemView.context.startActivity(i)
                 }
             }
@@ -132,7 +132,7 @@ class ChatAdapter(
         }
     }
 
-    // ======================= VIEW HOLDER ======================= //
+    // -------------------- VIEW HOLDERS --------------------
 
     class TextMeVH(v: View) : RecyclerView.ViewHolder(v) {
         val tv: TextView = v.findViewById(R.id.tvTextMe)
@@ -151,9 +151,13 @@ class ChatAdapter(
         val map: ImageView = v.findViewById(R.id.imgLocationMap)
     }
 
-    // ======= REQUEST MONEY – FRIEND (có nút thanh toán) ======= //
+    // ================= REQUEST MONEY FRIEND =================
 
-    class RequestMoneyFriendVH(v: View) : RecyclerView.ViewHolder(v) {
+    class RequestMoneyFriendVH(
+        v: View,
+        private val onPay: (ChatMessage) -> Unit
+    ) : RecyclerView.ViewHolder(v) {
+
         private val amount: TextView = v.findViewById(R.id.tvMoneyValueFriend)
         private val note: TextView = v.findViewById(R.id.tvNoteFriend)
         private val btnPay: TextView = v.findViewById(R.id.btnPayNow)
@@ -163,26 +167,22 @@ class ChatAdapter(
             note.text = m.note ?: ""
 
             if (m.paid) {
-                btnPay.text = "Đã thanh toán ✔"
+                btnPay.text = "Đã thanh toán"
                 btnPay.isEnabled = false
-            }
+                btnPay.alpha = 0.5f
+            } else {
+                btnPay.text = "Thanh toán"
+                btnPay.isEnabled = true
+                btnPay.alpha = 1f
 
-            btnPay.setOnClickListener {
-                val ref = FirebaseFirestore.getInstance()
-                    .collection("chats")
-                    .document(m.chatId)
-                    .collection("messages")
-                    .document(m.msgId)
-
-                ref.update("paid", true)
-
-                btnPay.text = "Đã thanh toán ✔"
-                btnPay.isEnabled = false
+                btnPay.setOnClickListener {
+                    onPay(m)   // ⭐ GỬI VỀ CHAT ACTIVITY
+                }
             }
         }
     }
 
-    // ======= REQUEST MONEY – ME (không nút thanh toán) ======= //
+    // ================= REQUEST MONEY ME =================
 
     class RequestMoneyMeVH(v: View) : RecyclerView.ViewHolder(v) {
         private val amount: TextView = v.findViewById(R.id.tvMoneyValueMe)
@@ -192,8 +192,7 @@ class ChatAdapter(
         fun bind(m: ChatMessage) {
             amount.text = "${m.amount} đ"
             note.text = m.note ?: ""
-
-            status.text = if (m.paid) "Đã thanh toán ✔" else "Chưa thanh toán"
+            status.text = if (m.paid) "Đã thanh toán" else "Chưa thanh toán"
         }
     }
 }
