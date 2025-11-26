@@ -38,23 +38,22 @@ class ChatListActivity : AppCompatActivity() {
 
         db.collection("chats")
             .whereArrayContains("members", currentUid)
-            .addSnapshotListener { snap, _ ->
+            .addSnapshotListener { chatSnap, _ ->
 
-                if (snap == null || snap.isEmpty) {
+                if (chatSnap == null || chatSnap.isEmpty) {
                     adapter.setData(emptyList())
                     return@addSnapshotListener
                 }
 
-                val result = mutableListOf<ChatListItem>()
-                val total = snap.size()
-                var loaded = 0
+                val finalList = mutableListOf<ChatListItem>()
 
-                for (chatDoc in snap.documents) {
+                chatSnap.documents.forEach { chatDoc ->
 
                     val chatId = chatDoc.id
-                    val members = chatDoc.get("members") as? List<String> ?: continue
+                    val members = chatDoc.get("members") as? List<String> ?: return@forEach
                     val friendUid = members.first { it != currentUid }
 
+                    // ⭐ LISTEN USER REALTIME
                     db.collection("users").document(friendUid)
                         .addSnapshotListener { userDoc, _ ->
 
@@ -63,6 +62,7 @@ class ChatListActivity : AppCompatActivity() {
                             val name = userDoc.getString("username") ?: "Không tên"
                             val avatar = userDoc.getString("avatarUrl") ?: ""
 
+                            // ⭐ LISTEN LAST MESSAGE REALTIME
                             db.collection("chats")
                                 .document(chatId)
                                 .collection("messages")
@@ -80,15 +80,13 @@ class ChatListActivity : AppCompatActivity() {
 
                                         val type = d.getString("type") ?: "text"
                                         val text = d.getString("text") ?: ""
+                                        val sender = d.getString("senderId") ?: ""
                                         val paid = d.getBoolean("paid") ?: false
                                         val seenBy = d.get("seenBy") as? List<String> ?: emptyList()
-                                        val sender = d.getString("senderId") ?: ""
 
                                         ts = d.getLong("timestamp") ?: 0L
 
-                                        unread =
-                                            sender != currentUid &&
-                                                    !seenBy.contains(currentUid)
+                                        unread = sender != currentUid && !seenBy.contains(currentUid)
 
                                         lastMsg = when (type) {
                                             "text" -> text
@@ -101,25 +99,25 @@ class ChatListActivity : AppCompatActivity() {
                                         }
                                     }
 
-                                    result.removeAll { it.chatId == chatId }
+                                    // Xóa mục cũ nếu tồn tại
+                                    finalList.removeAll { it.chatId == chatId }
 
-                                    result.add(
+                                    // Thêm mục mới
+                                    finalList.add(
                                         ChatListItem(
-                                            chatId,
-                                            friendUid,
-                                            name,
-                                            avatar,
-                                            lastMsg,
-                                            ts,
-                                            unread
+                                            chatId = chatId,
+                                            friendUid = friendUid,
+                                            friendName = name,
+                                            friendAvatar = avatar,
+                                            lastMessage = lastMsg,
+                                            timestamp = ts,
+                                            unread = unread
                                         )
                                     )
 
-                                    loaded++
-                                    if (loaded == total) {
-                                        result.sortByDescending { it.timestamp }
-                                        adapter.setData(result)
-                                    }
+                                    // Sort + update UI
+                                    finalList.sortByDescending { it.timestamp }
+                                    adapter.setData(finalList)
                                 }
                         }
                 }
